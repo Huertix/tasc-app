@@ -21,11 +21,22 @@ class ArticuloController extends Controller
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
 
+    $familias = $em->getRepository('AppBundle\Entity\Familia')
+      ->findAll();
+
+    $marcas = $em->getRepository('AppBundle\Entity\Marca')
+      ->findAll();
+
+    $vendedores = $em->getRepository('AppBundle\Entity\Vendedor')
+      ->findAll();
+
     return $this->render('articulos/lista_articulos.html.twig', [
-      'articulos' => $articulos
+      'articulos' => $articulos,
+      'familias' => $familias,
+      'marcas' => $marcas,
+      'vendedores' => $vendedores,
     ]);
 
   }
-
 
 }
