@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,7 +28,8 @@ class Presupuesto {
    */
   private $fecha;
   /**
-   * @ORM\Column(type="string", length=8, options={"fixed" = true}, nullable=false)
+   * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="presupuestos")
+   * @ORM\JoinColumn(name="cliente", referencedColumnName="codigo")
    */
   private $cliente;
   /**
@@ -178,6 +180,15 @@ class Presupuesto {
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
   private $codpost;
+  /**
+   * @ORM\OneToMany(targetEntity="PresupuestoDetalles", mappedBy="presupuesto")
+   */
+  private $presupuesto_detalles;
+
+  public function __construct()
+  {
+    $this->presupuesto_detalles = new ArrayCollection();
+  }
 
   /**
    * @return mixed
@@ -765,6 +776,20 @@ class Presupuesto {
    */
   public function setCodpost($codpost) {
     $this->codpost = $codpost;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getpresupuesto_detalles() {
+    return $this->presupuesto_detalles;
+  }
+
+  /**
+   * @param mixed $presupuesto_detalles
+   */
+  public function setPresupuestoDetalles($presupuesto_detalles) {
+    $this->presupuesto_detalles = $presupuesto_detalles;
   }
 
 }

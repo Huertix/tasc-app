@@ -34,7 +34,7 @@ class ClienteController extends Controller
 
     $em = $this->getDoctrine()->getManager();
     $cliente = $em->getRepository('AppBundle:Cliente')
-      ->findOneBy(['codigo' => $codigo_cliente]);
+      ->findOneBy(['id' => $codigo_cliente]);
 
     if (!$cliente) {
       throw $this->createNotFoundException('Cliente no Encontrado');

@@ -1,1 +1,9 @@
-{{ dump(clientes) }}
+{#{{ dump(clientes) }}#}
+
+{% for presupuesto in clientes[20].presupuestos %}
+    <div class="col-md-12" style="margin-top: 10px; font-size: 1.2em">
+        <div class="col-md-3">
+            <a href="#">{{ presupuesto.numero }}</a>
+        </div>
+    </div>
+{% endfor %}

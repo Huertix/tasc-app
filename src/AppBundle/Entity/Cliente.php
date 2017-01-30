@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -432,6 +433,16 @@ class Cliente
    * @ORM\Column(type="string", length=50, options={"fixed" = true}, nullable=false)
    */
   private $guid_exp;
+  /**
+   * @ORM\OneToMany(targetEntity="Presupuesto", mappedBy="cliente")
+   */
+  private $presupuestos;
+
+  public function __construct()
+  {
+    $this->presupuestos = new ArrayCollection();
+  }
+
 
   /**
    * @return mixed
@@ -1903,5 +1914,18 @@ class Cliente
     $this->guid_exp = $guid_exp;
   }
 
+  /**
+   * @return mixed
+   */
+  public function getPresupuestos() {
+    return $this->presupuestos;
+  }
+
+  /**
+   * @param mixed $presupuestos
+   */
+  public function setPresupuestos($presupuestos) {
+    $this->presupuestos = $presupuestos;
+  }
 
 }

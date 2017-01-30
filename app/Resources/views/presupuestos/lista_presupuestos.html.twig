@@ -1,1 +1,13 @@
-{{ dump(presupuestos) }}
+{#{{ dump(presupuestos[0].presupuesto_detalles) }}#}
+
+{% for linea in presupuestos[0].presupuesto_detalles %}
+    <div class="col-md-12" style="margin-top: 10px; font-size: 1.2em">
+        <div class="col-md-3">
+            {{ linea.numero }}
+        </div>
+        <div class="col-md-3">
+            {{ linea.definicion }}
+        </div>
+
+    </div>
+{% endfor %}

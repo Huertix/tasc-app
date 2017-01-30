@@ -223,6 +223,11 @@ class PresupuestoDetalles {
    * @ORM\Column(type="decimal", precision=20, scale=4, nullable=false)
    */
   private $uniagrup;
+  /**
+   * @ORM\ManyToOne(targetEntity="Presupuesto", inversedBy="presupuesto_detalles")
+   * @ORM\JoinColumn(name="numero", referencedColumnName="numero")
+   */
+  private $presupuesto;
 
   /**
    * @return mixed
@@ -965,6 +970,22 @@ class PresupuestoDetalles {
   public function setUniagrup($uniagrup) {
     $this->uniagrup = $uniagrup;
   }
+
+  /**
+   * @return mixed
+   */
+  public function getPresupuesto() {
+    return $this->presupuesto;
+  }
+
+  /**
+   * @param mixed $presupuesto
+   */
+  public function setPresupuesto($presupuesto) {
+    $this->presupuesto = $presupuesto;
+  }
+
+
 
 
 }
