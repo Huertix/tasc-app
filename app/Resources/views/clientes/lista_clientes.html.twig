@@ -66,7 +66,7 @@
                             {% for presupuesto in cliente.presupuestos %}
                                 <div class="col-md-12" style="margin-top: 10px; font-size: 1.2em">
                                     <div class="col-md-3">
-                                        <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero}) }}">{{ presupuesto.numero }}</a>
+                                        <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero|trim}) }}">{{ presupuesto.numero|trim }}</a>
                                     </div>
                                     <div class="col-md-4">
                                         {{ presupuesto.fecha| date('Y-m-d') }}
