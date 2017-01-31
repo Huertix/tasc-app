@@ -26,40 +26,7 @@ class ClienteController extends Controller {
   }
 
   /**
-   * @Route("/clientes/nuevo", name="nuevo_cliente")
-   */
-  public function nuevoAction(Request $request) {
-    $form = $this->createForm(ClienteFormType::class);
-
-    // only handles data on POST
-    $form->handleRequest($request);
-
-    dump($form->isSubmitted());
-    dump($form->isValid());
-    die();
-
-    if ($form->isSubmitted() && $form->isValid()) {
-
-      $cliente = $form->getData();
-
-      dump($cliente);die;
-
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($cliente);
-      $em->flush();
-
-      $this->addFlash('success', 'Cliente created!');
-
-      return $this->redirectToRoute('clientes');
-    }
-
-    return $this->render('clientes/nuevo_cliente.html.twig', [
-      'clienteForm' => $form->createView()
-    ]);
-  }
-
-  /**
-   * @Route("/clientes/editar/{codigo}", name="editar_cliente")
+   * @Route("/clientes/{codigo}", name="vista_cliente")
    */
   public function editAction(Request $request, Cliente $cliente) {
     $form = $this->createForm(ClienteFormType::class, $cliente);
@@ -90,23 +57,23 @@ class ClienteController extends Controller {
   }
 
 
-  /**
-   * @Route("/clientes/{codigo_cliente}", name="vista_cliente")
-   */
-  public function showAction($codigo_cliente) {
-
-    $em = $this->getDoctrine()->getManager();
-    $cliente = $em->getRepository('AppBundle:Cliente')
-      ->findOneBy(['codigo' => $codigo_cliente]);
-
-    if (!$cliente) {
-      throw $this->createNotFoundException('Cliente no Encontrado');
-    }
-
-
-    return $this->render('clientes/vista_cliente.html.twig', [
-      'cliente' => $cliente
-    ]);
-  }
+  ///**
+  // * @Route("/clientes/{codigo_cliente}", name="vista_cliente")
+  // */
+  //public function showAction($codigo_cliente) {
+  //
+  //  $em = $this->getDoctrine()->getManager();
+  //  $cliente = $em->getRepository('AppBundle:Cliente')
+  //    ->findOneBy(['codigo' => $codigo_cliente]);
+  //
+  //  if (!$cliente) {
+  //    throw $this->createNotFoundException('Cliente no Encontrado');
+  //  }
+  //
+  //
+  //  return $this->render('clientes/vista_cliente.html.twig', [
+  //    'cliente' => $cliente
+  //  ]);
+  //}
 
 }

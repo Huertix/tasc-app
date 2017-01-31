@@ -1,9 +1,131 @@
-{#{{ dump(clientes) }}#}
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="content container">
+        <table class="table table-striped" id="clients_list">
+            <thead>
+            <tr>
+                <th class="col-md-1">
+                    <button type="button" class="btn btn-warning collaps_all"
+                            onclick="collaps_all()"
+                            title="Collapse All">
+                                    <span class="glyphicon glyphicon-eject" aria-hidden="true">
+                                    </span>
+                    </button>
+                </th>
+                <th class="col-md-2">
+                    <div>Codigo</div>
+                </th>
+                <th class="col-md-8">
+                    <div class="pull-left">Clientes</div>
+                    <div class="pull-right">
+                        <input type="text" onkeyup="filter(this)" name="search" id="search" placeholder="Filtro"
+                               class="pull-right"/>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cliente in clientes %}
+                <tr class="client_row">
+                    <td class="col-md-1">
+                        <div>
+                            {% if cliente.presupuestos|length > 0 %}
+                                <button type="button" class="btn btn-info quotation_collapsable_btn"
+                                        data-toggle="collapse"
+                                        data-target="#{{ cliente.codigo }}"
+                                        onclick="collaps_btn(this)">
+                                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true">
 
-{% for presupuesto in clientes[20].presupuestos %}
-    <div class="col-md-12" style="margin-top: 10px; font-size: 1.2em">
-        <div class="col-md-3">
-            <a href="#">{{ presupuesto.numero }}</a>
-        </div>
+                                    </span>
+                                </button>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="col-md-2">
+                        <div >{{ cliente.codigo }}</div>
+                    </td>
+                    <td class="col-md-6">
+                        <div>
+                            <a href="{{ path('vista_cliente', {'codigo': cliente.codigo}) }}">{{ cliente.nombre|convert_encoding('UTF-8', 'iso-8859-1') }}</a>
+                        </div>
+                        <div class="container collapse col-md-8" id="{{ cliente.codigo }}">
+                            <div class="col-md-12" style="margin-top: 20px; background: #13e2d0; border-radius: 5px; font-size: 1.2em">
+                                <div class="col-md-12" style="text-align: center; font-weight: bold">
+                                    <h4>PRESUPUESTOS</h4>
+                                </div>
+                                <div class="col-md-3">
+                                    Numero
+                                </div>
+                                <div class="col-md-4">
+                                    Fecha
+                                </div>
+                                <div class="col-md-4 pull-right">
+                                    Importe
+                                </div>
+                            </div>
+                            {% for presupuesto in cliente.presupuestos %}
+                                <div class="col-md-12" style="margin-top: 10px; font-size: 1.2em">
+                                    <div class="col-md-3">
+                                        <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero}) }}">{{ presupuesto.numero }}</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ presupuesto.fecha| date('Y-m-d') }}
+                                    </div>
+                                    <div class="col-md-4 pull-right">
+                                        {{ presupuesto.importe|number_format(2, '.', ',') }} &euro;
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-{% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#Function for filtering lists#}
+    <script language="javascript" type="text/javascript">
+        function filter(element) {
+
+            var count = 0;
+            var value = $(element).val();
+            value = value.toUpperCase();
+            console.log(value);
+
+            $(".client_row").each(function () {
+                text = $(this)
+                        .text()
+                        .replace(/(\r\n|\n|\r)/gm, "")
+                        .toString()
+                        .trim()
+                        .toUpperCase();
+                console.log(text);
+                if (text.search(value) > -1) {
+                    $(this).show();
+                    count++;
+                    $("input[name='list_matched']").show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
+
+        }
+
+        function collaps_all() {
+            $( '.quotation_collapsable_btn' ).each(function() {
+                if ($(this).find('span').hasClass('glyphicon-chevron-up')) {
+                    console.log(this);
+                    $(this).click();
+                }
+            });
+    </script>
+
+
+
+{% endblock %}
