@@ -50,7 +50,7 @@ class ClienteController extends Controller {
 
 
 
-    return $this->render('clientes/nuevo_cliente.html.twig', [
+    return $this->render('clientes/vista_cliente.html.twig', [
       'clienteForm' => $form->createView()
     ]);
 

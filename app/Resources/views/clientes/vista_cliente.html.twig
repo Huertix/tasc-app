@@ -1,1 +1,100 @@
-{{ dump(cliente) }}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{{ clienteForm.nombre.vars.value }}</h2>
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                {{ form_label(clienteForm.codigo) }}
+                                {{ form_errors(clienteForm.codigo) }}
+                                {{ form_widget(clienteForm.codigo) }}
+                            </div>
+                            <div class="col-md-10">
+                                {{ form_label(clienteForm.nombre) }}
+                                {{ form_errors(clienteForm.nombre) }}
+                                {{ form_widget(clienteForm.nombre) }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.cif) }}
+                            </div>
+                            <div class="col-md-10">
+                                {{ form_row(clienteForm.direccion) }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.codpost) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.poblacion) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.provincia) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.pais) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.f_alta) }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                {{ form_row(clienteForm.vendedor) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_label(clienteForm.tipofac) }}
+                                {{ form_errors(clienteForm.tipofac) }}
+                                {{ form_widget(clienteForm.tipofac) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.credito) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.descu1) }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form_row(clienteForm.tipo_iva, {
+                                    'label': 'IVA'
+                                }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                {{ form_row(clienteForm.email) }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                {{ form_row(clienteForm.observacio) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_widget(clienteForm) }}
+                <button type="submit" class="btn btn-primary" formnovalidate>Guardar</button>
+                {{ form_end(clienteForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        jQuery(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+{% endblock %}
