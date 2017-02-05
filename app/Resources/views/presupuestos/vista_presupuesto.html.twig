@@ -4,7 +4,7 @@
 
 {% endblock %}
 {% block body %}
-    <div class="">
+    <div>
         <div class="row">
             <div class="col-md-12 prespuesto_container" >
                 <div class="col-md-3 prespuesto_datos">
@@ -49,10 +49,18 @@
                         <fieldset>
                             <legend>Importes</legend>
                             <div class="col-md-12">
-                                <p>lams'dl;ma
-                                    sdamsdk;ma's;md
-                                    asdklamsd
-                                    adma</p>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><span>Base:</span></div>
+                                    <div class="total_importe_base col-md-6 col-md-offset-1"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><span>IVA:</span></div>
+                                    <div class="total_importe_iva col-md-6 col-md-offset-1"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><span>TOTAL:</span></div>
+                                    <div class="total_importe col-md-6 col-md-offset-1"></div>
+                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -94,8 +102,8 @@
                                 <th>Artículo</th>
                                 <th>Definición</th>
                                 <th>Precio</th>
-                                <th>U.</th>
-                                <th>IVA</th>
+                                <th>Unidades</th>
+                                {#<th>IVA</th>#}
                                 <th>%</th>
                                 <th>Importe</th>
                             </tr>
@@ -106,24 +114,25 @@
                             {% if linea.articulo|trim != '' %}
                                 {% set is_linea_articulo = true %}
                             {% endif %}
-                            <tr onclick="toggleTableRowActive(this)">
+
                                 {% if linea.articulo|trim != '' %}
-                                    <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
-                                    <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}"></div></td>
-                                    <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
-                                    <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
-                                    <td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>
-                                    <td><div class="input_row_dto"><input type="text" value="{{ linea.dto1|trim }}" ></div></td>
-                                    <td><div class="input_row_importe">{{ linea.importe|trim|number_format(2, '.', '') }}</div></td>
+                                    <tr class="table_row_head" onclick="toggleTableRowActive(this)">
+                                        <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
+                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
+                                        <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
+                                        <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
+                                        {#<td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>#}
+                                        <td><div class="input_row_dto"><input type="text" value="{{ linea.dto1|trim }}" ></div></td>
+                                        <td><div class="input_row_importe">{{ linea.importe|trim|number_format(2, '.', '') }}</div></td>
                                 {% else %}
-                                    <td></td>
-                                    {#<td>{{ linea.definicion|trim }}</td>#}
-                                    <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}"></div></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <tr class="table_row_body" onclick="toggleTableRowActive(this)">
+                                        <td></td>
+                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
+                                        <td></td>
+                                        <td></td>
+                                        {#<td></td>#}
+                                        <td></td>
+                                        <td></td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
@@ -221,6 +230,28 @@
 
     <script >
         $(document).ready(function(){
+
+            // UPDATE IMPORT ROWS
+            $('.table_row_head').on('change', function() {
+                var precio = parseFloat($(this).find(".input_row_precio :input").val());
+                var unidades = parseFloat($(this).find(".input_row_unidades :input").val());
+//                var iva = parseFloat($(this).find(".input_row_iva :input").val());
+                var dto = parseFloat($(this).find(".input_row_dto :input").val());
+
+                var base =  ( precio * unidades );
+//                var importe_iva = ( base * iva ) / 100;
+//                var importe = base + importe_iva;
+                var importe = base;
+
+                var importe_descuento = ( importe * dto ) / 100;
+                importe = importe - importe_descuento;
+
+                $(this).find(".input_row_importe").html(importe.toFixed(2));
+
+                calc_importe_total();
+
+            });
+
             $('#clientesModalTrigger').click(function() {
                 $('#clientesModal').modal();
             });
@@ -246,12 +277,12 @@
                 var line = get_line_for_inserting();
 
                 line.after(
-                        '<tr class="active" onclick="toggleTableRowActive(this)">' +
+                        '<tr class="tabel_row_body active" onclick="toggleTableRowActive(this)">' +
                         '<td>&nbsp;</td>' +
-                        '<td><div class="input_row_definicion"><input type="text" value=""></div></td>' +
+                        '<td><div class="input_row_definicion"><input type="text" value="" maxlength="75"></div></td>' +
                         '<td></td>' +
                         '<td></td>' +
-                        '<td></td>' +
+//                        '<td></td>' +
                         '<td></td>' +
                         '<td></td>' +
                         '</tr>'
@@ -279,12 +310,12 @@
                         var line = get_line_for_inserting();
 
                         line.after(
-                                '<tr class="active" onclick="toggleTableRowActive(this)">' +
+                                '<tr class="table_row_head active" onclick="toggleTableRowActive(this)">' +
                                     '<td><div class="input_row_articulo">' + data['codigo'] + '</div></td>' +
-                                    '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '"></div></td>' +
+                                    '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '" maxlength="75"></div></td>' +
                                     '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div></td>' +
                                     '<td><div class="input_row_unidades"><input type="text" value="0.00"></div></td>' +
-                                    '<td><div class="input_row_iva"><input type="text" value="' + data['tipo_iva'] + '"></div></td>' +
+//                                    '<td><div class="input_row_iva"><input type="text" value="' + data['tipo_iva'] + '"></div></td>' +
                                     '<td><div class="input_row_dto"><input type="text" value="0" ></div></td>' +
                                     '<td><div class="input_row_importe">' + data['precio'] + '</div></td>' +
                                 '</tr>'
@@ -295,12 +326,12 @@
                             line = get_line_for_inserting();
 
                             line.after(
-                                    '<tr class="active" onclick="toggleTableRowActive(this)">' +
+                                    '<tr class="table_row_body active" onclick="toggleTableRowActive(this)">' +
                                     '<td>&nbsp;</td>' +
-                                    '<td><div class="input_row_definicion"><input type="text" value="' + row + '"></div></td>' +
+                                    '<td><div class="input_row_definicion"><input type="text" value="' + row + '" maxlength="75"></div></td>' +
                                     '<td></td>' +
                                     '<td></td>' +
-                                    '<td></td>' +
+//                                    '<td></td>' +
                                     '<td></td>' +
                                     '<td></td>' +
                                     '</tr>'
@@ -355,7 +386,20 @@
                     }
                 });
             });
+
+            calc_importe_total();
         });
+    </script>
+
+    <script>
+        function calc_importe_total () {
+            var total_importe = 0;
+            $('.input_row_importe').each( function(index, element) {
+                total_importe = total_importe + parseFloat($(element).text());
+            });
+
+            $('.total_importe').html(total_importe.toFixed(2));
+        }
     </script>
 
     <script>

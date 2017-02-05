@@ -87,3 +87,8 @@
     width: 100pk;
     text-align: right;
 }
+
+.total_importe {
+    font-size: 1.2em;
+    font-weight: bold;
+}

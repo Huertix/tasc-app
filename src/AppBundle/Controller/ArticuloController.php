@@ -58,8 +58,6 @@ class ArticuloController extends Controller
     $articulo = [];
 
     // Split Definicion in lines of 75 characters
-
-
     $trimed_definicion = trim(utf8_encode($art->getNombre2()));
     $original_lines = explode(PHP_EOL,$trimed_definicion);
     $final_lines = [];
