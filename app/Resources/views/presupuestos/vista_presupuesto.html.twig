@@ -91,12 +91,13 @@
                     <table class="table table-bordered table-hover thead-inverse prespuesto_table">
                         <thead>
                             <tr>
-                                <th style="min-width: 150px">Artículo</th>
-                                <th style="min-width: 50px">Definición</th>
-                                <th style="min-width: 50px">Precio</th>
-                                <th style="max-width: 40px">Un.</th>
-                                <th style="max-width: 35px">%</th>
-                                <th style="min-width: 50px">Importe</th>
+                                <th>Artículo</th>
+                                <th>Definición</th>
+                                <th>Precio</th>
+                                <th>U.</th>
+                                <th>IVA</th>
+                                <th>%</th>
+                                <th>Importe</th>
                             </tr>
                         </thead>
                         <tbody class="table-striped">
@@ -107,18 +108,18 @@
                             {% endif %}
                             <tr onclick="toggleTableRowActive(this)">
                                 {% if linea.articulo|trim != '' %}
-                                    <td style="width: 50px">
-                                        <input name="articulo" value="{{ linea.articulo|trim }}" hidden>
-                                        {{ linea.articulo|trim }}
-                                    </td>
-                                    <td>{{ linea.definicion|trim }}</td>
-                                    <td>{{ linea.precio|trim|number_format(2, '.', ',') }}</td>
-                                    <td>{{ linea.unidades|trim|number_format(2, '.', ',') }}</td>
-                                    <td>{{ linea.dto1|trim }}</td>
-                                    <td>{{ linea.importe|trim|number_format(2, '.', ',') }}</td>
+                                    <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
+                                    <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}"></div></td>
+                                    <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
+                                    <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
+                                    <td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>
+                                    <td><div class="input_row_dto"><input type="text" value="{{ linea.dto1|trim }}" ></div></td>
+                                    <td><div class="input_row_importe">{{ linea.importe|trim|number_format(2, '.', '') }}</div></td>
                                 {% else %}
-                                    <td onclick="console.log(this)"></td>
-                                    <td>{{ linea.definicion|trim }}</td>
+                                    <td></td>
+                                    {#<td>{{ linea.definicion|trim }}</td>#}
+                                    <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}"></div></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -133,7 +134,7 @@
         </div>
     </div>
 
-    <div = id="clientesModal" class="modal fade" role="dialog">
+    <div id="clientesModal" class="modal fade" role="dialog">
         <div class="modal-dialog" role="document">
             <!-- Modal Content-->
             <div class="modal-content">
@@ -172,7 +173,7 @@
                 <div class="form-group col-md-3 col-md-offset-2">
                     <label for="familia_selector">Familia</label>
                     <select class="form-control" id="familia_selector">
-                        <option value="" disabled selected>Familia</option>
+                        {#<option value="" disabled selected>Familia</option>#}
                         <option value="">All</option>
                         <option value="03">03</option>
                         <option value="08">08</option>
@@ -182,7 +183,7 @@
                 <div class="form-group col-md-3">
                     <label for="marca_selector">Marca</label>
                     <select class="form-control" id="marca_selector">
-                        <option value="" disabled selected>Marca</option>
+                        {#<option value="" disabled selected>Marca</option>#}
                         <option value="">All</option>
                         <option value="01">01</option>
                         <option value="04">04</option>
@@ -192,20 +193,21 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <div class="row client_row" style="color: white; background: black; font-size: 1.2em">
+                    <div class="row" style="color: white; background: black; font-size: 1.2em">
                         <div class="col-md-2">Código</div>
                         <div class="col-md-2">Familia</div>
                         <div class="col-md-2">Marca</div>
-                        <div class="col-md-6">Nombre</div>
+                        <div class="col-md-5">Nombre</div>
+                        <div class="col-md-1">Precio</div>
                     </div>
                     {% for articulo in articulos %}
-                        <div class="row article_row">
-                            <div class="col-md-2">{{ articulo.codigo }}</div>
+                        <div class="row article_row" data-codigo="{{ articulo.codigo|trim|url_encode }}">
+                            <div class="col-md-2">{{ articulo.codigo|trim }}</div>
                             <div class="col-md-2 familia_column">{{ articulo.familia }}</div>
                             <div class="col-md-2 marca_column">{{ articulo.marca }}</div>
-                            <div class="col-md-6">{{ articulo.nombre }}</div>
+                            <div class="col-md-5">{{ articulo.nombre }}</div>
+                            <div class="col-md-1">{{ articulo.pmcom1|trim|number_format(2, '.', '') }}</div>
                         </div>
-
                     {% endfor %}
                 </div>
             </div>
@@ -224,40 +226,92 @@
             });
 
             $('#btn_borrar_lineas').on('click', function() {
-                $('tr').each(function () {
-                    if ($(this).hasClass("active"))
-                        this.remove();
-                });
-            });
-
-            $('#btn_nueva_linea').on('click', function() {
 
                 var $set = $('tr.active');
                 var len = $set.length;
 
                 if (len > 0) {
-                    $set.each(function(index, element) {
-                        if (index == len - 1) {
-                            $(this).after(
-                                    '<tr class="active" onclick="toggleTableRowActive(this)"><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'
-                            );
-                        }
-
+                    $set.each(function () {
+                        this.remove();
                     });
-
                 } else {
-                    $('.prespuesto_table tr:last').after(
-                            '<tr class="active" onclick="toggleTableRowActive(this)"><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>'
-                    );
-
-                    $('html, body').animate({
-                        scrollTop: $('.prespuesto_table tr:last').offset().top
-                    }, 1000);
+                  alert("No hay Lineas Seleccionadas");
                 }
+
+            });
+
+
+            $('#btn_nueva_linea').on('click', function() {
+
+                var line = get_line_for_inserting();
+
+                line.after(
+                        '<tr class="active" onclick="toggleTableRowActive(this)">' +
+                        '<td>&nbsp;</td>' +
+                        '<td><div class="input_row_definicion"><input type="text" value=""></div></td>' +
+                        '<td></td>' +
+                        '<td></td>' +
+                        '<td></td>' +
+                        '<td></td>' +
+                        '<td></td>' +
+                        '</tr>'
+                );
+
             });
 
             $('#btn_insertar_articulo').on('click', function() {
                 $('#articulosModal').modal();
+            });
+
+
+            $('.article_row').on('click', function() {
+
+                var codigo = this.dataset.codigo;
+                var url =  "/api/articulos/" + codigo;
+                console.log(url);
+
+                $.ajax({
+                    url: url,
+                    success: function(result){
+
+                        var data = result['articulo'][0];
+                        console.log(data);
+                        var line = get_line_for_inserting();
+
+                        line.after(
+                                '<tr class="active" onclick="toggleTableRowActive(this)">' +
+                                    '<td><div class="input_row_articulo">' + data['codigo'] + '</div></td>' +
+                                    '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '"></div></td>' +
+                                    '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div></td>' +
+                                    '<td><div class="input_row_unidades"><input type="text" value="0.00"></div></td>' +
+                                    '<td><div class="input_row_iva"><input type="text" value="' + data['tipo_iva'] + '"></div></td>' +
+                                    '<td><div class="input_row_dto"><input type="text" value="0" ></div></td>' +
+                                    '<td><div class="input_row_importe">' + data['precio'] + '</div></td>' +
+                                '</tr>'
+                        );
+
+                        data['definicion'].forEach( function (row) {
+
+                            line = get_line_for_inserting();
+
+                            line.after(
+                                    '<tr class="active" onclick="toggleTableRowActive(this)">' +
+                                    '<td>&nbsp;</td>' +
+                                    '<td><div class="input_row_definicion"><input type="text" value="' + row + '"></div></td>' +
+                                    '<td></td>' +
+                                    '<td></td>' +
+                                    '<td></td>' +
+                                    '<td></td>' +
+                                    '<td></td>' +
+                                    '</tr>'
+                            );
+
+                        });
+
+                       $('#articulosModal').modal('hide');
+
+                }});
+
             });
 
             $('#familia_selector').on('change', function() {
@@ -307,6 +361,27 @@
     <script>
         function selectCliente (codigo) {
             console.log(codigo);
+        }
+
+        function get_line_for_inserting() {
+            var $set = $('tr.active');
+            var len = $set.length;
+            var target = null;
+
+            if (len > 0) {
+                $set.each(function(index, element) {
+                    if (index == len - 1) {
+                        target = $(this);
+                    }
+                });
+            } else {
+                target = $('.prespuesto_table tr:last');
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+            }
+
+            return target;
         }
     </script>
 

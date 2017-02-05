@@ -25,3 +25,65 @@
 
 }
 
+.article_row:hover {
+    background: #ddd;
+}
+
+.input_row_articulo {
+    width: 160px;
+    text-align: left;
+}
+
+.input_row_definicion {
+    width: 654px;
+    text-align: center;
+}
+
+.input_row_definicion > input {
+    width: 100%;
+    text-align: left;
+}
+
+.input_row_precio {
+    width: 85px;
+    text-align: center;
+}
+
+.input_row_precio > input {
+    width: 100%;
+    text-align: right;
+}
+
+.input_row_unidades {
+    width: 75px;
+    text-align: center;
+}
+
+.input_row_unidades > input {
+    width: 100%;
+    text-align: right;
+}
+
+.input_row_iva {
+    width: 40px;
+}
+
+.input_row_iva > input {
+    width: 100%;
+    text-align: center;
+}
+
+
+.input_row_dto {
+    width: 40px;
+}
+
+.input_row_dto > input {
+    width: 100%;
+    text-align: center;
+}
+
+.input_row_importe {
+    width: 100pk;
+    text-align: right;
+}
