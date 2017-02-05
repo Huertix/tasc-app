@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+{% block body %}
+    <div>
+        <div class="row">
+            <div class="col-md-12 prespuesto_container" >
+                <div class="col-md-3 prespuesto_datos">
+                    <div class="col-md-12 prespuesto_datos_numeros">
+                        <fieldset>
+                            <legend>Prespuesto</legend>
+                            <div class="col-md-3">Número</div>
+                            {#<div class="col-md-9"> {{ presupuesto[0].numero }}</div>#}
+                            <div class="col-md-9"></div>
+
+                            <div class="col-md-3">Fecha</div>
+                            {#<div class="col-md-9"> {{ presupuesto[0].fecha| date('d/m/Y') }}</div>#}
+                            <div class="col-md-9"></div>
+
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12" style="height: 30px"></div>
+                    <div class="col-md-12 prespuesto_datos_cliente">
+                        <fieldset>
+                            <legend>
+                                <span>Cliente</span>
+                                <span id="clientesModalTrigger" class="glyphicon glyphicon-search pull-right"></span>
+                            </legend>
+                            <div class="col-md-12">
+                                {#<div class="col-md-3">Código</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.codigo }}</div>#}
+                                {#<div class="col-md-3">Nombre</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.nombre }}</div>#}
+                                {#<div class="col-md-3">CIF</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.cif }}</div>#}
+                                {#<div class="col-md-3">Dirección</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.direccion }}</div>#}
+                                {#<div class="col-md-3">CP</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.codpost }}</div>#}
+                                {#<div class="col-md-3">Municipio</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.poblacion }}</div>#}
+                                {#<div class="col-md-3">Provincia</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.provincia }}</div>#}
+                                {#<div class="col-md-3">Credito</div>#}
+                                {#<div class="col-md-9"> {{ presupuesto[0].cliente.credito|trim|number_format(2, '.', ',') }}</div>#}
+
+                                <div class="col-md-3">Código</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">Nombre</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">CIF</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">Dirección</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">CP</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">Municipio</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">Provincia</div>
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">Credito</div>
+                                <div class="col-md-9"></div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12" style="height: 30px"></div>
+                    <div class="col-md-12 prespuesto_datos_numeros">
+                        <fieldset>
+                            <legend>Importes</legend>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><span>Base:</span></div>
+                                    <div class="total_importe_base col-md-6 col-md-offset-1"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><span>IVA:</span></div>
+                                    <div class="total_importe_iva col-md-6 col-md-offset-1"></div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><span>TOTAL:</span></div>
+                                    <div class="total_importe col-md-6 col-md-offset-1"></div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12" style="height: 30px"></div>
+                    <div class="col-md-12 prespuesto_acciones_tabla">
+                        <fieldset>
+                            <legend>Acciones Tabla</legend>
+                            <div class="col-md-3">
+                                <button id="btn_nueva_linea" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span> Nueva</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button id="btn_borrar_lineas" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove" ></span> Borrar</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button id="btn_insertar_articulo" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus" ></span> Articulo</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12" style="height: 30px"></div>
+                    <div class="col-md-12 prespuesto_acciones_db">
+                        <fieldset>
+                            <legend>Acciones Presupuesto</legend>
+                            <div class="col-md-3">
+                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span> Enviar</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="col-md-9" >
+                    <table class="table table-bordered table-hover thead-inverse prespuesto_table">
+                        <thead>
+                            <tr>
+                                <th>Artículo</th>
+                                <th>Definición</th>
+                                <th>Precio</th>
+                                <th>Unidades</th>
+                                {#<th>IVA</th>#}
+                                <th>%</th>
+                                <th>Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-striped">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="clientesModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <!-- Modal Content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                        <div class="pull-left"><h4 class="modal-title">Clientes</h4></div>
+                        <div class="pull-right">
+                            <input type="text" onkeyup="filter(this)" name="search" id="search" placeholder="Filtro"
+                                   class="pull-right"/>
+                        </div>
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                    {% for cliente in clientes %}
+                        <div class="row client_row">
+                            <div class="col-md-2">{{ cliente.codigo }}</div>
+                            <div class="col-md-10">{{ cliente.nombre }}</div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="articulosModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 80%">
+        <!-- Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <div class="pull-left">
+                    <h4 class="modal-title">Articulos</h4>
+                </div>
+                <div class="form-group col-md-3 col-md-offset-2">
+                    <label for="familia_selector">Familia</label>
+                    <select class="form-control" id="familia_selector">
+                        {#<option value="" disabled selected>Familia</option>#}
+                        <option value="">All</option>
+                        <option value="03">03</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="marca_selector">Marca</label>
+                    <select class="form-control" id="marca_selector">
+                        {#<option value="" disabled selected>Marca</option>#}
+                        <option value="">All</option>
+                        <option value="01">01</option>
+                        <option value="04">04</option>
+                        <option value="11">11</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="row" style="color: white; background: black; font-size: 1.2em">
+                        <div class="col-md-2">Código</div>
+                        <div class="col-md-2">Familia</div>
+                        <div class="col-md-2">Marca</div>
+                        <div class="col-md-5">Nombre</div>
+                        <div class="col-md-1">Precio</div>
+                    </div>
+                    {% for articulo in articulos %}
+                        <div class="row article_row" data-codigo="{{ articulo.codigo|trim|url_encode }}">
+                            <div class="col-md-2">{{ articulo.codigo|trim }}</div>
+                            <div class="col-md-2 familia_column">{{ articulo.familia }}</div>
+                            <div class="col-md-2 marca_column">{{ articulo.marca }}</div>
+                            <div class="col-md-5">{{ articulo.nombre }}</div>
+                            <div class="col-md-1">{{ articulo.pmcom1|trim|number_format(2, '.', '') }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function selectCliente (codigo) {
+            console.log(codigo);
+        }
+
+
+    </script>
+{% endblock %}

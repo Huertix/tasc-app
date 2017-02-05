@@ -29,6 +29,27 @@ class PresupuestoController extends Controller
   }
 
   /**
+   * @Route("/presupuestos/nuevo", name="nuevo_presupuesto")
+   */
+  public function newAction() {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $clientes = $em->getRepository('AppBundle\Entity\Cliente')
+      ->findAll();
+
+    $articulos = $em->getRepository('AppBundle\Entity\Articulo')
+      ->findAll();
+
+    return $this->render('presupuestos/nuevo_presupuesto.html.twig', [
+      'clientes' => $clientes,
+      'articulos' => $articulos
+    ]);
+
+
+  }
+
+  /**
    * @Route("/presupuestos/{numero_presupuesto}", name="vista_presupuesto")
    */
   public function showAction($numero_presupuesto) {
@@ -71,8 +92,7 @@ class PresupuestoController extends Controller
       'clientes' => $clientes,
       'articulos' => $articulos
     ]);
+
+    //TODO: Check transpasado for prespuesto modifications
   }
-
-  //TODO: Check transpasado for prespuesto modifications
-
 }
