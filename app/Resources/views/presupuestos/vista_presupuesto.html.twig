@@ -143,86 +143,10 @@
         </div>
     </div>
 
-    <div id="clientesModal" class="modal fade" role="dialog">
-        <div class="modal-dialog" role="document">
-            <!-- Modal Content-->
-            <div class="modal-content">
-                <div class="modal-header">
+    {% include 'clientes_modal.html.twig' with {'clientes': clientes} %}
 
-                        <div class="pull-left"><h4 class="modal-title">Clientes</h4></div>
-                        <div class="pull-right">
-                            <input type="text" onkeyup="filter(this)" name="search" id="search" placeholder="Filtro"
-                                   class="pull-right"/>
-                        </div>
+    {% include 'articulos_modal.html.twig' with {'articulos': articulos} %}
 
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                    {% for cliente in clientes %}
-                        <div class="row client_row">
-                            <div class="col-md-2">{{ cliente.codigo }}</div>
-                            <div class="col-md-10">{{ cliente.nombre }}</div>
-                        </div>
-                    {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="articulosModal" class="modal fade" role="dialog">
-    <div class="modal-dialog" role="document" style="width: 80%">
-        <!-- Modal Content-->
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <div class="pull-left">
-                    <h4 class="modal-title">Articulos</h4>
-                </div>
-                <div class="form-group col-md-3 col-md-offset-2">
-                    <label for="familia_selector">Familia</label>
-                    <select class="form-control" id="familia_selector">
-                        {#<option value="" disabled selected>Familia</option>#}
-                        <option value="">All</option>
-                        <option value="03">03</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="marca_selector">Marca</label>
-                    <select class="form-control" id="marca_selector">
-                        {#<option value="" disabled selected>Marca</option>#}
-                        <option value="">All</option>
-                        <option value="01">01</option>
-                        <option value="04">04</option>
-                        <option value="11">11</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <div class="row" style="color: white; background: black; font-size: 1.2em">
-                        <div class="col-md-2">Código</div>
-                        <div class="col-md-2">Familia</div>
-                        <div class="col-md-2">Marca</div>
-                        <div class="col-md-5">Nombre</div>
-                        <div class="col-md-1">Precio</div>
-                    </div>
-                    {% for articulo in articulos %}
-                        <div class="row article_row" data-codigo="{{ articulo.codigo|trim|url_encode }}">
-                            <div class="col-md-2">{{ articulo.codigo|trim }}</div>
-                            <div class="col-md-2 familia_column">{{ articulo.familia }}</div>
-                            <div class="col-md-2 marca_column">{{ articulo.marca }}</div>
-                            <div class="col-md-5">{{ articulo.nombre }}</div>
-                            <div class="col-md-1">{{ articulo.pmcom1|trim|number_format(2, '.', '') }}</div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
 
 {% endblock %}
 {% block javascripts %}

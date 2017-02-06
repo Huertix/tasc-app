@@ -1,0 +1,27 @@
+
+<div id="clientesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <!-- Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <div class="pull-left"><h4 class="modal-title">Clientes</h4></div>
+                <div class="pull-right">
+                    <input type="text" onkeyup="filter(this)" name="search" id="search" placeholder="Filtro"
+                           class="pull-right"/>
+                </div>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    {% for cliente in clientes %}
+                        <div class="row client_row">
+                            <div class="col-md-2">{{ cliente.codigo }}</div>
+                            <div class="col-md-10">{{ cliente.nombre }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
