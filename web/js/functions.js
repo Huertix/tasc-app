@@ -76,11 +76,20 @@ function get_line_for_inserting() {
 }
 
 function calc_importe_total () {
+    var total_importe_base = 0;
+    var total_importe_iva = 0;
     var total_importe = 0;
     $('.input_row_importe').each( function(index, element) {
-        total_importe = total_importe + parseFloat($(element).text());
+        total_importe_base = total_importe_base + parseFloat($(element).text());
     });
 
+    total_importe_iva = (total_importe_base * 21) / 100;
+
+    total_importe = total_importe_base + total_importe_iva;
+
+
+    $('.total_importe_base').html(total_importe_base.toFixed(2));
+    $('.total_importe_iva').html(total_importe_iva.toFixed(2));
     $('.total_importe').html(total_importe.toFixed(2));
 }
 

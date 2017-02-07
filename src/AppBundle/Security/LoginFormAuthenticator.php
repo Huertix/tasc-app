@@ -25,11 +25,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator {
     $this->formFactory = $formFactory;
     $this->em = $em;
     $this->router = $router;
-
-
   }
-
-
   /**
    * Return the URL to the login page.
    *
@@ -127,12 +123,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator {
   public function checkCredentials($credentials, UserInterface $user) {
       $password = $credentials['_password'];
 
-      if ($password == 'iliketurtles') {
+      if ($password == trim($user->getPassword())) {
         return true;
       }
-
       return false;
-
   }
 
   protected function getDefaultSuccessRedirectUrl() {

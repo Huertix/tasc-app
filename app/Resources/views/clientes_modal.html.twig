@@ -15,7 +15,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     {% for cliente in clientes %}
-                        <div class="row client_row">
+                        <div class="row client_row" data-codigo="{{ cliente.codigo|trim|url_encode }}">
                             <div class="col-md-2">{{ cliente.codigo }}</div>
                             <div class="col-md-10">{{ cliente.nombre }}</div>
                         </div>

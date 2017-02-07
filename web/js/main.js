@@ -95,6 +95,24 @@ $(document).ready(function(){
 
     });
 
+    $('.client_row').on('click', function() {
+
+        var codigo = this.dataset.codigo;
+        var url =  "/api/clientes/" + codigo;
+
+        $.ajax({
+            url: url,
+            success: function(result){
+
+                var data = result['cliente'][0];
+
+                console.log(data);
+
+                $('#clientesModal').modal('hide');
+
+            }});
+    });
+
     $('#familia_selector').on('change', function() {
 
         var value = $(this).val();

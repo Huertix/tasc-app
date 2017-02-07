@@ -6,6 +6,7 @@ use AppBundle\Entity\Cliente;
 use AppBundle\Form\ClienteFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -13,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Security("is_granted('ROLE_USER')")
- * @Route("/clientes")
  */
 class ClienteController extends Controller {
 
@@ -30,6 +30,42 @@ class ClienteController extends Controller {
     return $this->render('clientes/lista_clientes.html.twig', [
       'clientes' => $clientes
     ]);
+
+  }
+
+  /**
+   * @Route("/api/clientes/{codigo_cliente}", name="api_clientes")
+   */
+  public function getAction($codigo_cliente) {
+
+
+    $em = $this->getDoctrine()->getManager();
+
+    $cli = $em->getRepository('AppBundle:Cliente')
+      ->findOneBy([
+        'codigo' => str_pad ( $codigo_cliente , 15 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
+      ]);
+
+
+    $cliente = [];
+
+    $cliente[] = [
+      'cliente' => trim(utf8_encode($cli->getCodigo())),
+      'nombre' => trim(utf8_encode($cli->getNombre())),
+      'cif' => trim(utf8_encode($cli->getCif())),
+      'direccion' => trim(utf8_encode($cli->getDireccion())),
+      'cp' => trim(utf8_encode($cli->getCodpost())),
+      'poblacion' => trim(utf8_encode($cli->getPoblacion())),
+      'provincia' => trim(utf8_encode($cli->getProvincia())),
+      'credito' => trim(utf8_encode($cli->getCredito())),
+    ];
+
+
+    $data = [
+      'cliente' => $cliente
+    ];
+
+    return new JsonResponse($data);
 
   }
 
