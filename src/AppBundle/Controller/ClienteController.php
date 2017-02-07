@@ -7,13 +7,21 @@ use AppBundle\Form\ClienteFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
+
+/**
+ * @Security("is_granted('ROLE_USER')")
+ * @Route("/clientes")
+ */
 class ClienteController extends Controller {
 
   /**
    * @Route("/clientes", name="clientes")
    */
   public function listAction() {
+
     $em = $this->getDoctrine()->getManager();
 
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
