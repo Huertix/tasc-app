@@ -10,10 +10,8 @@ security:
             memory: ~
 
     access_control:
-        - { path: ^/clientes, roles: ROLE_USER }
-        - { path: ^/api, roles: ROLE_USER }
-        - { path: ^/presupuestos, roles: ROLE_USER }
-
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
