@@ -108,6 +108,15 @@ $(document).ready(function(){
 
                 console.log(data);
 
+                $('.datos_cliente_codigo').html(data.cliente);
+                $('.datos_cliente_nombre').html(data.nombre);
+                $('.datos_cliente_cif').html(data.cif);
+                $('.datos_cliente_direccion').html(data.direccion);
+                $('.datos_cliente_poblacion').html(data.poblacion);
+                $('.datos_cliente_provincia').html(data.provincia);
+                $('.datos_cliente_credito').html(data.credito);
+
+
                 $('#clientesModal').modal('hide');
 
             }});

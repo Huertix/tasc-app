@@ -50,14 +50,14 @@ class ClienteController extends Controller {
     $cliente = [];
 
     $cliente[] = [
-      'cliente' => trim(utf8_encode($cli->getCodigo())),
-      'nombre' => trim(utf8_encode($cli->getNombre())),
-      'cif' => trim(utf8_encode($cli->getCif())),
-      'direccion' => trim(utf8_encode($cli->getDireccion())),
-      'cp' => trim(utf8_encode($cli->getCodpost())),
-      'poblacion' => trim(utf8_encode($cli->getPoblacion())),
-      'provincia' => trim(utf8_encode($cli->getProvincia())),
-      'credito' => trim(utf8_encode($cli->getCredito())),
+      'cliente' => $this->checkValue($cli->getCodigo()),
+      'nombre' => $this->checkValue($cli->getNombre()),
+      'cif' => $this->checkValue($cli->getCif()),
+      'direccion' => $this->checkValue($cli->getDireccion()),
+      'cp' => $this->checkValue($cli->getCodpost()),
+      'poblacion' => $this->checkValue($cli->getPoblacion()),
+      'provincia' => $this->checkValue($cli->getProvincia()),
+      'credito' => $this->checkValue($cli->getCredito()),
     ];
 
 
@@ -67,6 +67,12 @@ class ClienteController extends Controller {
 
     return new JsonResponse($data);
 
+  }
+
+  private function checkValue($value) {
+    $value = trim($value);
+    $value = utf8_encode($value);
+    return $value != '' ? $value : '&nbsp';
   }
 
   /**
