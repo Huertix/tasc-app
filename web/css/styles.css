@@ -93,3 +93,7 @@
     font-size: 1.2em;
     font-weight: bold;
 }
+
+#datepicker_presupuesto {
+    width: 100px;
+}

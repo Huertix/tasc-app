@@ -33,6 +33,8 @@ class PresupuestoController extends Controller
    */
   public function newAction() {
 
+    $next_presupuesto_number = $this->get_next_presupuesto_number();
+
     $em = $this->getDoctrine()->getManager();
 
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
@@ -41,13 +43,50 @@ class PresupuestoController extends Controller
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
 
+    $familias = $em->getRepository('AppBundle\Entity\Familia')
+      ->findAll();
+
+
+
     return $this->render('presupuestos/nuevo_presupuesto.html.twig', [
       'clientes' => $clientes,
-      'articulos' => $articulos
+      'articulos' => $articulos,
+      'familias' => $familias,
+      'numero_presupuesto' => $next_presupuesto_number
     ]);
 
 
   }
+
+  private function get_next_presupuesto_number() {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
+      ->findAll();
+
+    $next_number = 0;
+
+    foreach ($presupuestos as $presupuesto) {
+        $raw_number = trim($presupuesto->getNumero());
+        $number = '';
+
+      for ($i = 1; $i <= strlen($raw_number); $i++){
+        $char = $raw_number[$i-1];
+        if (is_numeric($char)) {
+          $number = $number . $char;
+        }
+      }
+
+      $k = (int)$number;
+      if ($next_number <= $k) {
+        $next_number = $k;
+      }
+    }
+
+    return $next_number  + 1;
+  }
+
 
   /**
    * @Route("/presupuestos/{numero_presupuesto}", name="vista_presupuesto")

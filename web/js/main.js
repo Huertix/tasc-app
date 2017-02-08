@@ -19,6 +19,7 @@ $(document).ready(function(){
             alert("No hay Lineas Seleccionadas");
         }
 
+        calc_importe_total();
     });
 
 
@@ -62,7 +63,7 @@ $(document).ready(function(){
                     '<td><div class="input_row_articulo">' + data['codigo'] + '</div></td>' +
                     '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '" maxlength="75"></div></td>' +
                     '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div></td>' +
-                    '<td><div class="input_row_unidades"><input type="text" value="1.00"></div></td>' +
+                    '<td><div class="input_row_unidades"><input type="text" value="0.00"></div></td>' +
 //                                    '<td><div class="input_row_iva"><input type="text" value="' + data['tipo_iva'] + '"></div></td>' +
                     '<td><div class="input_row_dto"><input type="text" value="0" ></div></td>' +
                     '<td><div class="input_row_importe">' + data['precio'] + '</div></td>' +
@@ -88,9 +89,9 @@ $(document).ready(function(){
                 });
 
                 $('#articulosModal').modal('hide');
-
+            },
+            complete: function(data) {
                 register_table_row_head_change();
-
             }});
 
     });

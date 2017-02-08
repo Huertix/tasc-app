@@ -9,7 +9,7 @@
             <div class="col-md-12 prespuesto_container" >
                 <div class="col-md-3 prespuesto_datos">
 
-                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig' %}
+                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig' with {'numero_presupuesto': numero_presupuesto} %}
 
                     <div class="col-md-12" style="height: 30px"></div>
 
@@ -46,17 +46,18 @@
 
     {% include 'clientes/clientes_modal.html.twig' with {'clientes': clientes} %}
 
-    {% include 'articulos/articulos_modal.html.twig' with {'articulos': articulos} %}
+    {% include 'articulos/articulos_modal.html.twig' with {'articulos': articulos, 'familias': familias} %}
 
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+
     <script>
-        function selectCliente (codigo) {
-            console.log(codigo);
-        }
-
-
+      $( function() {
+        $( "#datepicker_presupuesto" ).datepicker({
+            "dateFormat":"dd/mm/yy"
+        });
+      } );
     </script>
 {% endblock %}
