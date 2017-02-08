@@ -8,94 +8,21 @@
         <div class="row">
             <div class="col-md-12 prespuesto_container" >
                 <div class="col-md-3 prespuesto_datos">
-                    <div class="col-md-12 prespuesto_datos_numeros">
-                        <fieldset>
-                            <legend>Prespuesto</legend>
-                            <div class="col-md-3">Número</div>
-                            <div class="col-md-9">&nbsp</div>
-                            <div class="col-md-3">Fecha</div>
-                            <div class="col-md-9">&nbsp</div>
 
-                        </fieldset>
-                    </div>
+                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig' %}
+
                     <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_datos_cliente">
-                        <fieldset>
-                            <legend>
-                                <span>Cliente</span>
-                                <span id="clientesModalTrigger" class="glyphicon glyphicon-search pull-right"></span>
-                            </legend>
-                            <div class="col-md-12">
-                                <div class="col-md-3">Código</div>
-                                <div class="col-md-9 datos_cliente_codigo">&nbsp</div>
-                                <div class="col-md-3">Nombre</div>
-                                <div class="col-md-9 datos_cliente_nombre">&nbsp</div>
-                                <div class="col-md-3">CIF</div>
-                                <div class="col-md-9 datos_cliente_cif">&nbsp</div>
-                                <div class="col-md-3">Dirección</div>
-                                <div class="col-md-9 datos_cliente_direccion">&nbsp</div>
-                                <div class="col-md-3">CP</div>
-                                <div class="col-md-9 datos_cliente_cp">&nbsp</div>
-                                <div class="col-md-3 ">Poblacion</div>
-                                <div class="col-md-9 datos_cliente_poblacion">&nbsp</div>
-                                <div class="col-md-3">Provincia</div>
-                                <div class="col-md-9 datos_cliente_provincia">&nbsp</div>
-                                <div class="col-md-3">Credito</div>
-                                <div class="col-md-9 datos_cliente_credito">&nbsp</div>
-                            </div>
-                        </fieldset>
-                    </div>
+
+                    {% include 'presupuestos/presupuesto_datos_cliente.html.twig' %}
+
                     <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_datos_numeros">
-                        <fieldset>
-                            <legend>Importes</legend>
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-2"><span>Base:</span></div>
-                                    <div class="total_importe_base col-md-6 col-md-offset-1">&nbsp</div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-2"><span>IVA:</span></div>
-                                    <div class="total_importe_iva col-md-6 col-md-offset-1">&nbsp</div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-2"><span>TOTAL:</span></div>
-                                    <div class="total_importe col-md-6 col-md-offset-1">&nbsp</div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
+
+                    {% include 'presupuestos/presupuesto_datos_importes.html.twig' %}
+
                     <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_acciones_tabla">
-                        <fieldset>
-                            <legend>Acciones Tabla</legend>
-                            <div class="col-md-3">
-                                <button id="btn_nueva_linea" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span> Nueva</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button id="btn_borrar_lineas" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove" ></span> Borrar</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button id="btn_insertar_articulo" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus" ></span> Articulo</button>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_acciones_db">
-                        <fieldset>
-                            <legend>Acciones Presupuesto</legend>
-                            <div class="col-md-3">
-                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span> Enviar</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
+
+                    {% include 'presupuestos/presupuesto_acciones.html.twig' %}
+
                 <div class="col-md-9" >
                     <table class="table table-bordered table-hover thead-inverse prespuesto_table">
                         <thead>
@@ -117,9 +44,9 @@
         </div>
     </div>
 
-    {% include 'clientes_modal.html.twig' with {'clientes': clientes} %}
+    {% include 'clientes/clientes_modal.html.twig' with {'clientes': clientes} %}
 
-    {% include 'articulos_modal.html.twig' with {'articulos': articulos} %}
+    {% include 'articulos/articulos_modal.html.twig' with {'articulos': articulos} %}
 
 
 {% endblock %}
