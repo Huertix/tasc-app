@@ -122,6 +122,13 @@ class PresupuestoController extends Controller
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
 
+    $familias = $em->getRepository('AppBundle\Entity\Familia')
+      ->findAll();
+
+    $marcas = $em->getRepository('AppBundle\Entity\Marca')
+      ->findAll();
+
+
 
     if (!$detalles_presupuesto) {
       throw $this->createNotFoundException('Presupuesto no Encontrado');
@@ -133,7 +140,9 @@ class PresupuestoController extends Controller
       'detalles_presupuesto' => $detalles_presupuesto,
       //'cliente' => $cliente,
       'clientes' => $clientes,
-      'articulos' => $articulos
+      'articulos' => $articulos,
+      'familias' => $familias,
+      'marcas' => $marcas,
     ]);
 
     //TODO: Check transpasado for prespuesto modifications
