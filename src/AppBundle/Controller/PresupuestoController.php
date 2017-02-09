@@ -46,12 +46,16 @@ class PresupuestoController extends Controller
     $familias = $em->getRepository('AppBundle\Entity\Familia')
       ->findAll();
 
+    $marcas = $em->getRepository('AppBundle\Entity\Marca')
+      ->findAll();
+
 
 
     return $this->render('presupuestos/nuevo_presupuesto.html.twig', [
       'clientes' => $clientes,
       'articulos' => $articulos,
       'familias' => $familias,
+      'marcas' => $marcas,
       'numero_presupuesto' => $next_presupuesto_number
     ]);
 

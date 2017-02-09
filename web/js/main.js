@@ -127,6 +127,8 @@ $(document).ready(function(){
 
         var value = $(this).val();
 
+        $("#marca_selector").val("");
+
         $(".article_row").each(function () {
             text = $(this).find('.familia_column')
                 .text()
@@ -142,11 +144,15 @@ $(document).ready(function(){
                 $(this).hide();
             }
         });
+
+
     });
 
     $('#marca_selector').on('change', function() {
 
         var value = $(this).val();
+
+        $("#familia_selector").val("");
 
         $(".article_row").each(function () {
             text = $(this).find('.marca_column')
@@ -163,6 +169,8 @@ $(document).ready(function(){
                 $(this).hide();
             }
         });
+
+
     });
 
     calc_importe_total();
