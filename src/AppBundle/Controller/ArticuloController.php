@@ -13,7 +13,7 @@ class ArticuloController extends Controller
 
 
   /**
-   * @Route("/articulos", name="articulos")
+   * @Route("/articulos", name="lista_articulos")
    */
   public function listAction()
   {
@@ -28,14 +28,11 @@ class ArticuloController extends Controller
     $marcas = $em->getRepository('AppBundle\Entity\Marca')
       ->findAll();
 
-    $vendedores = $em->getRepository('AppBundle\Entity\Vendedor')
-      ->findAll();
 
     return $this->render('articulos/lista_articulos.html.twig', [
       'articulos' => $articulos,
       'familias' => $familias,
       'marcas' => $marcas,
-      'vendedores' => $vendedores,
     ]);
 
   }
@@ -45,15 +42,12 @@ class ArticuloController extends Controller
    */
   public function getAction($codigo_articulo) {
 
-
     $em = $this->getDoctrine()->getManager();
 
     $art = $em->getRepository('AppBundle:Articulo')
       ->findOneBy([
         'codigo' => str_pad ( $codigo_articulo , 20 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
       ]);
-
-    //dump($art);die();
 
     $articulo = [];
 

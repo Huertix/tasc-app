@@ -48,65 +48,23 @@
                             <li><a href="#">Buscar</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Articulos</a></li>
+                    {#<li><a href="{{ path('lista_articulos') }}">Articulos</a></li>#}
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    {% if is_granted('ROLE_USER') %}
                     <li>
                         <a href="#">{{ app.user.nombre }}</a>
                     </li>
                     <li>
-                        {#<a id="loginModalTrigger">#}
-                            {#<span class="glyphicon glyphicon-log-in"></span> Login#}
-                        {#</a>#}
-                        {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('security_logout') }}">Logout</a>
-                        {% endif %}
+                        <a href="{{ path('security_logout') }}">Logout</a>
                     </li>
+                    {% endif %}
                 </ul>
 
             </div>
         </div>
     </nav>
-
-    {#<div = id="loginModal" class="modal fade" role="dialog">#}
-    {#<div class="modal-dialog" role="document">#}
-        {#<!-- Modal Content-->#}
-        {#<div class="modal-content">#}
-            {#<div class="modal-header">#}
-                {#<button type="button" class="close" data-dismiss="modal">&times;</button>#}
-                {#<h4 class="modal-title">Login </h4>#}
-            {#</div>#}
-            {#<div class="modal-body">#}
-                {#<form class="form-inline"  >#}
-
-                    {#<div class="form-group">#}
-                        {#<label for="email" class="sr-only  control-label">Last Name</label>#}
-                        {#<div>#}
-                            {#<input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email">#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#<div class="form-group">#}
-                        {#<label for="password" class="sr-only control-label">password</label>#}
-                        {#<div>#}
-                            {#<input type="password" class="form-control input-sm" id="password" name="password" placeholder="Password">#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#<div class="form-group">#}
-                        {#<div class="checkbox">#}
-                            {#<label class="checkbox-inline" >#}
-                                {#<input type="checkbox" name="remember" value="">#}
-                                {#<strong> Remember me </strong>#}
-                            {#</label>#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#<button type="button" class="btn btn-info btn-sm">Sign in</button>#}
-                    {#<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>#}
-                {#</form>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-    {#</div>#}
 
     <div class="main-content">
         {% for msg in app.session.flashBag.get('success') %}
