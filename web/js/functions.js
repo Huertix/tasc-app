@@ -189,25 +189,34 @@ function ajax_call_guardar_presupuesto(url) {
 
     var d = new Date($('#datepicker_presupuesto').val());
 
-    var data = {
-        'cliente': $('.datos_cliente_codigo').text(),
-        'numero': $('.datos_presupuesto_numero').text(),
-        'fecha': formatDate(d),
-        'importe': $('.total_importe').text()
-    };
+    var codigo = check_value_not_empty($('.datos_cliente_codigo').text());
+    var fecha = check_value_not_empty(formatDate(d));
 
-    console.log(JSON.stringify(data));
+    var importe = check_importe_zero($('.total_importe').text());
 
-    $.ajax({
-        url: url,
-        dataType   : 'json',
-        contentType: 'application/json; charset=UTF-8',
-        data       : JSON.stringify(data),
-        type       : 'POST',
-        success: function(result){
-            console.log(result);
 
-        }});
+    if (codigo && fecha && importe) {
+        var data = {
+            'cliente': codigo,
+            'numero': $('.datos_presupuesto_numero').text(),
+            'fecha': fecha,
+            'importe': importe
+        };
+
+        $.ajax({
+            url: url,
+            dataType   : 'json',
+            contentType: 'application/json; charset=UTF-8',
+            data       : JSON.stringify(data),
+            type       : 'POST',
+            success: function(result){
+                console.log(result);
+                $("#btn_guardar_presupuesto").prop("disabled",true);
+                alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")
+
+            }});
+    }
+
 }
 
 function formatDate(d) {
@@ -221,4 +230,27 @@ function formatDate(d) {
     var yyyy = d.getFullYear()
 
     return yyyy+'-'+mm+'-'+dd+ ' 00:00:00';
+}
+
+function check_value_not_empty(value) {
+
+    value = $.trim(value);
+
+    if (!value || value != 'NaN-NaN-NaN 00:00:00')  {
+        return value;
+    } else {
+        alert("Comprueba que las Entradas no esten vacías: \n\n\t- Fecha\n\t- Codigo de Cliente\n\t")
+        return false;
+    }
+}
+
+function check_importe_zero(value) {
+    if (parseFloat(value) > 0)  {
+        return value;
+    } else {
+        if(confirm("El Presupuesto tiene Importe Cero: \n\n\t- SEGURO QUIERES GUARDARLO??"))
+            return value;
+        else
+            return false;
+    }
 }
