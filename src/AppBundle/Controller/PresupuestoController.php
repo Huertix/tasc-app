@@ -2,10 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Presupuesto;
 use AppBundle\Form\PresupuestoDetallesFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PresupuestoController extends Controller
 {
@@ -147,4 +151,73 @@ class PresupuestoController extends Controller
 
     //TODO: Check transpasado for prespuesto modifications
   }
+
+
+  /**
+   * @Route("api/presupuestos/save", name="save_presupuesto")
+   */
+  public function saveAction(Request $request) {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $parametersAsArray = [];
+
+    if ($content = $request->getContent()) {
+      $parametersAsArray = json_decode($content, true);
+    }
+
+    //dump($parametersAsArray);die();
+
+    try {
+
+      $cliente = $em->getRepository('AppBundle:Cliente')
+        ->findOneBy([
+          'codigo' => str_pad ( $parametersAsArray["cliente"] , 15 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
+        ]);
+
+
+      $numero = str_pad ( $parametersAsArray["numero"], 10, $pad_string = " ", $pad_type = STR_PAD_LEFT);
+
+      $c_presup = new Presupuesto();
+      $c_presup->setUsuario('TASCAPP');
+      $c_presup->setNumero($numero);
+      $date = new \DateTime($parametersAsArray["fecha"]);
+      $c_presup->setFecha($date);
+      $c_presup->setFechaacep($date);
+      $c_presup->setNumeroCliente($parametersAsArray["cliente"]);
+      $c_presup->setCliente($cliente);
+      $c_presup->setVendedor($this->getUser()->getCodigo());
+      $c_presup->setImporte($parametersAsArray["importe"]);
+      $c_presup->setImpdivisa($parametersAsArray["importe"]);
+
+      $em->persist($c_presup);
+      $em->flush();
+
+      $respose_array = [
+        "sucess" => True,
+        "message" => "Presupuesto saved",
+        "presupuesto" => $parametersAsArray["numero"]
+      ];
+
+    } catch (\Exception $e) {
+      switch (get_class($e)) {
+        case 'Doctrine\DBAL\DBALException':
+          $respose_array['succes'] = False;
+          $respose_array['message'] = "DBAL Error: " . $e->getMessage();
+          break;
+        case 'Doctrine\DBA\DBAException':
+          $respose_array['succes'] = False;
+          $respose_array['message'] = "DBA Error: " . $e->getMessage();
+          break;
+        default:
+          throw $e;
+          break;
+      }
+    }
+
+
+    return new JsonResponse($respose_array);
+  }
+
+
 }

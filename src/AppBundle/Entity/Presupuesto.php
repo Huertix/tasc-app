@@ -17,7 +17,7 @@ class Presupuesto {
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $empresa;
+  private $empresa = '01';
   /**
    * @ORM\Id
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
@@ -28,6 +28,10 @@ class Presupuesto {
    */
   private $fecha;
   /**
+   * @ORM\Column(name="cliente", type="string", length=10, nullable=false)
+   */
+  private $numero_cliente;
+  /**
    * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="presupuestos")
    * @ORM\JoinColumn(name="cliente", referencedColumnName="codigo")
    */
@@ -35,15 +39,15 @@ class Presupuesto {
   /**
    * @ORM\Column(type="integer", nullable=false)
    */
-  private $env_cli;
+  private $env_cli = 1;
   /**
-   * @ORM\Column(type="datetime")
+   * @ORM\Column(type="datetime", nullable=true)
    */
   private $entrega;
   /**
    * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
    */
-  private $nota;
+  private $nota = '';
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
@@ -51,27 +55,27 @@ class Presupuesto {
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $ruta;
+  private $ruta = '';
   /**
    * @ORM\Column(type="decimal", precision=20, scale=2, nullable=false)
    */
-  private $pronto;
+  private $pronto = 0.00;
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $traspasado;
+  private $traspasado = 0;
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $cancelado;
+  private $cancelado = 0;
   /**
-   * @ORM\Column(type="text")
+   * @ORM\Column(type="text", nullable=true)
    */
-  private $observacio;
+  private $observacio = '';
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $iva_inc;
+  private $iva_inc = 0;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
@@ -79,107 +83,107 @@ class Presupuesto {
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $futuro;
+  private $futuro = 0;
   /**
    * @ORM\Column(type="string", length=3, options={"fixed" = true}, nullable=false)
    */
-  private $divisa;
+  private $divisa = '000';
   /**
    * @ORM\Column(type="decimal", precision=20, scale=6, nullable=false)
    */
-  private $cambio;
+  private $cambio = 1.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
   private $impdivisa;
   /**
-   * @ORM\Column(type="text")
+   * @ORM\Column(type="text", nullable=true)
    */
-  private $fpag;
+  private $fpag = '';
   /**
    * @ORM\Column(type="string", length=12, options={"fixed" = true}, nullable=false)
    */
-  private $hora;
+  private $hora = '';
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $aceptado;
+  private $aceptado = 0;
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $produccion;
+  private $produccion = 0;
   /**
-   * @ORM\Column(type="datetime")
+   * @ORM\Column(type="datetime", nullable=true)
    */
   private $servido;
   /**
-   * @ORM\Column(type="datetime")
+   * @ORM\Column(type="datetime", nullable=true)
    */
   private $fechaacep;
   /**
   * @ORM\Column(type="decimal", precision=20, scale=4, nullable=false)
   */
-  private $peso;
+  private $peso = 0.0000;
   /**
    * @ORM\Column(type="decimal", precision=20, scale=4, nullable=false)
    */
-  private $litros;
+  private $litros = 0.0000;
   /**
-   * @ORM\Column(type="binary")
+   * @ORM\Column(type="binary", nullable=true)
    */
-  private $vista;
-  /**
-   * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
-   */
-  private $operario;
+  private $vista = 0;
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $letra;
+  private $operario = '';
+  /**
+   * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
+   */
+  private $letra = '';
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $comms;
+  private $comms = 0;
   /**
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
-  private $libre_1;
+  private $libre_1 = '';
   /**
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
-  private $libre_2;
+  private $libre_2 = '';
   /**
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
-  private $libre_3;
+  private $libre_3 = '';
   /**
    * @ORM\Column(type="string", length=5, options={"fixed" = true}, nullable=false)
    */
-  private $obra;
+  private $obra = '';
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $impreso;
+  private $impreso = 0;
   /**
-   * @ORM\Column(type="binary")
+   * @ORM\Column(type="binary", nullable=true)
    */
-  private $traspejer;
+  private $traspejer = 0;
   /**
    * @ORM\Column(type="string", length=35, options={"fixed" = true}, nullable=false)
    */
-  private $mandato;
+  private $mandato = '';
   /**
    * @ORM\Column(type="string", length=1, options={"fixed" = true}, nullable=false)
    */
-  private $modificado;
+  private $modificado = '0';
   /**
    * @ORM\Column(type="string", length=15, options={"fixed" = true}, nullable=false)
    */
-  private $clienteerp;
+  private $clienteerp = '';
   /**
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
-  private $codpost;
+  private $codpost = '';
   /**
    * @ORM\OneToMany(targetEntity="PresupuestoDetalles", mappedBy="presupuesto")
    */
@@ -244,6 +248,20 @@ class Presupuesto {
    */
   public function setFecha($fecha) {
     $this->fecha = $fecha;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getNumeroCliente() {
+    return $this->numero_cliente;
+  }
+
+  /**
+   * @param mixed $numero_cliente
+   */
+  public function setNumeroCliente($numero_cliente) {
+    $this->numero_cliente = $numero_cliente;
   }
 
   /**

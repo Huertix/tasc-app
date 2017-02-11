@@ -97,3 +97,17 @@
 #datepicker_presupuesto {
     width: 100px;
 }
+
+
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 3em;
+    width: 4em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
