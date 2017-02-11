@@ -190,7 +190,12 @@ function ajax_call_guardar_presupuesto(url) {
     var d = new Date($('#datepicker_presupuesto').val());
 
     var codigo = check_value_not_empty($('.datos_cliente_codigo').text());
+    if (!codigo)
+        return null;
+
     var fecha = check_value_not_empty(formatDate(d));
+    if (!fecha)
+        return null;
 
     var importe = check_importe_zero($('.total_importe').text());
 
@@ -235,8 +240,8 @@ function formatDate(d) {
 function check_value_not_empty(value) {
 
     value = $.trim(value);
-
-    if (!value || value != 'NaN-NaN-NaN 00:00:00')  {
+    
+    if (value && value != 'NaN-NaN-NaN 00:00:00')  {
         return value;
     } else {
         alert("Comprueba que las Entradas no esten vacías: \n\n\t- Fecha\n\t- Codigo de Cliente\n\t")
