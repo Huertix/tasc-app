@@ -12,24 +12,24 @@ class PresupuestoDetalles {
   /**
    * @ORM\Column(type="string", length=25, options={"fixed" = true}, nullable=false)
    */
-  private $usuario;
+  private $usuario = "TASCAPP";
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $empresa;
+  private $empresa = '01';
   /**
    * @ORM\Id
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
   private $numero;
   /**
-   * @ORM\Column(type="datetime")
+   * @ORM\Column(type="datetime", nullable=true)
    */
   private $entrega;
   /**
    * @ORM\Column(type="string", length=20, options={"fixed" = true}, nullable=false)
    */
-  private $articulo;
+  private $articulo = '';
   /**
    * @ORM\Column(type="string", length=75, options={"fixed" = true}, nullable=false)
    */
@@ -37,43 +37,43 @@ class PresupuestoDetalles {
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $unidades;
+  private $unidades = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $precio;
+  private $precio = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=20, scale=2, nullable=false)
    */
-  private $dto1;
+  private $dto1 = 0.00;
   /**
    * @ORM\Column(type="decimal", precision=20, scale=2, nullable=false)
    */
-  private $dto2;
+  private $dto2 = 0.00;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $importe;
+  private $importe = 0.000000;
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $tipo_iva;
+  private $tipo_iva = '21';
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $traspaso;
+  private $traspaso = '0.000000';
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $servidas;
+  private $servidas  = '0.000000';
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $coste;
+  private $coste  = '0.000000';
   /**
    * @ORM\Column(type="string", length=8, options={"fixed" = true}, nullable=false)
    */
-  private $cuenta;
+  private $cuenta = '';
   /**
    * @ORM\Id
    * @ORM\Column(type="integer", nullable=false)
@@ -86,143 +86,143 @@ class PresupuestoDetalles {
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $precioiva;
+  private $precioiva = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $importeiva;
+  private $importeiva = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=10, scale=2, nullable=false)
    */
-  private $cajas;
+  private $cajas = 0.00;
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $familia;
+  private $familia = '';
   /**
    * @ORM\Column(type="decimal", precision=10, scale=2, nullable=false)
    */
-  private $cajaserv;
+  private $cajaserv = 0.00;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $preciodiv;
+  private $preciodiv = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $importediv;
+  private $importediv = 0.000000;
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $falta;
+  private $falta = 0;
   /**
    * @ORM\Column(type="decimal", precision=20, scale=4, nullable=false)
    */
-  private $peso;
+  private $peso = 0.0000;
   /**
    * @ORM\Column(type="binary")
    */
-  private $vista;
+  private $vista = 1;
   /**
    * @ORM\Column(type="decimal", precision=20, scale=4, nullable=false)
    */
-  private $pverde;
+  private $pverde = 0.0000;
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $recarg;
+  private $recarg = 0;
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $color;
+  private $color = '';
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $letra;
+  private $letra = '';
   /**
    * @ORM\Column(type="string", length=4, options={"fixed" = true}, nullable=false)
    */
-  private $talla;
+  private $talla = '';
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $impdiviva;
+  private $impdiviva = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $prediviva;
+  private $prediviva = 0.000000;
   /**
    * @ORM\Column(type="binary", nullable=false)
    */
-  private $lote;
+  private $lote = 0;
   /**
    * @ORM\Column(type="string", length=15, options={"fixed" = true}, nullable=false)
    */
-  private $libre_1;
+  private $libre_1 = '';
   /**
    * @ORM\Column(type="string", length=15, options={"fixed" = true}, nullable=false)
    */
-  private $libre_2;
+  private $libre_2 = '';
   /**
    * @ORM\Column(type="string", length=15, options={"fixed" = true}, nullable=false)
    */
-  private $libre_3;
+  private $libre_3 = '';
   /**
    * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
    */
-  private $libre_4;
+  private $libre_4 = '';
   /**
    * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
    */
-  private $libre_5;
+  private $libre_5 = '';
   /**
    * @ORM\Column(type="string", length=20, options={"fixed" = true}, nullable=false)
    */
-  private $asi;
+  private $asi = '';
   /**
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
-  private $ide;
+  private $ide = '';
   /**
    * @ORM\Column(type="decimal", precision=10, scale=2, nullable=false)
    */
-  private $dias;
+  private $dias = 0.00;
   /**
    * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
    */
-  private $escandal;
+  private $escandal  = '';
   /**
    * @ORM\Column(type="decimal", precision=1, scale=0, nullable=false)
    */
-  private $tipoprec;
+  private $tipoprec = 0;
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $tipo_ivav;
+  private $tipo_ivav = '';
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */
-  private $tipo_art;
+  private $tipo_art = '';
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $unimedida;
+  private $unimedida = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $premedida;
+  private $premedida = 0.000000;
   /**
    * @ORM\Column(type="string", length=15, options={"fixed" = true}, nullable=false)
    */
-  private $clienteerp;
+  private $clienteerp = '';
   /**
    * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
    */
-  private $codagrup;
+  private $codagrup = '';
   /**
    * @ORM\Column(type="decimal", precision=20, scale=4, nullable=false)
    */
-  private $uniagrup;
+  private $uniagrup  = 0.0000;
   /**
    * @ORM\ManyToOne(targetEntity="Presupuesto", inversedBy="presupuesto_detalles")
    * @ORM\JoinColumn(name="numero", referencedColumnName="numero")

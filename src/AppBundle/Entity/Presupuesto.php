@@ -13,7 +13,7 @@ class Presupuesto {
   /**
    * @ORM\Column(type="string", length=25, options={"fixed" = true}, nullable=false)
    */
-  private $usuario;
+  private $usuario = 'TASCAPP';
   /**
    * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
    */

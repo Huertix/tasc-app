@@ -284,6 +284,10 @@ class Articulo
    * @ORM\Column(type="decimal", precision=20, scale=2, nullable=false)
    */
   private $dto3;
+  /**
+   * @ORM\OneToOne(targetEntity="PVP", mappedBy="articulo_root")
+   */
+  private $pvp;
 
   /**
    * @return mixed
@@ -1236,6 +1240,22 @@ class Articulo
   public function setDto3($dto3) {
     $this->dto3 = $dto3;
   }
+
+  /**
+   * @return mixed
+   */
+  public function getPvp() {
+    return $this->pvp;
+  }
+
+  /**
+   * @param mixed $pvp
+   */
+  public function setPvp($pvp) {
+    $this->pvp = $pvp;
+  }
+
+
 
 
 

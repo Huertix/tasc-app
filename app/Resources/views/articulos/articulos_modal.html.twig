@@ -36,7 +36,7 @@
                         <div class="col-md-2">Familia</div>
                         <div class="col-md-2">Marca</div>
                         <div class="col-md-5">Nombre</div>
-                        <div class="col-md-1">Precio</div>
+                        <div class="col-md-1">PVP</div>
                     </div>
                     {% for articulo in articulos %}
                         <div class="row article_row" data-codigo="{{ articulo.codigo|trim|url_encode }}">
@@ -44,7 +44,7 @@
                             <div class="col-md-2 familia_column">{{ articulo.familia }}</div>
                             <div class="col-md-2 marca_column">{{ articulo.marca }}</div>
                             <div class="col-md-5">{{ articulo.nombre|trim|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
-                            <div class="col-md-1">{{ articulo.pmcom1|trim|number_format(2, '.', '') }}</div>
+                            <div class="col-md-1" style="text-align: right">{{ articulo.pvp.pvp|trim|number_format(2, '.', '') }}</div>
                         </div>
                     {% endfor %}
                 </div>

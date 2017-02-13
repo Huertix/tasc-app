@@ -41,11 +41,19 @@ class PresupuestoController extends Controller
 
     $em = $this->getDoctrine()->getManager();
 
+
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
       ->findAll();
 
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
+
+    $count = 0;
+    foreach ($articulos as $articulo) {
+      if ($articulo->getPvp() == null)
+        unset($articulos[$count]);
+      $count++;
+    }
 
     $familias = $em->getRepository('AppBundle\Entity\Familia')
       ->findAll();
@@ -179,7 +187,6 @@ class PresupuestoController extends Controller
       $numero = str_pad ( $parametersAsArray["numero"], 10, $pad_string = " ", $pad_type = STR_PAD_LEFT);
 
       $c_presup = new Presupuesto();
-      $c_presup->setUsuario('TASCAPP');
       $c_presup->setNumero($numero);
       $date = new \DateTime($parametersAsArray["fecha"]);
       $c_presup->setFecha($date);
