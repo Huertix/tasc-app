@@ -125,10 +125,11 @@ function ajax_call_articulo(url) {
             var line = get_line_for_inserting();
 
             line.after(
-                '<tr class="table_row_head active" onclick="toggleTableRowActive(this)">' +
+                '<tr class="presupuesto_row table_row_head active" onclick="toggleTableRowActive(this)">' +
                 '<td><div class="input_row_articulo">' + data['codigo'] + '</div></td>' +
                 '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '" maxlength="75"></div></td>' +
-                '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div></td>' +
+                '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div>' +
+                '<div class="input_row_coste" hidden><input type="text" value="' + data['coste'] + '"></div></td>' +
                 '<td><div class="input_row_unidades"><input type="text" value="0.00"></div></td>' +
 //                                    '<td><div class="input_row_iva"><input type="text" value="' + data['tipo_iva'] + '"></div></td>' +
                 '<td><div class="input_row_dto"><input type="text" value="0" ></div></td>' +
@@ -141,7 +142,7 @@ function ajax_call_articulo(url) {
                 line = get_line_for_inserting();
 
                 line.after(
-                    '<tr class="table_row_body active" onclick="toggleTableRowActive(this)">' +
+                    '<tr class="presupuesto_row table_row_body active" onclick="toggleTableRowActive(this)">' +
                     '<td>&nbsp;</td>' +
                     '<td><div class="input_row_definicion"><input type="text" value="' + row + '" maxlength="75"></div></td>' +
                     '<td></td>' +
@@ -187,7 +188,8 @@ function ajax_call_cliente(url) {
 
 function ajax_call_guardar_presupuesto(url) {
 
-    var d = new Date($('#datepicker_presupuesto').val());
+    var dateObject = $("#datepicker_presupuesto").datepicker('getDate');
+    var d = new Date($.datepicker.formatDate('MM-dd-yy', dateObject));
 
     var codigo = check_value_not_empty($('.datos_cliente_codigo').text());
     if (!codigo)
@@ -208,6 +210,34 @@ function ajax_call_guardar_presupuesto(url) {
             'importe': importe
         };
 
+        var line_count = 0;
+        data['rows'] = [];
+
+        $('.presupuesto_row').each( function() {
+            var line = $(this);
+            data['rows'][line_count] = [];
+
+            if (line.hasClass('table_row_head')) {
+                data['rows'][line_count]['numero'] = data['numero'];
+                data['rows'][line_count]['articulo'] = line.find('.input_row_articulo').text();
+                data['rows'][line_count]['definicion'] = line.find('.input_row_definicion :input').val();
+                data['rows'][line_count]['precio'] = line.find('.input_row_precio :input').val();
+                data['rows'][line_count]['coste'] = line.find('.input_row_coste :input').val();
+                data['rows'][line_count]['unidades'] = line.find('.input_row_unidades :input').val();
+                data['rows'][line_count]['dto'] = line.find('.input_row_dto :input').val();
+                data['rows'][line_count]['importe'] = line.find('.input_row_importe').text();
+                data['rows'][line_count]['linia'] = ++line_count;
+            } else {
+                data['rows'][line_count]['numero'] = data['numero'];
+                data['rows'][line_count]['definicion'] = line.find('.input_row_definicion :input').val();
+                data['rows'][line_count]['linia'] = ++line_count;
+            }
+
+        });
+
+        console.log(data);
+        return null;
+
         $.ajax({
             url: url,
             dataType   : 'json',
@@ -226,13 +256,13 @@ function ajax_call_guardar_presupuesto(url) {
 
 function formatDate(d) {
 
-    var dd = d.getDate()
-    if ( dd < 10 ) dd = '0' + dd
+    var dd = d.getDate();
+    if ( dd < 10 ) dd = '0' + dd;
 
-    var mm = d.getMonth()+1
-    if ( mm < 10 ) mm = '0' + mm
+    var mm = d.getMonth()+1;
+    if ( mm < 10 ) mm = '0' + mm;
 
-    var yyyy = d.getFullYear()
+    var yyyy = d.getFullYear();
 
     return yyyy+'-'+mm+'-'+dd+ ' 00:00:00';
 }
@@ -240,7 +270,7 @@ function formatDate(d) {
 function check_value_not_empty(value) {
 
     value = $.trim(value);
-    
+
     if (value && value != 'NaN-NaN-NaN 00:00:00')  {
         return value;
     } else {
