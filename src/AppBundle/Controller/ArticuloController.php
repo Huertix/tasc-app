@@ -83,7 +83,7 @@ class ArticuloController extends Controller
       'nombre' => utf8_encode(trim($art->getNombre())),
       'definicion' => $final_lines,
       'tipo_iva' => $art->getTipoIva(),
-      'precio' => number_format($art->getPvp()->getPvp(), 2, ',', ''),
+      'precio' => number_format($art->getPvp()->getPvp(), 2, '.', ''),
       'coste' => $art->getCostUlt1(),
     ];
 

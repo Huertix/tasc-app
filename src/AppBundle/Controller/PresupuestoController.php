@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Presupuesto;
+use AppBundle\Entity\PresupuestoDetalles;
 use AppBundle\Form\PresupuestoDetallesFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PresupuestoController extends Controller
 {
+
+  private static $IVA = 21;
 
 
 
@@ -199,6 +202,45 @@ class PresupuestoController extends Controller
 
       $em->persist($c_presup);
       $em->flush();
+
+      $rows = $parametersAsArray["rows"];
+
+
+
+      foreach ($rows as $row) {
+          $d_presup = new PresupuestoDetalles();
+
+          $d_presup->setNumero($numero);
+          $d_presup->setDefinicion($row['definicion']);
+          $d_presup->setLinia($row['linia']);
+          $d_presup->setCliente($parametersAsArray["cliente"]);
+
+          if (array_key_exists("articulo", $row)){
+            $d_presup->setTipoIva((string) self::$IVA);
+            $d_presup->setArticulo($row['articulo']);
+            $d_presup->setUnidades($row['unidades']);
+            $d_presup->setPrecio($row['precio']);
+            $d_presup->setDto1($row['dto']);
+            $d_presup->setImporte($row['importe']);
+            $d_presup->setCoste($row['coste']);
+
+            $precio = floatval($row['precio']);
+            $precio_iva = ($precio * self::$IVA) / 100;
+            $d_presup->setPrecioiva($precio + $precio_iva);
+            $d_presup->setPrediviva($precio + $precio_iva);
+
+            $importe = floatval($row['importe']);
+            $imporet_iva = ($importe * self::$IVA) / 100;
+            $d_presup->setImporteiva($importe + $imporet_iva);
+            $d_presup->setImpdiviva($importe + $imporet_iva);
+
+            $d_presup->setPreciodiv($row['precio']);
+            $d_presup->setImportediv($row['importe']);
+          }
+
+        $em->persist($d_presup);
+        $em->flush();
+      }
 
       $respose_array = [
         "sucess" => True,

@@ -215,10 +215,8 @@ function ajax_call_guardar_presupuesto(url) {
 
         $('.presupuesto_row').each( function() {
             var line = $(this);
-            data['rows'][line_count] = [];
-
+            data['rows'][line_count] = {};
             if (line.hasClass('table_row_head')) {
-                data['rows'][line_count]['numero'] = data['numero'];
                 data['rows'][line_count]['articulo'] = line.find('.input_row_articulo').text();
                 data['rows'][line_count]['definicion'] = line.find('.input_row_definicion :input').val();
                 data['rows'][line_count]['precio'] = line.find('.input_row_precio :input').val();
@@ -235,8 +233,6 @@ function ajax_call_guardar_presupuesto(url) {
 
         });
 
-        console.log(data);
-        return null;
 
         $.ajax({
             url: url,
