@@ -2,3 +2,5 @@ vendor/
 app/config/parameters.yml
 web/vendor
 var/
+.idea/
+app/bootstrap.php.cache

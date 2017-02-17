@@ -212,17 +212,18 @@ class PresupuestoController extends Controller
 
           $d_presup->setNumero($numero);
           $d_presup->setDefinicion($row['definicion']);
-          $d_presup->setLinia($row['linia']);
+          $d_presup->setLinia(intval($row['linia']));
           $d_presup->setCliente($parametersAsArray["cliente"]);
+          $d_presup->setPresupuesto($c_presup);
 
           if (array_key_exists("articulo", $row)){
             $d_presup->setTipoIva((string) self::$IVA);
             $d_presup->setArticulo($row['articulo']);
-            $d_presup->setUnidades($row['unidades']);
-            $d_presup->setPrecio($row['precio']);
-            $d_presup->setDto1($row['dto']);
-            $d_presup->setImporte($row['importe']);
-            $d_presup->setCoste($row['coste']);
+            $d_presup->setUnidades(floatval($row['unidades']));
+            $d_presup->setPrecio(floatval($row['precio']));
+            $d_presup->setDto1(floatval($row['dto']));
+            $d_presup->setImporte(floatval($row['importe']));
+            $d_presup->setCoste(floatval($row['coste']));
 
             $precio = floatval($row['precio']);
             $precio_iva = ($precio * self::$IVA) / 100;
@@ -234,8 +235,9 @@ class PresupuestoController extends Controller
             $d_presup->setImporteiva($importe + $imporet_iva);
             $d_presup->setImpdiviva($importe + $imporet_iva);
 
-            $d_presup->setPreciodiv($row['precio']);
-            $d_presup->setImportediv($row['importe']);
+            $d_presup->setPreciodiv(floatval($row['precio']));
+            $d_presup->setImportediv(floatval($row['importe']));
+
           }
 
         $em->persist($d_presup);

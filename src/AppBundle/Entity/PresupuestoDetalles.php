@@ -61,15 +61,15 @@ class PresupuestoDetalles {
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $traspaso = '0.000000';
+  private $traspaso = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $servidas  = '0.000000';
+  private $servidas  = 0.000000;
   /**
    * @ORM\Column(type="decimal", precision=15, scale=6, nullable=false)
    */
-  private $coste  = '0.000000';
+  private $coste  = 0.000000;
   /**
    * @ORM\Column(type="string", length=8, options={"fixed" = true}, nullable=false)
    */
@@ -265,7 +265,7 @@ class PresupuestoDetalles {
   }
 
   /**
-   * @param mixed $numero
+   * @param string $numero
    */
   public function setNumero($numero) {
     $this->numero = $numero;
