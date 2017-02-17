@@ -271,4 +271,32 @@ class PresupuestoController extends Controller
   }
 
 
+  /**
+   * Export to PDF
+   * http://blog.michaelperrin.fr/2016/02/17/generating-pdf-files-with-symfony/
+   * @Route("/pdf", name="acme_demo_pdf")
+   */
+  public function pdfAction()
+  {
+    $html = $this->renderView('presupuestos/pdf.html.twig');
+
+
+
+    $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+
+//    var_dump($html);die();
+
+//    return $html;
+
+    return new Response(
+        $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+        200,
+        [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+        ]
+    );
+  }
+
+
 }
