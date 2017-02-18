@@ -10,9 +10,30 @@
     <link rel="stylesheet" href="{{ absolute_url(asset('css/pdf-style.css')) }}">
 </head>
 <body>
-    <div class="main-content">
-        {% block content %}
-        {% endblock %}
+    <div class="content">
+        <div class="row col-md-12 presupuesto_header">
+            <b>Tecnología Avanzada de Seguridad y Control, S.L.</b>
+            <div class="col-md-5">
+                <div class="tasc_info_text">
+                    <div>c/Imprenta, 8, P-1 Of. 15-16</div>
+                    <div>28760 Tres Cantos, Madrid (Spain)</div>
+                    <div>Tel. +4 9180792 / Fax: +34 918035875</div>
+                    <div>email: <a href="mailto:logistica@tasc.es">logistica@tasc.es</a></div>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-4 logo_tasc">
+                <div class="col-md-12">
+                    <img class="logo_img" src="{{ absolute_url(asset('images/logo.gif')) }}">
+                </div>
+                <div class="col-md-12">
+                    <a href="http://www.tasc.es">www.tasc.es</a>
+                </div>
+            </div>
+        </div>
+        <div class="row col-md-12 presupuesto_body">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
 </body>
 </html>

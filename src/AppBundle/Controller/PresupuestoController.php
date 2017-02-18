@@ -280,13 +280,9 @@ class PresupuestoController extends Controller
   {
     $html = $this->renderView('presupuestos/pdf.html.twig');
 
-
+    //return $this->render('presupuestos/pdf.html.twig');
 
     $filename = sprintf('test-%s.pdf', date('Y-m-d'));
-
-//    var_dump($html);die();
-
-//    return $html;
 
     return new Response(
         $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
