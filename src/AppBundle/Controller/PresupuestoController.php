@@ -11,6 +11,10 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Finder\Finder;
+
+use iio\libmergepdf\Merger;
+use iio\libmergepdf\Pages;
 
 class PresupuestoController extends Controller
 {
@@ -274,15 +278,63 @@ class PresupuestoController extends Controller
   /**
    * Export to PDF
    * http://blog.michaelperrin.fr/2016/02/17/generating-pdf-files-with-symfony/
-   * @Route("/pdf", name="acme_demo_pdf")
+   * @Route("/pdf/{numero_presupuesto}", name="presupuesto_pdf")
    */
-  public function pdfAction()
-  {
-    $html = $this->renderView('presupuestos/pdf.html.twig');
+  public function pdfAction($numero_presupuesto) {
 
-    //return $this->render('presupuestos/pdf.html.twig');
+    $path_pdf_tmp = $this->get('kernel')->getRootDir() . '/../web/pdf_tmp/';
+    $path_pdf_output = $this->get('kernel')->getRootDir() . '/../web/pdf_output/';
 
-    $filename = sprintf('test-%s.pdf', date('Y-m-d'));
+    $em = $this->getDoctrine()->getManager();
+
+    $presupuesto = $em->getRepository('AppBundle:Presupuesto')
+      ->findOneBy([
+        'numero' => str_pad ( $numero_presupuesto, 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT )
+      ]);
+
+    $cliente = $presupuesto->getCliente();
+    $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
+
+    $total_rows = count($detalles_presupuesto);
+
+    $pages_body_array = [];
+    if ($total_rows >= 55) {
+
+    } else {
+        array_push($pages_body_array, $detalles_presupuesto);
+    }
+
+
+    $page_count = 1;
+    foreach ($pages_body_array as $page_body) {
+
+      $html = $this->renderView('presupuestos/pdf.html.twig', [
+          'page_body' => $page_body,
+          'cliente' => $cliente,
+          'presupuesto' => $presupuesto
+      ]);
+
+      $filename = sprintf('page-%s.pdf', $page_count++);
+
+      $this->get('knp_snappy.pdf')->generateFromHtml(
+        $html,
+        $path_pdf_tmp . $filename
+      );
+    }
+
+
+    $finder = new Finder();
+    $finder->files()->in($path_pdf_tmp)->name('*.pdf')->sortByName();
+
+    $m = new Merger();
+    $m->addFinder($finder);
+
+    file_put_contents($path_pdf_output . 'PR' . $numero_presupuesto . '.pdf', $m->merge());
+
+    $this->recursiveRemoveDirectory($path_pdf_tmp);
+
+    die();
+
 
     return new Response(
         $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
@@ -292,6 +344,18 @@ class PresupuestoController extends Controller
             'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
         ]
     );
+  }
+
+  function recursiveRemoveDirectory($directory)
+  {
+    foreach(glob("{$directory}/*") as $file)
+    {
+      if(is_dir($file)) {
+        $this->recursiveRemoveDirectory($file);
+      } else {
+        unlink($file);
+      }
+    }
   }
 
 

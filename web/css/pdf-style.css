@@ -57,11 +57,11 @@
 }
 
 .presupuesto_table tbody  td:nth-child(2) {
-    width: 110px;
+    width: 105px;
 }
 
 .presupuesto_table tbody  td:nth-child(3) {
-    width: 70px;
+    width: 60px;
 }
 
 .presupuesto_table tbody  td:nth-child(4) {
