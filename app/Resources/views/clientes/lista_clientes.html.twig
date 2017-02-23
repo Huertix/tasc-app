@@ -26,7 +26,7 @@
             </thead>
             <tbody>
             {% for cliente in clientes %}
-                <tr class="list_clients_row">
+                <tr class="client_row">
                     <td class="col-md-1">
                         <div>
                             {% if cliente.presupuestos|length > 0 %}
@@ -88,33 +88,7 @@
 {% block javascripts %}
     {{ parent() }}
 
-    {#Function for filtering lists#}
     <script language="javascript" type="text/javascript">
-        function filter(element) {
-
-            var count = 0;
-            var value = $(element).val();
-            value = value.toUpperCase();
-
-            $(".client_row").each(function () {
-                text = $(this)
-                        .text()
-                        .replace(/(\r\n|\n|\r)/gm, "")
-                        .toString()
-                        .trim()
-                        .toUpperCase();
-                console.log(text);
-                if (text.search(value) > -1) {
-                    $(this).show();
-                    count++;
-                    $("input[name='list_matched']").show();
-                }
-                else {
-                    $(this).hide();
-                }
-            });
-
-        }
 
         function collaps_btn(btn) {
 

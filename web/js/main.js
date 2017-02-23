@@ -53,6 +53,11 @@ $(document).ready(function(){
         ajax_call_guardar_presupuesto(url);
     });
 
+    $('#btn_imprimir_presupuesto').on('click', function() {
+
+        presupuesto_to_pdf();
+    });
+
     $('.article_row').on('click', function() {
 
         var codigo = this.dataset.codigo;

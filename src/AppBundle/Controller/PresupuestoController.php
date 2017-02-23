@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Presupuesto;
 use AppBundle\Entity\PresupuestoDetalles;
 use AppBundle\Form\PresupuestoDetallesFormType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -295,26 +296,47 @@ class PresupuestoController extends Controller
     $cliente = $presupuesto->getCliente();
     $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
 
-    $total_rows = count($detalles_presupuesto);
+    $total_rows = $detalles_presupuesto->count();
 
+
+    $count = 0;
     $pages_body_array = [];
-    if ($total_rows >= 55) {
-
-    } else {
-        array_push($pages_body_array, $detalles_presupuesto);
+    $sliced_array = [];
+    foreach ($detalles_presupuesto as $row) {
+      if( $count >= 54 ) {
+        $pages_body_array[] = $sliced_array;
+        $sliced_array = [];
+        $count = 0;
+      }
+      else {
+        $sliced_array[] = $row;
+        $count++;
+      }
     }
+    array_push($pages_body_array, $sliced_array);
 
+    $presupuesto_importe_base = $presupuesto->getImporte();
+    $presupuesto_importe_iva =  ($presupuesto_importe_base * self::$IVA) / 100;
+    $presupuesto_importe_total = $presupuesto_importe_base + $presupuesto_importe_iva;
 
-    $page_count = 1;
+    $current_page = 1;
+    $total_pages = count($pages_body_array);
     foreach ($pages_body_array as $page_body) {
 
       $html = $this->renderView('presupuestos/pdf.html.twig', [
           'page_body' => $page_body,
           'cliente' => $cliente,
-          'presupuesto' => $presupuesto
+          'presupuesto' => $presupuesto,
+          'presupuesto_importe' => $presupuesto_importe_base,
+          'presupuesto_iva' => self::$IVA,
+          'presupuesto_importe_iva' => $presupuesto_importe_iva,
+          'presupuesto_importe_total' => $presupuesto_importe_total,
+          'current_page' => $current_page,
+          'total_pages' => $total_pages,
+          'final_pages' => $current_page == $total_pages,
       ]);
 
-      $filename = sprintf('page-%s.pdf', $page_count++);
+      $filename = sprintf('page-%s.pdf', $current_page++);
 
       $this->get('knp_snappy.pdf')->generateFromHtml(
         $html,
@@ -329,25 +351,28 @@ class PresupuestoController extends Controller
     $m = new Merger();
     $m->addFinder($finder);
 
-    file_put_contents($path_pdf_output . 'PR' . $numero_presupuesto . '.pdf', $m->merge());
+    $file_name = 'PR' . $numero_presupuesto . '.pdf';
+    $file = $path_pdf_output . $file_name;
+    file_put_contents($file, $m->merge());
+    $pdf_file = file_get_contents($file);
 
     $this->recursiveRemoveDirectory($path_pdf_tmp);
-
-    die();
+    $this->recursiveRemoveDirectory($path_pdf_output);
 
 
     return new Response(
-        $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+        $pdf_file,
         200,
         [
             'Content-Type'        => 'application/pdf',
-            'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $file_name),
         ]
     );
   }
 
-  function recursiveRemoveDirectory($directory)
-  {
+
+
+  function recursiveRemoveDirectory($directory) {
     foreach(glob("{$directory}/*") as $file)
     {
       if(is_dir($file)) {
@@ -357,6 +382,5 @@ class PresupuestoController extends Controller
       }
     }
   }
-
 
 }

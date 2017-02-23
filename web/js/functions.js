@@ -188,6 +188,7 @@ function ajax_call_cliente(url) {
 
 function ajax_call_guardar_presupuesto(url) {
 
+    /* http://stackoverflow.com/questions/30629958/firefox-and-chrome-again-seem-to-parse-dates-differently */
     var dateObject = $("#datepicker_presupuesto").datepicker('getDate');
     var d = new Date($.datepicker.formatDate('MM-dd-yy', dateObject));
 
@@ -242,6 +243,7 @@ function ajax_call_guardar_presupuesto(url) {
             type       : 'POST',
             success: function(result){
                 console.log(result);
+                $("#btn_imprimir_presupuesto").prop("disabled",false);
                 $("#btn_guardar_presupuesto").prop("disabled",true);
                 alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")
 
@@ -284,4 +286,10 @@ function check_importe_zero(value) {
         else
             return false;
     }
+}
+
+function presupuesto_to_pdf() {
+    var numero = $('.datos_presupuesto_numero').text();
+
+    window.location.href = "http://tasc.app/pdf/" + numero;
 }

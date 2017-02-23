@@ -35,10 +35,10 @@
                 <div class="row presupuesto_data_header">
                     <div class="col-md-12">
                         <div class="col-md-5 col-md-offset-1 cliente_data">
-                            <div>{{ cliente.nombre }}</div>
-                            <div>{{ cliente.direccion }}</div>
-                            <div>{{ cliente.codpost }} {{ cliente.poblacion }}</div>
-                            <div>{{ cliente.provincia }} ESPAÑA</div>
+                            <div>{{ cliente.nombre|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                            <div>{{ cliente.direccion|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                            <div>{{ cliente.codpost }} {{ cliente.poblacion|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                            <div>{{ cliente.provincia|convert_encoding('UTF-8', 'iso-8859-1') }} ESPAÑA</div>
                         </div>
 
                         <div class="col-md-4 col-md-offset-2  presupuesto_data">
@@ -68,27 +68,29 @@
                 <div class="row presupuesto_footer">
                     <div class="col-md-12">
                         <div class="col-md-3 pagination">
-                            Pagina 1 de 3
+                            Página {{ current_page }} de {{ total_pages }}
                         </div>
                         <div class="col-md-6 col-md-offset-3 total_table">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Base</th>
-                                    <th>Iva</th>
-                                    <th>Imp. Iva</th>
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>66,134.25</td>
-                                    <td>21</td>
-                                    <td>14,308.20</td>
-                                    <td><b>82,442.45</b></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            {% if final_pages %}
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Base</th>
+                                        <th>Iva</th>
+                                        <th>Imp. Iva</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ presupuesto_importe|number_format(2, '.', ',')}}</td>
+                                        <td>{{ presupuesto_iva }}</td>
+                                        <td>{{ presupuesto_importe_iva|number_format(2, '.', ',') }}</td>
+                                        <td><b>{{ presupuesto_importe_total|number_format(2, '.', ',') }}</b></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

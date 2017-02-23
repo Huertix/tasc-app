@@ -2,19 +2,36 @@
 
 {% set cliente = cliente %}
 {% set presupuesto = presupuesto %}
+{% set presupuesto_importe = presupuesto_importe %}
+{% set presupuesto_iva = presupuesto_iva %}
+{% set presupuesto_importe_iva = presupuesto_importe_iva %}
+{% set presupuesto_importe_total = presupuesto_importe_total %}
+{% set current_page = current_page %}
+{% set total_page = total_page %}
+{% set final_page = final_page %}
 
 {% block tbody %}
     <tbody>
-        {#{% for i in 1..56 %}#}
-        {#{% for i in 1..10 %}#}
         {% for row in page_body %}
             <tr>
-                <td class="presupuesto_table_body_item">1</td>
+                <td class="presupuesto_table_body_item"></td>
                 <td class="presupuesto_table_body_codigo">{{ row.articulo }}</td>
-                <td class="presupuesto_table_body_cantidad">{{ row.unidades }}</td>
-                <td class="presupuesto_table_body_descripcion">{{ row.definicion }}</td>
-                <td class="presupuesto_table_body_precio">{{ row.precioiva }}</td>
-                <td class="presupuesto_table_body_importe">{{ row.importeiva }}</td>
+                {% if row.unidades > 0 or row.unidades < 0%}
+                    <td class="presupuesto_table_body_cantidad">{{ row.unidades|number_format(2, '.', ',') }}</td>
+                {% else %}
+                    <td class="presupuesto_table_body_cantidad"> </td>
+                {% endif %}
+                <td class="presupuesto_table_body_descripcion">{{ row.definicion|convert_encoding('UTF-8', 'iso-8859-1') }}</td>
+                {% if row.precio > 0 or row.precio < 0%}
+                    <td class="presupuesto_table_body_precio">{{ row.precio|number_format(2, '.', ',') }}</td>
+                {% else %}
+                    <td class="presupuesto_table_body_precio"> </td>
+                {% endif %}
+                {% if row.importe > 0 or row.importe < 0%}
+                    <td class="presupuesto_table_body_importe">{{ row.importe|number_format(2, '.', ',') }}</td>
+                {% else %}
+                    <td class="presupuesto_table_body_importe"> </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>

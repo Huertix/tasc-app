@@ -12,7 +12,7 @@
                         <fieldset>
                             <legend>Prespuesto</legend>
                             <div class="col-md-3">Número</div>
-                            <div class="col-md-9"> {{ presupuesto[0].numero }}</div>
+                            <div class="col-md-9 datos_presupuesto_numero">{{ presupuesto[0].numero|trim }}</div>
                             <div class="col-md-3">Fecha</div>
                             <div class="col-md-9"> {{ presupuesto[0].fecha| date('d/m/Y') }}</div>
                         </fieldset>
@@ -69,13 +69,13 @@
                         <fieldset>
                             <legend>Acciones Tabla</legend>
                             <div class="col-md-3">
-                                <button id="btn_nueva_linea" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span> Nueva</button>
+                                <button id="btn_nueva_linea" class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-plus"></span> Nueva</button>
                             </div>
                             <div class="col-md-3">
-                                <button id="btn_borrar_lineas" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove" ></span> Borrar</button>
+                                <button id="btn_borrar_lineas" class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-remove" ></span> Borrar</button>
                             </div>
                             <div class="col-md-3">
-                                <button id="btn_insertar_articulo" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus" ></span> Articulo</button>
+                                <button id="btn_insertar_articulo" class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-plus" ></span> Articulo</button>
                             </div>
                         </fieldset>
                     </div>
@@ -84,13 +84,13 @@
                         <fieldset>
                             <legend>Acciones Presupuesto</legend>
                             <div class="col-md-3">
-                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+                                <button id="btn_imprimir_presupuesto" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
                             </div>
+                            {#<div class="col-md-3">#}
+                                {#<button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span> Enviar</button>#}
+                            {#</div>#}
                             <div class="col-md-3">
-                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span> Enviar</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button>
+                                <button class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-floppy-save"></span> Modificar</button>
                             </div>
                         </fieldset>
                     </div>
