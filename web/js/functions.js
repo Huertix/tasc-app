@@ -46,6 +46,31 @@ function filter(element) {
 
 }
 
+function filter_client_list(element) {
+
+    var count = 0;
+    var value = $(element).val();
+    value = value.toUpperCase();
+
+    $(".client_list_row").each(function () {
+        text = $(this)
+            .text()
+            .replace(/(\r\n|\n|\r)/gm, "")
+            .toString()
+            .trim()
+            .toUpperCase();
+        if (text.search(value) > -1) {
+            $(this).show();
+            count++;
+            $("input[name='list_matched']").show();
+        }
+        else {
+            $(this).hide();
+        }
+    });
+
+}
+
 function toggleTableRowActive(row) {
     if ($(row).hasClass("active")) {
         $(row).removeClass("active")

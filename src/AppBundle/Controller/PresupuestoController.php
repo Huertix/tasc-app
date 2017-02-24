@@ -319,6 +319,7 @@ class PresupuestoController extends Controller
 
     $current_page = 1;
     $total_pages = count($pages_body_array);
+
     foreach ($pages_body_array as $page_body) {
 
       $html = $this->renderView('presupuestos/pdf.html.twig', [
