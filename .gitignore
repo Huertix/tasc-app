@@ -4,3 +4,5 @@ web/vendor
 var/
 .idea/
 app/bootstrap.php.cache
+*/**/.DS_Store
+.DS_Store

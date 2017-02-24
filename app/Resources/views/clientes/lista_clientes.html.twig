@@ -18,7 +18,7 @@
                 <th class="col-md-8">
                     <div class="pull-left">Clientes</div>
                     <div class="pull-right">
-                        <input type="text" onkeyup="filter(this)" name="search" id="search" placeholder="Filtro"
+                        <input type="text" onkeyup="filter_clients_list(this)" name="search" id="search" placeholder="Filtro"
                                class="pull-right"/>
                     </div>
                 </th>
@@ -26,7 +26,7 @@
             </thead>
             <tbody>
             {% for cliente in clientes %}
-                <tr class="client_row">
+                <tr class="client_list_row">
                     <td class="col-md-1">
                         <div>
                             {% if cliente.presupuestos|length > 0 %}
