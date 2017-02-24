@@ -22,8 +22,6 @@ class PresupuestoController extends Controller
 
   private static $IVA = 21;
 
-
-
   /**
    * @Route("/presupuestos", name="presupuestos")
    */
@@ -284,7 +282,6 @@ class PresupuestoController extends Controller
   public function pdfAction($numero_presupuesto) {
 
     $path_pdf_tmp = $this->get('kernel')->getRootDir() . '/../web/pdf_tmp/';
-    $path_pdf_output = $this->get('kernel')->getRootDir() . '/../web/pdf_output/';
 
     $em = $this->getDoctrine()->getManager();
 
@@ -313,6 +310,7 @@ class PresupuestoController extends Controller
         $count++;
       }
     }
+
     array_push($pages_body_array, $sliced_array);
 
     $presupuesto_importe_base = $presupuesto->getImporte();
@@ -343,7 +341,7 @@ class PresupuestoController extends Controller
         $path_pdf_tmp . $filename
       );
     }
-
+    
 
     $finder = new Finder();
     $finder->files()->in($path_pdf_tmp)->name('*.pdf')->sortByName();
@@ -352,15 +350,15 @@ class PresupuestoController extends Controller
     $m->addFinder($finder);
 
     $file_name = 'PR' . $numero_presupuesto . '.pdf';
-    $file = $path_pdf_output . $file_name;
-    file_put_contents($file, $m->merge());
-    $pdf_file = file_get_contents($file);
+    $file = $path_pdf_tmp . $file_name;
 
-    $this->recursiveRemoveDirectory($path_pdf_tmp);
-    $this->recursiveRemoveDirectory($path_pdf_output);
+    try {
 
+        file_put_contents($file, $m->merge());
+        $pdf_file = file_get_contents($file);
+        $this->recursiveRemoveDirectory($path_pdf_tmp);
 
-    return new Response(
+        return new Response(
         $pdf_file,
         200,
         [
@@ -368,6 +366,12 @@ class PresupuestoController extends Controller
             'Content-Disposition' => sprintf('attachment; filename="%s"', $file_name),
         ]
     );
+    } catch(Exception $e) {
+        $logger = $this->get('logger');
+        $logger->error(sprintf('PDF Error: %s', $e));
+    }
+  
+    
   }
 
 
