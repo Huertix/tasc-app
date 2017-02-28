@@ -26,7 +26,7 @@ class Cliente
    */
   private $cif;
   /**
-   * @ORM\Column(type="string", length=80, options={"fixed" = true,}, nullable=false)
+   * @ORM\Column(type="utf8string", length=80, options={"fixed" = true,}, nullable=false)
    */
   private $nombre;
   /**
@@ -34,19 +34,19 @@ class Cliente
    */
   private $nombre2;
   /**
-   * @ORM\Column(type="string", length=80, options={"fixed" = true, "default"=""}, nullable=false)
+   * @ORM\Column(type="utf8string", length=80, options={"fixed" = true, "default"=""}, nullable=false)
    */
   private $direccion;
   /**
-   * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=10, options={"fixed" = true}, nullable=false)
    */
   private $codpost;
   /**
-   * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=30, options={"fixed" = true}, nullable=false)
    */
   private $poblacion;
   /**
-   * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=30, options={"fixed" = true}, nullable=false)
    */
   private $provincia;
   /**

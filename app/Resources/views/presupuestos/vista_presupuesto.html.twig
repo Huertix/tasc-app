@@ -28,17 +28,17 @@
                                 <div class="col-md-3">Código</div>
                                 <div class="col-md-9"> {{ presupuesto[0].cliente.codigo }}</div>
                                 <div class="col-md-3">Nombre</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.nombre|trim|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                                <div class="col-md-9"> {{ presupuesto[0].cliente.nombre|trim }}</div>
                                 <div class="col-md-3">CIF</div>
                                 <div class="col-md-9"> {{ presupuesto[0].cliente.cif }}</div>
                                 <div class="col-md-3">Dirección</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.direccion|trim|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                                <div class="col-md-9"> {{ presupuesto[0].cliente.direccion|trim }}</div>
                                 <div class="col-md-3">CP</div>
                                 <div class="col-md-9"> {{ presupuesto[0].cliente.codpost }}</div>
                                 <div class="col-md-3">Municipio</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.poblacion|trim|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                                <div class="col-md-9"> {{ presupuesto[0].cliente.poblacion|trim }}</div>
                                 <div class="col-md-3">Provincia</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.provincia|trim|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                                <div class="col-md-9"> {{ presupuesto[0].cliente.provincia|trim }}</div>
                                 <div class="col-md-3">Credito</div>
                                 <div class="col-md-9"> {{ presupuesto[0].cliente.credito|trim|number_format(2, '.', ',') }}</div>
                             </div>
@@ -118,7 +118,7 @@
                                 {% if linea.articulo|trim != '' %}
                                     <tr class="table_row_head" onclick="toggleTableRowActive(this)">
                                         <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
-                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim|convert_encoding('UTF-8', 'iso-8859-1') }}" maxlength="75"></div></td>
+                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
                                         <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
                                         <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
                                         {#<td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>#}
@@ -127,7 +127,7 @@
                                 {% else %}
                                     <tr class="table_row_body" onclick="toggleTableRowActive(this)">
                                         <td></td>
-                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim|convert_encoding('UTF-8', 'iso-8859-1') }}" maxlength="75"></div></td>
+                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
                                         <td></td>
                                         <td></td>
                                         {#<td></td>#}

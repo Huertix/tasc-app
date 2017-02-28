@@ -17,7 +17,7 @@
                     {% for cliente in clientes %}
                         <div class="row client_row" data-codigo="{{ cliente.codigo|trim|url_encode }}">
                             <div class="col-md-2">{{ cliente.codigo }}</div>
-                            <div class="col-md-10">{{ cliente.nombre|trim|convert_encoding('UTF-8', 'iso-8859-1') }}</div>
+                            <div class="col-md-10">{{ cliente.nombre|trim }}</div>
                         </div>
                     {% endfor %}
                 </div>

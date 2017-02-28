@@ -67,8 +67,6 @@ class PresupuestoController extends Controller
     $marcas = $em->getRepository('AppBundle\Entity\Marca')
       ->findAll();
 
-
-
     return $this->render('presupuestos/nuevo_presupuesto.html.twig', [
       'clientes' => $clientes,
       'articulos' => $articulos,
@@ -79,36 +77,6 @@ class PresupuestoController extends Controller
 
 
   }
-
-  private function get_next_presupuesto_number() {
-
-    $em = $this->getDoctrine()->getManager();
-
-    $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
-      ->findAll();
-
-    $next_number = 0;
-
-    foreach ($presupuestos as $presupuesto) {
-        $raw_number = trim($presupuesto->getNumero());
-        $number = '';
-
-      for ($i = 1; $i <= strlen($raw_number); $i++){
-        $char = $raw_number[$i-1];
-        if (is_numeric($char)) {
-          $number = $number . $char;
-        }
-      }
-
-      $k = (int)$number;
-      if ($next_number <= $k) {
-        $next_number = $k;
-      }
-    }
-
-    return $next_number  + 1;
-  }
-
 
   /**
    * @Route("/presupuestos/{numero_presupuesto}", name="vista_presupuesto")
@@ -146,6 +114,13 @@ class PresupuestoController extends Controller
     $marcas = $em->getRepository('AppBundle\Entity\Marca')
       ->findAll();
 
+    $count = 0;
+    foreach ($articulos as $articulo) {
+      if ($articulo->getPvp() == null)
+        unset($articulos[$count]);
+      $count++;
+    }
+
 
 
     if (!$detalles_presupuesto) {
@@ -165,7 +140,6 @@ class PresupuestoController extends Controller
 
     //TODO: Check transpasado for prespuesto modifications
   }
-
 
   /**
    * @Route("api/presupuestos/save", name="save_presupuesto")
@@ -214,7 +188,7 @@ class PresupuestoController extends Controller
           $d_presup = new PresupuestoDetalles();
 
           $d_presup->setNumero($numero);
-          $d_presup->setDefinicion($row['definicion']);
+          $d_presup->setDefinicion(utf8_decode($row['definicion']));
           $d_presup->setLinia(intval($row['linia']));
           $d_presup->setCliente($parametersAsArray["cliente"]);
           $d_presup->setPresupuesto($c_presup);
@@ -272,7 +246,6 @@ class PresupuestoController extends Controller
 
     return new JsonResponse($respose_array);
   }
-
 
   /**
    * Export to PDF
@@ -375,9 +348,7 @@ class PresupuestoController extends Controller
     
   }
 
-
-
-  function recursiveRemoveDirectory($directory) {
+  private function recursiveRemoveDirectory($directory) {
     foreach(glob("{$directory}/*") as $file)
     {
       if(is_dir($file)) {
@@ -386,6 +357,35 @@ class PresupuestoController extends Controller
         unlink($file);
       }
     }
+  }
+
+  private function get_next_presupuesto_number() {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
+      ->findAll();
+
+    $next_number = 0;
+
+    foreach ($presupuestos as $presupuesto) {
+      $raw_number = trim($presupuesto->getNumero());
+      $number = '';
+
+      for ($i = 1; $i <= strlen($raw_number); $i++){
+        $char = $raw_number[$i-1];
+        if (is_numeric($char)) {
+          $number = $number . $char;
+        }
+      }
+
+      $k = (int)$number;
+      if ($next_number <= $k) {
+        $next_number = $k;
+      }
+    }
+
+    return $next_number  + 1;
   }
 
 }

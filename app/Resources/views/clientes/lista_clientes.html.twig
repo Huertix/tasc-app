@@ -46,7 +46,7 @@
                     </td>
                     <td class="col-md-6">
                         <div>
-                            <a href="{{ path('vista_cliente', {'codigo': cliente.codigo}) }}">{{ cliente.nombre|convert_encoding('UTF-8', 'iso-8859-1') }}</a>
+                            <a href="{{ path('vista_cliente', {'codigo': cliente.codigo}) }}">{{ cliente.nombre|trim }}</a>
                         </div>
                         <div class="container collapse col-md-8" id="{{ cliente.codigo }}">
                             <div class="col-md-12" style="margin-top: 20px; background: #13e2d0; border-radius: 5px; font-size: 1.2em">

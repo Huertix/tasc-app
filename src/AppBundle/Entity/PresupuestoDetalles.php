@@ -31,7 +31,7 @@ class PresupuestoDetalles {
    */
   private $articulo = '';
   /**
-   * @ORM\Column(type="string", length=75, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=75, options={"fixed" = true}, nullable=false)
    */
   private $definicion;
   /**

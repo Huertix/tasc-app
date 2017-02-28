@@ -21,7 +21,7 @@
                 {% else %}
                     <td class="presupuesto_table_body_cantidad"> </td>
                 {% endif %}
-                <td class="presupuesto_table_body_descripcion">{{ row.definicion|convert_encoding('UTF-8', 'iso-8859-1') }}</td>
+                <td class="presupuesto_table_body_descripcion">{{ row.definicion }}</td>
                 {% if row.precio > 0 or row.precio < 0%}
                     <td class="presupuesto_table_body_precio">{{ row.precio|number_format(2, '.', ',') }}</td>
                 {% else %}

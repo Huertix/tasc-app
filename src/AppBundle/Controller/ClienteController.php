@@ -71,7 +71,6 @@ class ClienteController extends Controller {
 
   private function checkValue($value) {
     $value = trim($value);
-    $value = utf8_encode($value);
     return $value != '' ? $value : '&nbsp';
   }
 

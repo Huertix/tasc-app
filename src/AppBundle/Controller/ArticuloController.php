@@ -52,7 +52,7 @@ class ArticuloController extends Controller
     $articulo = [];
 
     // Split Definicion in lines of 75 characters
-    $trimed_definicion = trim(utf8_encode($art->getNombre2()));
+    $trimed_definicion = trim($art->getNombre2());
     $original_lines = explode(PHP_EOL,$trimed_definicion);
     $final_lines = [];
 
@@ -80,7 +80,7 @@ class ArticuloController extends Controller
 
     $articulo[] = [
       'codigo' => trim($art->getCodigo()),
-      'nombre' => utf8_encode(trim($art->getNombre())),
+      'nombre' => trim($art->getNombre()),
       'definicion' => $final_lines,
       'tipo_iva' => $art->getTipoIva(),
       'precio' => number_format($art->getPvp()->getPvp(), 2, '.', ''),

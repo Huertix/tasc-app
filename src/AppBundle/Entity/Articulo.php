@@ -17,11 +17,11 @@ class Articulo
    */
   private $codigo;
   /**
-   * @ORM\Column(type="string", length=75, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=75, options={"fixed" = true}, nullable=false)
    */
   private $nombre;
   /**
-   * @ORM\Column(type="string", length=30, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=30, options={"fixed" = true}, nullable=false)
    */
   private $abrev;
   /**
