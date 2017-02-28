@@ -12,21 +12,32 @@
 
 {% block tbody %}
     <tbody>
+        {% set items = 1 %}
         {% for row in page_body %}
             <tr>
-                <td class="presupuesto_table_body_item"></td>
+                {% if row.articulo|trim %}
+                    <td class="presupuesto_table_body_item">{{ items }}</td>
+                    {% set items = items + 1 %}
+                {% else %}
+                    <td class="presupuesto_table_body_item"></td>
+                {% endif %}
+
                 <td class="presupuesto_table_body_codigo">{{ row.articulo }}</td>
+
                 {% if row.unidades > 0 or row.unidades < 0%}
                     <td class="presupuesto_table_body_cantidad">{{ row.unidades|number_format(2, '.', ',') }}</td>
                 {% else %}
                     <td class="presupuesto_table_body_cantidad"> </td>
                 {% endif %}
+
                 <td class="presupuesto_table_body_descripcion">{{ row.definicion }}</td>
+
                 {% if row.precio > 0 or row.precio < 0%}
                     <td class="presupuesto_table_body_precio">{{ row.precio|number_format(2, '.', ',') }}</td>
                 {% else %}
                     <td class="presupuesto_table_body_precio"> </td>
                 {% endif %}
+
                 {% if row.importe > 0 or row.importe < 0%}
                     <td class="presupuesto_table_body_importe">{{ row.importe|number_format(2, '.', ',') }}</td>
                 {% else %}

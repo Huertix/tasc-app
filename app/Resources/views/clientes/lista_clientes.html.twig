@@ -69,7 +69,7 @@
                                         <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero|trim}) }}">{{ presupuesto.numero|trim }}</a>
                                     </div>
                                     <div class="col-md-4">
-                                        {{ presupuesto.fecha| date('Y-m-d') }}
+                                        {{ presupuesto.fecha| date('d-m-Y') }}
                                     </div>
                                     <div class="col-md-4 pull-right">
                                         {{ presupuesto.importe|number_format(2, '.', ',') }} &euro;
