@@ -14,7 +14,7 @@ class Familia
   /**
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @ORM\Column(type="string", length=2, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=2, options={"fixed" = true}, nullable=false)
    */
   private $codigo;
   /**

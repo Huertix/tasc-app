@@ -42,11 +42,13 @@ class ArticuloController extends Controller
    */
   public function getAction($codigo_articulo) {
 
+    $codigo_articulo = str_pad ( $codigo_articulo , 20 , $pad_string = " ", $pad_type = STR_PAD_RIGHT );
+
     $em = $this->getDoctrine()->getManager();
 
     $art = $em->getRepository('AppBundle:Articulo')
       ->findOneBy([
-        'codigo' => str_pad ( $codigo_articulo , 20 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
+        'codigo' => $codigo_articulo
       ]);
 
     $articulo = [];
@@ -57,6 +59,8 @@ class ArticuloController extends Controller
     $final_lines = [];
 
     foreach ( $original_lines as $line) {
+
+      $line = utf8_encode($line);
       $line = str_replace("\r", "",$line);
       $words = explode(" ",$line);
       $line = "";
@@ -66,6 +70,7 @@ class ArticuloController extends Controller
         $spacer = $i == 0 ? "" : " ";
         if ($i === $words_count - 1) {
           $final_lines[] = $line . $spacer . $words[$i];
+
         } else {
           if(strlen($line) + strlen($words[$i]) <= 75) {
             $line = $line . $spacer . $words[$i];
@@ -86,7 +91,6 @@ class ArticuloController extends Controller
       'precio' => number_format($art->getPvp()->getPvp(), 2, '.', ''),
       'coste' => $art->getCostUlt1(),
     ];
-
 
     $data = [
       'articulo' => $articulo

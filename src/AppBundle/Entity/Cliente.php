@@ -18,7 +18,7 @@ class Cliente
   /**
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @ORM\Column(type="string", length=8, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=8, options={"fixed" = true}, nullable=false)
    */
   private $codigo;
   /**

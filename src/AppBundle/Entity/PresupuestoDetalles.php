@@ -19,7 +19,7 @@ class PresupuestoDetalles {
   private $empresa = '01';
   /**
    * @ORM\Id
-   * @ORM\Column(type="string", length=10, options={"fixed" = true}, nullable=false)
+   * @ORM\Column(type="utf8string", length=10, options={"fixed" = true}, nullable=false)
    */
   private $numero;
   /**

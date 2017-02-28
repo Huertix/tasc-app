@@ -188,7 +188,7 @@ class PresupuestoController extends Controller
           $d_presup = new PresupuestoDetalles();
 
           $d_presup->setNumero($numero);
-          $d_presup->setDefinicion(utf8_decode($row['definicion']));
+          $d_presup->setDefinicion($row['definicion']);
           $d_presup->setLinia(intval($row['linia']));
           $d_presup->setCliente($parametersAsArray["cliente"]);
           $d_presup->setPresupuesto($c_presup);
