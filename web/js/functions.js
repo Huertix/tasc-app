@@ -315,6 +315,6 @@ function check_importe_zero(value) {
 
 function presupuesto_to_pdf() {
     var numero = $('.datos_presupuesto_numero').text();
-
-    window.location.href = "http://tasc.app/pdf/" + numero;
+    var url = window.location.origin + /pdf/ + numero;
+    window.location.href = url;
 }
