@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PresupuestoRepository")
  * @ORM\Table(name="c_presuv")
  */
 class Presupuesto {

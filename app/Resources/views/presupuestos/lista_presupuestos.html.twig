@@ -1,13 +1,53 @@
-{#{{ dump(presupuestos[0].presupuesto_detalles) }}#}
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="content container">
+        <table class="table table-striped" id="presupuestos_list">
+            <thead>
+            <tr>
+                <th class="col-md-2">
+                    <div>Número</div>
+                </th>
+                <th class="col-md-6">
+                    <div>Cliente</div>
+                </th>
+                <th class="col-md-2">
+                    <div>Fecha</div>
+                </th>
+                <th class="col-md-1">
+                    <div class="pull-right">Importe</div>
+                </th>
+                <th class="col-md-1">
+                    <div class="pull-right">
+                        <input type="text" onkeyup="filter_presupuesto_list(this)" name="search" id="search" placeholder="Filtro"
+                               class="pull-right"/>
+                    </div>
+                </th>
 
-{% for linea in presupuestos[0].presupuesto_detalles %}
-    <div class="col-md-12" style="margin-top: 10px; font-size: 1.2em">
-        <div class="col-md-3">
-            {{ linea.numero }}
-        </div>
-        <div class="col-md-3">
-            {{ linea.definicion }}
-        </div>
-
+            </tr>
+            </thead>
+            <tbody>
+            {% for presupuesto in presupuestos %}
+                <tr class="presupuesto_list_row">
+                    <td class="col-md-2">
+                        <div >
+                            <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero|trim}) }}">
+                                {{ presupuesto.numero|trim }}
+                            </a>
+                        </div>
+                    </td>
+                    <td class="col-md-6">
+                        <div>{{ presupuesto.cliente.codigo}}</div>
+                    </td>
+                    <td class="col-md-2">
+                        <div>{{ presupuesto.fecha| date('d-m-Y') }}</div>
+                    </td>
+                    <td class="col-md-1">
+                        <div class="pull-right">{{ presupuesto.importe|number_format(2, '.', ',') }}</div>
+                    </td>
+                    <td class="col-md-1"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-{% endfor %}
+{% endblock %}

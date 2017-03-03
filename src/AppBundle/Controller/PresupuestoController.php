@@ -23,14 +23,14 @@ class PresupuestoController extends Controller
   private static $IVA = 21;
 
   /**
-   * @Route("/presupuestos", name="presupuestos")
+   * @Route("/presupuestos", name="listado_presupuestos")
    */
   public function listAction()
   {
     $em = $this->getDoctrine()->getManager();
 
     $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
-      ->findAll();
+      ->presupuestosOrderedByDate();
 
     return $this->render('presupuestos/lista_presupuestos.html.twig', [
       'presupuestos' => $presupuestos
@@ -305,7 +305,7 @@ class PresupuestoController extends Controller
           'presupuesto_importe_total' => $presupuesto_importe_total,
           'current_page' => $current_page,
           'total_pages' => $total_pages,
-          'final_pages' => $current_page == $total_pages,
+          'final_page' => $current_page == $total_pages,
       ]);
 
       $filename = sprintf('page-%s.pdf', $current_page++);
