@@ -25,7 +25,7 @@ class ClienteController extends Controller {
     $em = $this->getDoctrine()->getManager();
 
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
-      ->findAll();
+      ->clientesOrderedByName();
 
     return $this->render('clientes/lista_clientes.html.twig', [
       'clientes' => $clientes
