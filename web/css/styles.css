@@ -25,6 +25,10 @@
 
 }
 
+.table>thead>tr.active>td {
+    background: #bdafaf;
+}
+
 .article_row:hover, .client_row:hover {
     background: #ddd;
     cursor: pointer;
