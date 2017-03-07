@@ -7,23 +7,71 @@
     <div>
         <div class="row">
             <div class="col-md-12 prespuesto_container" >
-                <div class="col-md-3 prespuesto_datos">
+                {#<div class="col-md-3 prespuesto_datos">#}
 
-                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig' with {'numero_presupuesto': numero_presupuesto} %}
+                    {#{% include 'presupuestos/presupuesto_datos_numeros.html.twig' with {'numero_presupuesto': numero_presupuesto} %}#}
 
-                    <div class="col-md-12" style="height: 30px"></div>
+                    {#<div class="col-md-12" style="height: 30px"></div>#}
 
-                    {% include 'presupuestos/presupuesto_datos_cliente.html.twig' %}
+                    {#{% include 'presupuestos/presupuesto_datos_cliente.html.twig' %}#}
 
-                    <div class="col-md-12" style="height: 30px"></div>
+                    {#<div class="col-md-12" style="height: 30px"></div>#}
 
-                    {% include 'presupuestos/presupuesto_datos_importes.html.twig' %}
+                    {#{% include 'presupuestos/presupuesto_datos_importes.html.twig' %}#}
 
-                    <div class="col-md-12" style="height: 30px"></div>
+                    {#<div class="col-md-12" style="height: 30px"></div>#}
 
-                    {% include 'presupuestos/presupuesto_acciones.html.twig' %}
+                    {#{% include 'presupuestos/presupuesto_acciones.html.twig' %}#}
+                {#</div>#}
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Detalles Presupuesto</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="col-md-12" style="padding: 20px">
+                                <div class="col-md-4">
+                                    {% include 'presupuestos/presupuesto_datos_cliente.html.twig' %}
+                                </div>
+                                <div class="col-md-3 col-md-offset-1">
+                                    {% include 'presupuestos/presupuesto_datos_importes.html.twig' %}
+                                </div>
+                                <div class="col-md-3 col-md-offset-1">
+                                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig' with {'numero_presupuesto': numero_presupuesto} %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-9" >
+                <div id="container-floating-right">
+
+                    <div class="nd3 nds" data-toggle="tooltip" data-placement="left" data-original-title="nuevo_articulo">
+                        <a href="#" id="btn_insertar_articulo"  role="button">
+                            <p class="icon"><i class="fa fa-list" aria-hidden="true"></i></p>
+                        </a>
+                        <span class="tooltiptext">Nuevo Artículo</span>
+                    </div>
+                    <div class="nd2 nds" data-toggle="tooltip" data-placement="left" data-original-title="nueva_linea">
+                        <a href="#" id="btn_nueva_linea"  role="button">
+                            <p class="icon"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                        </a>
+                        <span class="tooltiptext">Nueva Linea</span>
+                    </div>
+                    <div class="nd1 nds" data-toggle="tooltip" data-placement="left" data-original-title="borrar">
+                        <a href="#" id="btn_borrar_lineas"  role="button">
+                            <p class="icon"><i class="fa fa-eraser" aria-hidden="true"></i></p>
+                        </a>
+                        <span class="tooltiptext">Borrar</span>
+                    </div>
+                    <div id="floating-button-right" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
+                        <p class="plus">+</p>
+                        <img class="edit" src="http://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+                    </div>
+
+                </div>
+                <div class="col-md-12 table_container" >
                     <table class="table table-bordered table-hover thead-inverse prespuesto_table">
                         <thead>
                             <tr>

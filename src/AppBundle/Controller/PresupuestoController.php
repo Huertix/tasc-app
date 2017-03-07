@@ -49,7 +49,7 @@ class PresupuestoController extends Controller
 
 
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
-      ->findAll();
+      ->clientesOrderedByName();
 
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
