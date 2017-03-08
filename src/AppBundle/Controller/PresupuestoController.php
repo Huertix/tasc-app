@@ -32,6 +32,15 @@ class PresupuestoController extends Controller
     $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
       ->presupuestosOrderedByDate();
 
+    foreach ($presupuestos as $presupuesto) {
+      $cliente = $em->getRepository('AppBundle:Cliente')
+        ->findOneBy([
+          'codigo' => $presupuesto->getCliente()
+        ]);
+      $presupuesto->setCliente($cliente);
+
+    }
+
     return $this->render('presupuestos/lista_presupuestos.html.twig', [
       'presupuestos' => $presupuestos
     ]);
@@ -256,6 +265,8 @@ class PresupuestoController extends Controller
 
     $path_pdf_tmp = $this->get('kernel')->getRootDir() . '/../web/pdf_tmp/';
 
+    $this->recursiveRemoveDirectory($path_pdf_tmp);
+
     $em = $this->getDoctrine()->getManager();
 
     $presupuesto = $em->getRepository('AppBundle:Presupuesto')
@@ -285,9 +296,11 @@ class PresupuestoController extends Controller
     }
 
     array_push($pages_body_array, $sliced_array);
-
+    $presupuesto_importe_base = 0;
     $presupuesto_importe_base = $presupuesto->getImporte();
+    $presupuesto_importe_iva = 0;
     $presupuesto_importe_iva =  ($presupuesto_importe_base * self::$IVA) / 100;
+    $presupuesto_importe_total = 0;
     $presupuesto_importe_total = $presupuesto_importe_base + $presupuesto_importe_iva;
 
     $current_page = 1;
@@ -299,7 +312,7 @@ class PresupuestoController extends Controller
           'page_body' => $page_body,
           'cliente' => $cliente,
           'presupuesto' => $presupuesto,
-          'presupuesto_importe' => $presupuesto_importe_base,
+          'presupuesto_importe_base' => $presupuesto_importe_base,
           'presupuesto_iva' => self::$IVA,
           'presupuesto_importe_iva' => $presupuesto_importe_iva,
           'presupuesto_importe_total' => $presupuesto_importe_total,
@@ -330,7 +343,7 @@ class PresupuestoController extends Controller
 
         file_put_contents($file, $m->merge());
         $pdf_file = file_get_contents($file);
-        $this->recursiveRemoveDirectory($path_pdf_tmp);
+
 
         return new Response(
         $pdf_file,

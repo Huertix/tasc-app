@@ -6,3 +6,4 @@ var/
 app/bootstrap.php.cache
 */**/.DS_Store
 .DS_Store
+web/pdf_tmp/

@@ -36,7 +36,7 @@
                         </div>
                     </td>
                     <td class="col-md-6">
-                        <div>{{ presupuesto.cliente.codigo}}</div>
+                        {% if presupuesto.cliente %}<div>{{ presupuesto.cliente.nombre }}</div> {% endif %}
                     </td>
                     <td class="col-md-2">
                         <div>{{ presupuesto.fecha| date('d-m-Y') }}</div>

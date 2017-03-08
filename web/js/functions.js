@@ -71,6 +71,33 @@ function filter_client_list(element) {
 
 }
 
+function filter_presupuesto_list(element) {
+
+    var count = 0;
+    var value = $(element).val();
+    value = value.toUpperCase();
+
+    $(".presupuesto_list_row").each(function () {
+        text = $(this)
+            .text()
+            .replace(/(\r\n|\n|\r)/gm, "")
+            .toString()
+            .trim()
+            .toUpperCase();
+        if (text.search(value) > -1) {
+            $(this).show();
+            count++;
+            $("input[name='list_matched']").show();
+        }
+        else {
+            $(this).hide();
+        }
+    });
+
+}
+
+
+
 function toggleTableRowActive(row) {
     if ($(row).hasClass("active")) {
         $(row).removeClass("active")
@@ -268,8 +295,8 @@ function ajax_call_guardar_presupuesto(url) {
             type       : 'POST',
             success: function(result){
                 console.log(result);
-                $("#btn_imprimir_presupuesto").prop("disabled",false);
-                $("#btn_guardar_presupuesto").prop("disabled",true);
+                $("#btn_imprimir_presupuesto").prop("hidden",false);
+                $("#btn_guardar_presupuesto").prop("hidden",true);
                 alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")
 
             }});
