@@ -265,6 +265,8 @@ class PresupuestoController extends Controller
 
     $path_pdf_tmp = $this->get('kernel')->getRootDir() . '/../web/pdf_tmp/';
 
+    $this->recursiveRemoveDirectory($path_pdf_tmp);
+
     $em = $this->getDoctrine()->getManager();
 
     $presupuesto = $em->getRepository('AppBundle:Presupuesto')
@@ -341,7 +343,7 @@ class PresupuestoController extends Controller
 
         file_put_contents($file, $m->merge());
         $pdf_file = file_get_contents($file);
-        $this->recursiveRemoveDirectory($path_pdf_tmp);
+
 
         return new Response(
         $pdf_file,
