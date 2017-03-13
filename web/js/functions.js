@@ -290,13 +290,14 @@ function ajax_call_guardar_presupuesto(url) {
             data       : JSON.stringify(data),
             type       : 'POST',
             success: function(result){
-                console.log(result);
-                console.log("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.");
+
+                console.log(result['sucess']);
+                console.log(result['message']);
                 // $("#btn_imprimir_presupuesto").prop("hidden",false);
                 // $("#btn_guardar_presupuesto").prop("hidden",true);
                 // alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")
                 var numero = result['presupuesto'];
-                var url = window.location.origin + '/presupuestos/' + numero;
+                var url = window.location.origin + '/presupuestos/' + result['presupuesto'];
                 window.location.href = url;
 
             }});

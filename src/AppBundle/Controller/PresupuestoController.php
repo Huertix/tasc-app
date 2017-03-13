@@ -52,10 +52,7 @@ class PresupuestoController extends Controller
    */
   public function newAction() {
 
-    $next_presupuesto_number = $this->get_next_presupuesto_number();
-
     $em = $this->getDoctrine()->getManager();
-
 
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
       ->clientesOrderedByName();
@@ -80,8 +77,7 @@ class PresupuestoController extends Controller
       'clientes' => $clientes,
       'articulos' => $articulos,
       'familias' => $familias,
-      'marcas' => $marcas,
-      'numero_presupuesto' => $next_presupuesto_number
+      'marcas' => $marcas
     ]);
 
 
@@ -97,8 +93,6 @@ class PresupuestoController extends Controller
     $presupuesto = $em->getRepository('AppBundle\Entity\Presupuesto')->findOneBy(
       array('numero' => str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT ))
     );
-
-    $next_presupuesto_number = $this->get_next_presupuesto_number();
 
     $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
 
@@ -130,7 +124,6 @@ class PresupuestoController extends Controller
       'clientes' => $clientes,
       'presupuesto' => $presupuesto,
       'detalles_presupuesto' => $detalles_presupuesto,
-      'numero_presupuesto' => $next_presupuesto_number,
       'articulos' => $articulos,
       'familias' => $familias,
       'marcas' => $marcas,
@@ -151,8 +144,8 @@ class PresupuestoController extends Controller
     );
 
     if ($presupuesto->getTraspasado()) {
-      // TODO: Add Message
-      // TODO: Redirect to same page
+      $this->addFlash('error', 'El presupuesto ' . $numero_presupuesto .' ha sido transpasado');
+      return $this->redirect($this->generateUrl('vista_presupuesto', array('numero_presupuesto' => $numero_presupuesto)), 301);
     }
 
     //TODO: Get new presupuesto modificado number
@@ -231,8 +224,6 @@ class PresupuestoController extends Controller
       $parametersAsArray = json_decode($content, true);
     }
 
-    //dump($parametersAsArray);die();
-
     try {
 
       $cliente = $em->getRepository('AppBundle:Cliente')
@@ -240,11 +231,30 @@ class PresupuestoController extends Controller
           'codigo' => str_pad ( $parametersAsArray["cliente"] , 15 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
         ]);
 
+      if (strpos($request->headers->get('referer'), 'modificar' )) {
+        $number = explode( '/', $request->headers->get('referer'));
+        $number = $number[sizeof($number) - 1];
+        $numero_presupuesto = $this->get_next_presupuesto_modificado_number($number);
+        if ($numero_presupuesto == null) {
+          $this->addFlash('warning', 'Se ha llegado al limite de modificaciones del presupuesto ');
 
-      $numero = str_pad ( $parametersAsArray["numero"], 10, $pad_string = " ", $pad_type = STR_PAD_LEFT);
+          $response_array = [
+            "sucess" => False,
+            "message" => "Se ha llegado al limite de modificaciones del presupuesto ",
+            "presupuesto" => $number
+          ];
+
+          return new JsonResponse($response_array);
+        }
+
+      }
+      else
+        $numero_presupuesto = $this->get_next_presupuesto_number();
+
+      $numero_presupuesto = str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT );
 
       $c_presup = new Presupuesto();
-      $c_presup->setNumero($numero);
+      $c_presup->setNumero($numero_presupuesto);
       $date = new \DateTime($parametersAsArray["fecha"]);
       $c_presup->setFecha($date);
       $c_presup->setFechaacep($date);
@@ -259,12 +269,10 @@ class PresupuestoController extends Controller
 
       $rows = $parametersAsArray["rows"];
 
-
-
       foreach ($rows as $row) {
           $d_presup = new PresupuestoDetalles();
 
-          $d_presup->setNumero($numero);
+          $d_presup->setNumero($numero_presupuesto);
           $d_presup->setDefinicion($row['definicion']);
           $d_presup->setLinia(intval($row['linia']));
           $d_presup->setCliente($parametersAsArray["cliente"]);
@@ -298,23 +306,23 @@ class PresupuestoController extends Controller
         $em->flush();
       }
 
-      $this->addFlash('success', 'Presupuesto Correctamente Guardado');
+      $this->addFlash('success', 'El presupuesto ' . $numero_presupuesto .' se ha guardado correctamente');
 
-      $respose_array = [
+      $response_array = [
         "sucess" => True,
         "message" => "Presupuesto saved",
-        "presupuesto" => $parametersAsArray["numero"]
+        "presupuesto" => trim($numero_presupuesto)
       ];
 
     } catch (\Exception $e) {
       switch (get_class($e)) {
         case 'Doctrine\DBAL\DBALException':
-          $respose_array['succes'] = False;
-          $respose_array['message'] = "DBAL Error: " . $e->getMessage();
+          $response_array['succes'] = False;
+          $response_array['message'] = "DBAL Error: " . $e->getMessage();
           break;
         case 'Doctrine\DBA\DBAException':
-          $respose_array['succes'] = False;
-          $respose_array['message'] = "DBA Error: " . $e->getMessage();
+          $response_array['succes'] = False;
+          $response_array['message'] = "DBA Error: " . $e->getMessage();
           break;
         default:
           throw $e;
@@ -322,8 +330,7 @@ class PresupuestoController extends Controller
       }
     }
 
-
-    return new JsonResponse($respose_array);
+    return new JsonResponse($response_array);
   }
 
   /**
@@ -471,4 +478,75 @@ class PresupuestoController extends Controller
     return $next_number  + 1;
   }
 
+  private function get_next_presupuesto_modificado_number($numero_presupuesto) {
+
+    $mod_char = [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T"
+    ];
+
+    $number = '';
+    for ($i = 1; $i <= strlen($numero_presupuesto); $i++) {
+      $digit = $numero_presupuesto[$i - 1];
+      if (is_numeric($digit)) {
+        $number = $number . $digit;
+      }
+    }
+
+    $em = $this->getDoctrine()->getManager();
+
+    $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
+      ->createQueryBuilder('o')
+      ->where('o.numero LIKE :numero')
+      ->setParameter('numero', '%' . $number . '%')
+      ->getQuery()
+      ->getResult();
+
+    $index = 0;
+    $is_char_free = FALSE;
+    while (!$is_char_free) {
+
+      if ($index >= sizeof($mod_char)) {
+        return null;
+      }
+
+      $char = $mod_char[$index];
+
+      foreach ($presupuestos as $presupuesto) {
+        $raw_number = trim($presupuesto->getNumero());
+
+        if (strpos($raw_number, $char) === FALSE) {
+          $is_char_free = TRUE;
+        }
+        else {
+          $is_char_free = FALSE;
+        }
+      }
+
+      if ($is_char_free)
+        $number = $number . $char;
+      else
+        $index++;
+    }
+
+    return $number;
+  }
 }

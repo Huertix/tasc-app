@@ -23,7 +23,12 @@
                                     {% include 'presupuestos/presupuesto_datos_importes.html.twig' %}
                                 </div>
                                 <div class="col-md-3 col-md-offset-1">
-                                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig' with {'numero_presupuesto': numero_presupuesto} %}
+                                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig'
+                                        with {
+                                            'numero_presupuesto': numero_presupuesto,
+                                            'presupuesto': presupuesto
+                                        }
+                                    %}
                                 </div>
                             </div>
                         </div>
