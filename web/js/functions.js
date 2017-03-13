@@ -96,8 +96,6 @@ function filter_presupuesto_list(element) {
 
 }
 
-
-
 function toggleTableRowActive(row) {
     if ($(row).hasClass("active")) {
         $(row).removeClass("active")
@@ -177,13 +175,12 @@ function ajax_call_articulo(url) {
             var line = get_line_for_inserting();
 
             line.after(
-                '<tr class="presupuesto_row table_row_head active" onclick="toggleTableRowActive(this)">' +
+                '<tr class="presupuesto_row table_row_head" onclick="toggleTableRowActive(this)">' +
                 '<td><div class="input_row_articulo">' + data['codigo'] + '</div></td>' +
                 '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '" maxlength="75"></div></td>' +
                 '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div>' +
                 '<div class="input_row_coste" hidden><input type="text" value="' + data['coste'] + '"></div></td>' +
                 '<td><div class="input_row_unidades"><input type="text" value="0.00"></div></td>' +
-//                                    '<td><div class="input_row_iva"><input type="text" value="' + data['tipo_iva'] + '"></div></td>' +
                 '<td><div class="input_row_dto"><input type="text" value="0" ></div></td>' +
                 '<td><div class="input_row_importe">' + data['precio'] + '</div></td>' +
                 '</tr>'
@@ -194,12 +191,11 @@ function ajax_call_articulo(url) {
                 line = get_line_for_inserting();
 
                 line.after(
-                    '<tr class="presupuesto_row table_row_body active" onclick="toggleTableRowActive(this)">' +
+                    '<tr class="presupuesto_row table_row_body" onclick="toggleTableRowActive(this)">' +
                     '<td>&nbsp;</td>' +
                     '<td><div class="input_row_definicion"><input type="text" value="' + row + '" maxlength="75"></div></td>' +
                     '<td></td>' +
                     '<td></td>' +
-//                                    '<td></td>' +
                     '<td></td>' +
                     '<td></td>' +
                     '</tr>'
@@ -295,9 +291,13 @@ function ajax_call_guardar_presupuesto(url) {
             type       : 'POST',
             success: function(result){
                 console.log(result);
-                $("#btn_imprimir_presupuesto").prop("hidden",false);
-                $("#btn_guardar_presupuesto").prop("hidden",true);
-                alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")
+                console.log("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.");
+                // $("#btn_imprimir_presupuesto").prop("hidden",false);
+                // $("#btn_guardar_presupuesto").prop("hidden",true);
+                // alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")
+                var numero = result['presupuesto'];
+                var url = window.location.origin + '/presupuestos/' + numero;
+                window.location.href = url;
 
             }});
     }
@@ -340,8 +340,20 @@ function check_importe_zero(value) {
     }
 }
 
+function clonar_presupuesto() {
+    var numero = $('.datos_presupuesto_numero').text();
+    var url = window.location.origin + '/presupuestos/clonar/' + numero;
+    window.location.href = url;
+}
+
+function mod_presupuesto() {
+    var numero = $('.datos_presupuesto_numero').text();
+    var url = window.location.origin + '/presupuestos/modificar/' + numero;
+    window.location.href = url;
+}
+
 function presupuesto_to_pdf() {
     var numero = $('.datos_presupuesto_numero').text();
-    var url = window.location.origin + /pdf/ + numero;
+    var url = window.location.origin + '/pdf/' + numero;
     window.location.href = url;
 }

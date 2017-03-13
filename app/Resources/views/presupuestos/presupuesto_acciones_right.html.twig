@@ -1,0 +1,38 @@
+<div id="container-floating-right">
+    {% if clon_enable %}
+        <div class="nd4 nds" data-toggle="tooltip" data-placement="right" data-original-title="Clonar">
+            <a href="#" id="btn_clonar_presupuesto"  role="button">
+                <p class="icon"><i class="fa fa-clone" aria-hidden="true"></i></p>
+            </a>
+            <span class="tooltiptext">Clonar</span>
+        </div>
+    {% endif %}
+    {% if mod_enable %}
+        <div class="nd3 nds" data-toggle="tooltip" data-placement="right" data-original-title="Modificar">
+            <a href="#" id="btn_modificar_presupuesto"  role="button">
+                <p class="icon"><i class="fa fa-edit" aria-hidden="true"></i></p>
+            </a>
+            <span class="tooltiptext">Modifcar</span>
+        </div>
+    {% endif %}
+    {% if save_enable %}
+        <div class="nd2 nds" data-toggle="tooltip" data-placement="right" data-original-title="Guardar">
+            <a href="#" id="btn_guardar_presupuesto"  role="button">
+                <p class="icon"><i class="fa fa-floppy-o" aria-hidden="true"></i></p>
+            </a>
+            <span class="tooltiptext">Guardar</span>
+        </div>
+    {% endif %}
+    {% if print_enable %}
+        <div class="nd1 nds" data-toggle="tooltip" data-placement="right" data-original-title="Imprimir">
+            <a href="#" id="btn_imprimir_presupuesto"  role="button">
+                <p class="icon"><i class="fa fa-print" aria-hidden="true"></i></p>
+            </a>
+            <span class="tooltiptext">Imprimir</span>
+        </div>
+    {% endif %}
+    <div id="floating-button-right" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
+        <p class="plus">+</p>
+        <img class="edit" src="http://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+    </div>
+</div>

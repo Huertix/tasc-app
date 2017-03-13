@@ -31,7 +31,7 @@
                                     {% include 'presupuestos/presupuesto_datos_numeros.html.twig'
                                         with {
                                             'numero_presupuesto': numero_presupuesto,
-                                            'presupuesto': false
+                                            'presupuesto': presupuesto
                                         }
                                     %}
                                 </div>
@@ -65,6 +65,33 @@
                             </tr>
                         </thead>
                         <tbody class="table-striped">
+                        {% for linea in detalles_presupuesto %}
+                            {% set is_linea_articulo = false %}
+                            {% if linea.articulo|trim != '' %}
+                                {% set is_linea_articulo = true %}
+                            {% endif %}
+
+                                {% if linea.articulo|trim != '' %}
+                                    <tr class="table_row_head" onclick="toggleTableRowActive(this)">
+                                        <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
+                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
+                                        <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
+                                        <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
+                                        {#<td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>#}
+                                        <td><div class="input_row_dto"><input type="text" value="{{ linea.dto1|trim }}" ></div></td>
+                                        <td><div class="input_row_importe">{{ linea.importe|trim|number_format(2, '.', '') }}</div></td>
+                                {% else %}
+                                    <tr class="table_row_body" onclick="toggleTableRowActive(this)">
+                                        <td></td>
+                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
+                                        <td></td>
+                                        <td></td>
+                                        {#<td></td>#}
+                                        <td></td>
+                                        <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

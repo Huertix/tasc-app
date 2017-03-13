@@ -2,9 +2,29 @@
     <fieldset>
         <legend>
             <span>Cliente</span>
-            <span id="clientesModalTrigger" class="glyphicon glyphicon-search pull-right"></span>
+            {% if select_client_enable %}
+                <span id="clientesModalTrigger" class="glyphicon glyphicon-search pull-right"></span>
+            {% endif %}
         </legend>
         <div class="col-md-12">
+        {% if presupuesto %}
+            <div class="col-md-3">Código</div>
+            <div class="col-md-9 datos_cliente_codigo" > {{ presupuesto.cliente.codigo }}</div>
+            <div class="col-md-3">Nombre</div>
+            <div class="col-md-9 datos_cliente_nombre"> {{ presupuesto.cliente.nombre|trim }}</div>
+            <div class="col-md-3">CIF</div>
+            <div class="col-md-9 datos_cliente_cif"> {{ presupuesto.cliente.cif }}</div>
+            <div class="col-md-3">Dirección</div>
+            <div class="col-md-9 datos_cliente_direccion"> {{ presupuesto.cliente.direccion|trim }}</div>
+            <div class="col-md-3">CP</div>
+            <div class="col-md-9" datos_cliente_cp> {{ presupuesto.cliente.codpost }}</div>
+            <div class="col-md-3">Municipio</div>
+            <div class="col-md-9 datos_cliente_poblacion"> {{ presupuesto.cliente.poblacion|trim }}</div>
+            <div class="col-md-3">Provincia</div>
+            <div class="col-md-9 datos_cliente_provincia"> {{ presupuesto.cliente.provincia|trim }}</div>
+            <div class="col-md-3">Credito</div>
+            <div class="col-md-9 datos_cliente_credito"> {{ presupuesto.cliente.credito|trim|number_format(2, '.', ',') }}</div>
+        {% else %}
             <div class="col-md-3">Código</div>
             <div class="col-md-9 datos_cliente_codigo">&nbsp</div>
             <div class="col-md-3">Nombre</div>
@@ -21,6 +41,9 @@
             <div class="col-md-9 datos_cliente_provincia">&nbsp</div>
             <div class="col-md-3">Credito</div>
             <div class="col-md-9 datos_cliente_credito">&nbsp</div>
+        {% endif %}
         </div>
     </fieldset>
 </div>
+
+

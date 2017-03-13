@@ -19,12 +19,15 @@
 }
 
 .presupuesto_data_header {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    max-height: 260px;
+    height: 260px;
+    min-height: 260px;
 
 }
 
 .presupuesto_table {
-    height: 1060px;
+    height: 1000px;
     max-height: 1060px;
 }
 

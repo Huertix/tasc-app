@@ -7,105 +7,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {#<link rel="stylesheet" href="https://www.dropbox.com/s/2h6k7tpa8l5oux8/pdf-style.css?dl=1">#}
+    {#<link rel="stylesheet" href="{{ absolute_url(asset('vendor/bootstrap/dist/css/bootstrap.min.css')) }}">#}
+    {#<link rel="stylesheet" href="{{ absolute_url(asset('css/pdf-style.css')) }}">#}
+
     <style>
         .logo_tasc {
             text-align: center;
             position: relative;
             top: -30px;
-
         }
-
         .logo_tasc a {
             font-size: 1.2em;
         }
-
         .logo_img {
             height: 90px;
             width:  220px
         }
-
         .presupuesto_header {
             margin-bottom: 30px;
         }
-
         .presupuesto_data_header {
-            margin-bottom: 50px;
-
+            margin-bottom: 30px;
+            max-height: 150px;
+            height: 150px;
+            min-height: 150px;
         }
-
         .presupuesto_table {
-            height: 1060px;
+            height: 1000px;
             max-height: 1060px;
         }
-
         .presupuesto_table table {
             width: 100%;
             text-align: center;
             border-radius: 2px;
         }
-
         .presupuesto_table thead  th {
             border: 1px solid black;
             text-align: center;
         }
-
         .presupuesto_table thead  th:nth-child(4) {
             text-align: left;
             padding-left: 5px;
         }
-
         .presupuesto_table tbody  tr{
             vertical-align: top;
         }
-
         .presupuesto_table tbody  td{
-            font-size: 0.8  em;
+            font-size: 0.85em;
         }
-
         .presupuesto_table tbody  td:nth-child(1) {
             width: 30px;
         }
-
         .presupuesto_table tbody  td:nth-child(2) {
             width: 105px;
         }
-
         .presupuesto_table tbody  td:nth-child(3) {
             width: 60px;
         }
-
         .presupuesto_table tbody  td:nth-child(4) {
             text-align: left;
             padding-left: 5px;
         }
-
         .presupuesto_table tbody  td:nth-child(5) {
             width: 110px;
         }
-
         .presupuesto_table tbody  td:nth-child(6) {
             width: 110px;
         }
-
         .pagination {
 
         }
-
         .total_table {
 
         }
-
         .total_table table {
             width: 100%;
             text-align: center;
             border-radius: 2px;
         }
-
         .total_table thead  th {
             border: 1px solid black;
             text-align: center;
         }
-
         .total_table tbody {
             background: #d4d2d2;
         }
@@ -141,7 +125,7 @@
                             <div>{{ cliente.nombre }}</div>
                             <div>{{ cliente.direccion}}</div>
                             <div>{{ cliente.codpost }} {{ cliente.poblacion }}</div>
-                            <div>{{ cliente.provincia}} ESPAÑA</div>
+                            <div>{{ cliente.provincia}}</div>
                         </div>
 
                         <div class="col-md-4 col-md-offset-2  presupuesto_data">
@@ -189,7 +173,7 @@
                                         <td>{{ presupuesto_importe_base|number_format(2, '.', ',')}}</td>
                                         <td>{{ presupuesto_iva }}</td>
                                         <td>{{ presupuesto_importe_iva|number_format(2, '.', ',') }}</td>
-                                        <td><b>{{ presupuesto_importe_total|number_format(2, '.', ',') }}</b></td>
+                                        <td><b>{{ presupuesto_importe_total|number_format(2, '.', ',') }} &euro;</b></td>
                                     </tr>
                                     </tbody>
                                 </table>

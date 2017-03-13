@@ -1,9 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-{% endblock %}
-
 {% block stylesheets %}
+    {{ parent() }}
+    html {
+        background: url({{ asset('images/pipes.jpg') }}) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
 
 {% endblock %}
+
+{% block body %}
+    {#<div class="row">#}
+        {#<img src="{{ asset('images/pipes.jpg') }}">#}
+    {#</div>#}
+
+{% endblock %}
+

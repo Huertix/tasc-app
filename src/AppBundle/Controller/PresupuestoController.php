@@ -88,31 +88,22 @@ class PresupuestoController extends Controller
   }
 
   /**
-   * @Route("/presupuestos/{numero_presupuesto}", name="vista_presupuesto")
+   * @Route("/presupuestos/clonar/{numero_presupuesto}", name="clonar_presupuesto")
    */
-  public function showAction($numero_presupuesto) {
+  public function clonAction($numero_presupuesto) {
 
     $em = $this->getDoctrine()->getManager();
 
-    $presupuesto = $em->getRepository('AppBundle\Entity\Presupuesto')->findBy(
+    $presupuesto = $em->getRepository('AppBundle\Entity\Presupuesto')->findOneBy(
       array('numero' => str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT ))
     );
 
-    $detalles_presupuesto = $em->getRepository('AppBundle:PresupuestoDetalles')
-      ->findBy([
-        'numero' => str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT )
-      ]);
+    $next_presupuesto_number = $this->get_next_presupuesto_number();
 
-    //$array_form_detalles_presupuesto = [];
-    //
-    //foreach ($detalles_presupuesto as $detalle){
-    //  $array_form_detalles_presupuesto[] = $this->createForm(PresupuestoDetallesFormType::class, $detalle);
-    //}
-
-    //$cliente = $presupuesto->getCliente();
+    $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
 
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
-      ->findAll();
+      ->clientesOrderedByName();
 
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
@@ -131,23 +122,100 @@ class PresupuestoController extends Controller
     }
 
 
-
     if (!$detalles_presupuesto) {
       throw $this->createNotFoundException('Presupuesto no Encontrado');
     }
 
-
-    return $this->render('presupuestos/vista_presupuesto.html.twig', [
+    return $this->render('presupuestos/clonar_presupuesto.html.twig', [
+      'clientes' => $clientes,
       'presupuesto' => $presupuesto,
       'detalles_presupuesto' => $detalles_presupuesto,
-      //'cliente' => $cliente,
-      'clientes' => $clientes,
+      'numero_presupuesto' => $next_presupuesto_number,
       'articulos' => $articulos,
       'familias' => $familias,
       'marcas' => $marcas,
     ]);
 
-    //TODO: Check transpasado for prespuesto modifications
+
+  }
+
+  /**
+   * @Route("/presupuestos/modificar/{numero_presupuesto}", name="modificar_presupuesto")
+   */
+  public function modifAction($numero_presupuesto) {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $presupuesto = $em->getRepository('AppBundle\Entity\Presupuesto')->findOneBy(
+      array('numero' => str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT ))
+    );
+
+    if ($presupuesto->getTraspasado()) {
+      // TODO: Add Message
+      // TODO: Redirect to same page
+    }
+
+    //TODO: Get new presupuesto modificado number
+    $numero_presupuesto = 0;
+
+    $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
+
+
+    $articulos = $em->getRepository('AppBundle\Entity\Articulo')
+      ->findAll();
+
+    $familias = $em->getRepository('AppBundle\Entity\Familia')
+      ->findAll();
+
+    $marcas = $em->getRepository('AppBundle\Entity\Marca')
+      ->findAll();
+
+    $count = 0;
+    foreach ($articulos as $articulo) {
+      if ($articulo->getPvp() == null)
+        unset($articulos[$count]);
+      $count++;
+    }
+
+
+    if (!$detalles_presupuesto) {
+      throw $this->createNotFoundException('Presupuesto no Encontrado');
+    }
+
+    return $this->render('presupuestos/modificar_presupuesto.html.twig', [
+      'presupuesto' => $presupuesto,
+      'detalles_presupuesto' => $detalles_presupuesto,
+      'numero_presupuesto' => $numero_presupuesto,
+      'articulos' => $articulos,
+      'familias' => $familias,
+      'marcas' => $marcas,
+    ]);
+
+
+  }
+
+  /**
+   * @Route("/presupuestos/{numero_presupuesto}", name="vista_presupuesto")
+   */
+  public function showAction($numero_presupuesto) {
+
+    $em = $this->getDoctrine()->getManager();
+
+    $presupuesto = $em->getRepository('AppBundle\Entity\Presupuesto')->findOneBy(
+      array('numero' => str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT ))
+    );
+
+    $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
+
+    if (!$detalles_presupuesto) {
+      throw $this->createNotFoundException('Presupuesto no Encontrado');
+    }
+
+    return $this->render('presupuestos/vista_presupuesto.html.twig', [
+      'presupuesto' => $presupuesto,
+      'detalles_presupuesto' => $detalles_presupuesto,
+    ]);
+
   }
 
   /**
@@ -229,6 +297,8 @@ class PresupuestoController extends Controller
         $em->persist($d_presup);
         $em->flush();
       }
+
+      $this->addFlash('success', 'Presupuesto Correctamente Guardado');
 
       $respose_array = [
         "sucess" => True,

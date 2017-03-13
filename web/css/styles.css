@@ -312,7 +312,7 @@
 }
 
 #container-floating-right .nd4{
-    background-size: 100%;
+    background: #c84a48;
     right: 40px;
     bottom: 300px;
     animation-delay: 0.08s;
@@ -324,7 +324,7 @@
     background: #d3a411;
     left: 40px;
     bottom: 120px;
-    animation-delay: 0.2s;
+    animation-delay: 0.1s;
     animation: bounce-out-nds 0.3s linear;
     animation-fill-mode:  forwards;
 }
@@ -342,17 +342,17 @@
     background: #ba68c8;
     left: 40px;
     bottom: 240px;
-    animation-delay: 0.1s;
+    animation-delay: 0.2s;
     animation: bounce-out-nds 0.1s linear;
     animation-fill-mode:  forwards;
 }
 
 #container-floating-left .nd4{
-    background-size: 100%;
+    background: #c84a48;
     left: 40px;
     bottom: 300px;
     animation-delay: 0.08s;
-    animation: bounce-out-nds 0.1s linear;
+    animation: bounce-out-nds 0.3s linear;
     animation-fill-mode:  forwards;
 }
 
@@ -367,7 +367,6 @@
 }
 
 #container-floating-right:hover .nds, #container-floating-left:hover .nds{
-
     animation: bounce-nds 0.1s linear;
     animation-fill-mode:  forwards;
 }
@@ -380,6 +379,9 @@
 }
 #container-floating-right:hover .nd3, #container-floating-left:hover .nd3{
     animation-delay: 0.2s;
+}
+#container-floating-right:hover .nd4, #container-floating-left:hover .nd4{
+    animation-delay: 0.3s;
 }
 
 .icon{
@@ -443,8 +445,5 @@
 
 #container-floating-left .nds:hover .tooltiptext {
     visibility: visible;
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> a126ab5

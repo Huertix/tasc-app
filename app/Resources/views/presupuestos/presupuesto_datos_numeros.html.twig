@@ -1,11 +1,15 @@
-<div class="col-md-12 prespuesto_datos_numeros">
+<div class="col-md-12 presupuesto_datos_numeros">
     <fieldset>
         <legend>Presupuesto</legend>
         <div class="col-md-3">Fecha</div>
         <div class="col-md-9">
-            <input type="text" id="datepicker_presupuesto">
+            <input type="text" id="datepicker_presupuesto"
+                   {% if presupuesto %}
+                        value="{{ presupuesto.fecha| date('d/m/Y') }}
+                    {% endif %}
+            ">
         </div>
         <div class="col-md-3">Número</div>
-        <div class="col-md-9 datos_presupuesto_numero">{{ numero_presupuesto  }}</div>
+        <div class="col-md-9 datos_presupuesto_numero">{{ numero_presupuesto|trim  }}</div>
     </fieldset>
 </div>

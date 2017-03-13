@@ -6,6 +6,12 @@ $(document).ready(function(){
         $('#clientesModal').modal();
     });
 
+
+    $( "#datepicker_presupuesto" ).datepicker({
+        "dateFormat":"dd/mm/yy"
+    });
+
+
     $('#btn_borrar_lineas').on('click', function() {
 
         var $set = $('tr.active');
@@ -32,7 +38,6 @@ $(document).ready(function(){
             '<td><div class="input_row_definicion"><input type="text" value="" maxlength="75"></div></td>' +
             '<td></td>' +
             '<td></td>' +
-//                        '<td></td>' +
             '<td></td>' +
             '<td></td>' +
             '</tr>'
@@ -56,6 +61,16 @@ $(document).ready(function(){
     $('#btn_imprimir_presupuesto').on('click', function() {
 
         presupuesto_to_pdf();
+    });
+
+    $('#btn_clonar_presupuesto').on('click', function() {
+
+        clonar_presupuesto();
+    });
+
+    $('#btn_modificar_presupuesto').on('click', function() {
+
+        mod_presupuesto();
     });
 
     $('.article_row').on('click', function() {

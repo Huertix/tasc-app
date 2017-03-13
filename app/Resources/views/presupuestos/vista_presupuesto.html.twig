@@ -7,106 +7,60 @@
     <div>
         <div class="row">
             <div class="col-md-12 prespuesto_container" >
-                <div class="col-md-3 prespuesto_datos">
-                    <div class="col-md-12 prespuesto_datos_numeros">
-                        <fieldset>
-                            <legend>Prespuesto</legend>
-                            <div class="col-md-3">Número</div>
-                            <div class="col-md-9 datos_presupuesto_numero">{{ presupuesto[0].numero|trim }}</div>
-                            <div class="col-md-3">Fecha</div>
-                            <div class="col-md-9"> {{ presupuesto[0].fecha| date('d/m/Y') }}</div>
-                        </fieldset>
-                    </div>
-                    <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_datos_cliente">
-                        <fieldset>
-                            <legend>
-                                <span>Cliente</span>
-                                <span id="clientesModalTrigger" class="glyphicon glyphicon-search pull-right"></span>
-                            </legend>
-                            <div class="col-md-12">
-                                <div class="col-md-3">Código</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.codigo }}</div>
-                                <div class="col-md-3">Nombre</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.nombre|trim }}</div>
-                                <div class="col-md-3">CIF</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.cif }}</div>
-                                <div class="col-md-3">Dirección</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.direccion|trim }}</div>
-                                <div class="col-md-3">CP</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.codpost }}</div>
-                                <div class="col-md-3">Municipio</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.poblacion|trim }}</div>
-                                <div class="col-md-3">Provincia</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.provincia|trim }}</div>
-                                <div class="col-md-3">Credito</div>
-                                <div class="col-md-9"> {{ presupuesto[0].cliente.credito|trim|number_format(2, '.', ',') }}</div>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_datos_numeros">
-                        <fieldset>
-                            <legend>Importes</legend>
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    <div class="col-md-2"><span>Base:</span></div>
-                                    <div class="total_importe_base col-md-6 col-md-offset-1"></div>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Detalles Presupuesto</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="col-md-12" style="padding: 20px">
+                                <div class="col-md-4">
+                                    {% include 'presupuestos/presupuesto_datos_cliente.html.twig'
+                                        with {
+                                            'presupuesto': presupuesto,
+                                            'select_client_enable': false,
+                                        }
+                                    %}
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-2"><span>IVA:</span></div>
-                                    <div class="total_importe_iva col-md-6 col-md-offset-1"></div>
+                                <div class="col-md-3 col-md-offset-1">
+                                    {% include 'presupuestos/presupuesto_datos_importes.html.twig' %}
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-2"><span>TOTAL:</span></div>
-                                    <div class="total_importe col-md-6 col-md-offset-1"></div>
+                                <div class="col-md-3 col-md-offset-1">
+                                    {% include 'presupuestos/presupuesto_datos_numeros.html.twig'
+                                        with {
+                                            'numero_presupuesto': presupuesto.numero,
+                                            'presupuesto': presupuesto
+                                        }
+                                    %}
                                 </div>
                             </div>
-                        </fieldset>
-                    </div>
-                    <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_acciones_tabla">
-                        <fieldset>
-                            <legend>Acciones Tabla</legend>
-                            <div class="col-md-3">
-                                <button id="btn_nueva_linea" class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-plus"></span> Nueva</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button id="btn_borrar_lineas" class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-remove" ></span> Borrar</button>
-                            </div>
-                            <div class="col-md-3">
-                                <button id="btn_insertar_articulo" class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-plus" ></span> Articulo</button>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="col-md-12" style="height: 30px"></div>
-                    <div class="col-md-12 prespuesto_acciones_db">
-                        <fieldset>
-                            <legend>Acciones Presupuesto</legend>
-                            <div class="col-md-3">
-                                <button id="btn_imprimir_presupuesto" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
-                            </div>
-                            {#<div class="col-md-3">#}
-                                {#<button class="btn btn-info btn-xs"><span class="glyphicon glyphicon-remove"></span> Enviar</button>#}
-                            {#</div>#}
-                            <div class="col-md-3">
-                                <button class="btn btn-info btn-xs" disabled><span class="glyphicon glyphicon-floppy-save"></span> Modificar</button>
-                            </div>
-                        </fieldset>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-9" >
+
+                {% include 'presupuestos/presupuesto_acciones_right.html.twig'
+                    with {
+                        'save_enable': false,
+                        'clon_enable': true,
+                        'mod_enable': true,
+                        'print_enable': true
+                    }
+                %}
+
+                <div class="col-md-12 table_container" >
                     <table class="table table-bordered table-hover thead-inverse prespuesto_table">
                         <thead>
-                            <tr>
-                                <th>Artículo</th>
-                                <th>Definición</th>
-                                <th>Precio</th>
-                                <th>Unidades</th>
-                                {#<th>IVA</th>#}
-                                <th>%</th>
-                                <th>Importe</th>
-                            </tr>
+                        <tr>
+                            <th>Artículo</th>
+                            <th>Definición</th>
+                            <th>Precio</th>
+                            <th>Unidades</th>
+                            {#<th>IVA</th>#}
+                            <th>%</th>
+                            <th>Importe</th>
+                        </tr>
                         </thead>
                         <tbody class="table-striped">
                         {% for linea in detalles_presupuesto %}
@@ -115,25 +69,25 @@
                                 {% set is_linea_articulo = true %}
                             {% endif %}
 
-                                {% if linea.articulo|trim != '' %}
-                                    <tr class="table_row_head" onclick="toggleTableRowActive(this)">
-                                        <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
-                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
-                                        <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
-                                        <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
-                                        {#<td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>#}
-                                        <td><div class="input_row_dto"><input type="text" value="{{ linea.dto1|trim }}" ></div></td>
-                                        <td><div class="input_row_importe">{{ linea.importe|trim|number_format(2, '.', '') }}</div></td>
-                                {% else %}
-                                    <tr class="table_row_body" onclick="toggleTableRowActive(this)">
-                                        <td></td>
-                                        <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
-                                        <td></td>
-                                        <td></td>
-                                        {#<td></td>#}
-                                        <td></td>
-                                        <td></td>
-                                {% endif %}
+                            {% if linea.articulo|trim != '' %}
+                                <tr class="table_row_head" onclick="toggleTableRowActive(this)">
+                                <td><div class="input_row_articulo">{{ linea.articulo|trim }}</div></td>
+                                <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
+                                <td><div class="input_row_precio"><input type="text" value="{{ linea.precio|trim|number_format(2, '.', '') }}"></div></td>
+                                <td><div class="input_row_unidades"><input type="text" value="{{ linea.unidades|trim|number_format(2, '.', '') }}" ></div></td>
+                                {#<td><div class="input_row_iva"><input type="text" value="{{ linea.tipoiva|trim }}" ></div></td>#}
+                                <td><div class="input_row_dto"><input type="text" value="{{ linea.dto1|trim }}" ></div></td>
+                                <td><div class="input_row_importe">{{ linea.importe|trim|number_format(2, '.', '') }}</div></td>
+                            {% else %}
+                                <tr class="table_row_body" onclick="toggleTableRowActive(this)">
+                                <td></td>
+                                <td><div class="input_row_definicion"><input type="text" value="{{ linea.definicion|trim }}" maxlength="75"></div></td>
+                                <td></td>
+                                <td></td>
+                                {#<td></td>#}
+                                <td></td>
+                                <td></td>
+                            {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -143,19 +97,8 @@
         </div>
     </div>
 
-    {% include 'clientes/clientes_modal.html.twig' with {'clientes': clientes} %}
-
-    {% include 'articulos/articulos_modal.html.twig' with {'articulos': articulos} %}
-
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        function selectCliente (codigo) {
-            console.log(codigo);
-        }
 
-
-    </script>
 {% endblock %}
