@@ -149,11 +149,20 @@ class PresupuestoController extends Controller
     //}
 
     ////TODO: Get new presupuesto modificado number
-    $numero_presupuesto = $this->get_next_presupuesto_modificado_number($numero_presupuesto);
+    $next_numero = $this->get_next_presupuesto_modificado_number($numero_presupuesto);
+
+    if ($next_numero == null) {
+      $this->addFlash('success', 'Se ha llegado al limite de modificaciones del presupuesto ');
+      $this->redirect($numero_presupuesto);
+      $url = $this->generateUrl("vista_presupuesto", array("numero_presupuesto" => $numero_presupuesto));
+      return $this->redirect($url);
+
+    } else {
+      $numero_presupuesto = $next_numero;
+    }
 
     $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
-
-
+    
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
 
@@ -224,6 +233,7 @@ class PresupuestoController extends Controller
       $parametersAsArray = json_decode($content, true);
     }
 
+
     try {
 
       $cliente = $em->getRepository('AppBundle:Cliente')
@@ -235,18 +245,6 @@ class PresupuestoController extends Controller
         $number = explode( '/', $request->headers->get('referer'));
         $number = $number[sizeof($number) - 1];
         $numero_presupuesto = $this->get_next_presupuesto_modificado_number($number);
-        if ($numero_presupuesto == null) {
-          $this->addFlash('warning', 'Se ha llegado al limite de modificaciones del presupuesto ');
-
-          $response_array = [
-            "sucess" => False,
-            "message" => "Se ha llegado al limite de modificaciones del presupuesto ",
-            "presupuesto" => $number
-          ];
-
-          return new JsonResponse($response_array);
-        }
-
       }
       else
         $numero_presupuesto = $this->get_next_presupuesto_number();
@@ -510,6 +508,7 @@ class PresupuestoController extends Controller
         $number = $number . $digit;
       }
     }
+
 
     $em = $this->getDoctrine()->getManager();
 
