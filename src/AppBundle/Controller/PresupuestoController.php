@@ -143,13 +143,13 @@ class PresupuestoController extends Controller
       array('numero' => str_pad ( $numero_presupuesto , 10 , $pad_string = " ", $pad_type = STR_PAD_LEFT ))
     );
 
-    if ($presupuesto->getTraspasado()) {
-      $this->addFlash('error', 'El presupuesto ' . $numero_presupuesto .' ha sido transpasado');
-      return $this->redirect($this->generateUrl('vista_presupuesto', array('numero_presupuesto' => $numero_presupuesto)), 301);
-    }
+    //if ($presupuesto->getTraspasado()) {
+    //  $this->addFlash('error', 'El presupuesto ' . $numero_presupuesto .' ha sido transpasado');
+    //  return $this->redirect($this->generateUrl('vista_presupuesto', array('numero_presupuesto' => $numero_presupuesto)), 301);
+    //}
 
-    //TODO: Get new presupuesto modificado number
-    $numero_presupuesto = 0;
+    ////TODO: Get new presupuesto modificado number
+    $numero_presupuesto = $this->get_next_presupuesto_modificado_number($numero_presupuesto);
 
     $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
 
