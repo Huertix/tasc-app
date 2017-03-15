@@ -379,7 +379,7 @@ class PresupuestoController extends Controller
     //$presupuesto_importe_total = $presupuesto_importe_base + $presupuesto_importe_iva;
 
     $presupuesto_importe_total = $presupuesto->getImporte();
-    $presupuesto_importe_base =  $presupuesto_importe_total / 1 + (self::$IVA / 100);
+    $presupuesto_importe_base =  $presupuesto_importe_total / (1 + (self::$IVA / 100));
     $presupuesto_importe_iva = ($presupuesto_importe_base * self::$IVA) / 100;
 
     $current_page = 1;
