@@ -371,12 +371,16 @@ class PresupuestoController extends Controller
     }
 
     array_push($pages_body_array, $sliced_array);
-    $presupuesto_importe_base = 0;
-    $presupuesto_importe_base = $presupuesto->getImporte();
-    $presupuesto_importe_iva = 0;
-    $presupuesto_importe_iva =  ($presupuesto_importe_base * self::$IVA) / 100;
-    $presupuesto_importe_total = 0;
-    $presupuesto_importe_total = $presupuesto_importe_base + $presupuesto_importe_iva;
+    //$presupuesto_importe_base = 0;
+    //$presupuesto_importe_base = $presupuesto->getImporte();
+    //$presupuesto_importe_iva = 0;
+    //$presupuesto_importe_iva =  ($presupuesto_importe_base * self::$IVA) / 100;
+    //$presupuesto_importe_total = 0;
+    //$presupuesto_importe_total = $presupuesto_importe_base + $presupuesto_importe_iva;
+
+    $presupuesto_importe_total = $presupuesto->getImporte();
+    $presupuesto_importe_iva =  ($presupuesto_importe_total * self::$IVA) / 100;
+    $presupuesto_importe_base = $presupuesto_importe_total - $presupuesto_importe_iva;
 
     $current_page = 1;
     $total_pages = count($pages_body_array);
