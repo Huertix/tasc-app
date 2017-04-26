@@ -174,7 +174,7 @@ function ajax_call_articulo(url) {
             var line = get_line_for_inserting();
 
             line.after(
-                '<tr class="presupuesto_row table_row_head" onclick="toggleTableRowActive(this)">' +
+                '<tr class="presupuesto_row table_row_head active" onclick="toggleTableRowActive(this)">' +
                 '<td><div class="input_row_articulo">' + data['codigo'] + '</div></td>' +
                 '<td><div class="input_row_definicion"><input type="text" value="' + data['nombre'] + '" maxlength="75"></div></td>' +
                 '<td><div class="input_row_precio"><input type="text" value="' + data['precio'] + '"></div>' +
@@ -190,7 +190,7 @@ function ajax_call_articulo(url) {
                 line = get_line_for_inserting();
 
                 line.after(
-                    '<tr class="presupuesto_row table_row_body" onclick="toggleTableRowActive(this)">' +
+                    '<tr class="presupuesto_row table_row_body active" onclick="toggleTableRowActive(this)">' +
                     '<td>&nbsp;</td>' +
                     '<td><div class="input_row_definicion"><input type="text" value="' + row + '" maxlength="75"></div></td>' +
                     '<td></td>' +
@@ -206,8 +206,15 @@ function ajax_call_articulo(url) {
         },
         complete: function(data) {
             register_table_row_head_change();
+            deactivate_rows();
             $('.loading').hide();
         }});
+}
+
+function deactivate_rows() {
+    $('.presupuesto_row.active').each( function() {
+        $(this).removeClass('active');
+    });
 }
 
 function ajax_call_cliente(url) {

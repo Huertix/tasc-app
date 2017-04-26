@@ -33,7 +33,7 @@ $(document).ready(function(){
         var line = get_line_for_inserting();
 
         line.after(
-            '<tr class="presupuesto_row tabel_row_body active" onclick="toggleTableRowActive(this)">' +
+            '<tr class="presupuesto_row table_row_body active" onclick="toggleTableRowActive(this)">' +
             '<td>&nbsp;</td>' +
             '<td><div class="input_row_definicion"><input type="text" value="" maxlength="75"></div></td>' +
             '<td></td>' +
