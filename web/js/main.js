@@ -45,6 +45,40 @@ $(document).ready(function(){
 
     });
 
+    $('#btn_condiciones').on('click', function() {
+
+        var condiciones = [
+            '***************** CONDICIONES DE VENTA *****************',
+            'IVA: +21%.',
+            'Plazo de entrega: de 4 a 6 semanas.',
+            'Portes: por cuenta de TASC (Península) para pedidos superiores a',
+            '2.000 Eur + IVA.',
+            'Forma de pago: la habitual con ustedes.',
+            'Instalación, programación y puesta en marcha por cuenta del cliente.',
+            'Garantía: 12 meses.',
+            'Validez de la oferta: 30 días',
+            'No se admitirán devoluciones de equipos una vez formalizado el pedido.',
+            '**************************************************************************'
+        ];
+
+        for (i = 0; i < condiciones.length; i++) {
+            var line = get_line_for_inserting();
+
+            line.after(
+                '<tr class="presupuesto_row table_row_body active" onclick="toggleTableRowActive(this)">' +
+                '<td>&nbsp;</td>' +
+                '<td><div class="input_row_definicion"><input type="text" value="' + condiciones[i] + '" maxlength="75"></div></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>'
+            );
+        }
+
+        deactivate_rows();
+    });
+
     $('#btn_insertar_articulo').on('click', function() {
         $('#articulosModal').modal();
     });
