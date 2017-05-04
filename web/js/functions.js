@@ -21,13 +21,12 @@ function collaps_all() {
     });
 }
 
-function filter(element) {
-
+function base_filter(element, row_name) {
     var count = 0;
     var value = $(element).val();
     value = value.toUpperCase();
 
-    $(".client_row").each(function () {
+    $(row_name).each(function () {
         text = $(this)
             .text()
             .replace(/(\r\n|\n|\r)/gm, "")
@@ -44,57 +43,24 @@ function filter(element) {
         }
     });
 
+}
+
+function filter(element) {
+    base_filter(element, ".client_row");
 }
 
 function filter_client_list(element) {
+    base_filter(element, ".client_list_row");
+}
 
-    var count = 0;
-    var value = $(element).val();
-    value = value.toUpperCase();
-
-    $(".client_list_row").each(function () {
-        text = $(this)
-            .text()
-            .replace(/(\r\n|\n|\r)/gm, "")
-            .toString()
-            .trim()
-            .toUpperCase();
-        if (text.search(value) > -1) {
-            $(this).show();
-            count++;
-            $("input[name='list_matched']").show();
-        }
-        else {
-            $(this).hide();
-        }
-    });
-
+function filter_article_list(element) {
+    base_filter(element, ".article_row");
 }
 
 function filter_presupuesto_list(element) {
-
-    var count = 0;
-    var value = $(element).val();
-    value = value.toUpperCase();
-
-    $(".presupuesto_list_row").each(function () {
-        text = $(this)
-            .text()
-            .replace(/(\r\n|\n|\r)/gm, "")
-            .toString()
-            .trim()
-            .toUpperCase();
-        if (text.search(value) > -1) {
-            $(this).show();
-            count++;
-            $("input[name='list_matched']").show();
-        }
-        else {
-            $(this).hide();
-        }
-    });
-
+    base_filter(element, ".presupuesto_list_row");
 }
+
 
 function toggleTableRowActive(row) {
     if ($(row).hasClass("active")) {
