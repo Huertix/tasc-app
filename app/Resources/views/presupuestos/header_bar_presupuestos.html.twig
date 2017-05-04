@@ -1,0 +1,14 @@
+<div class="header_bar">
+    <h4 class="panel-title">
+        <div class="col-md-2">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Detalles Presupuesto</a>
+        </div>
+        {% if presupuesto %}
+            <div class="datos_cliente_nombre col-md-6 col-md-offset-1"> {{ presupuesto.cliente.nombre|trim }}</div>
+        {% else %}
+            <div class="col-md-9 datos_cliente_nombre">&nbsp</div>
+        {% endif %}
+        <div class="total_importe col-md-2 col-md-offset-1">&nbsp</div>
+
+    </h4>
+</div>^

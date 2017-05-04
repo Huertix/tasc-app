@@ -10,9 +10,7 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Detalles Presupuesto</a>
-                            </h4>
+                            {% include 'presupuestos/header_bar_presupuestos.html.twig' with {'presupuesto': false} %}
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in">
                             <div class="col-md-12" style="padding: 20px">
