@@ -7,13 +7,17 @@
     <div>
         <div class="row">
             <div class="col-md-12 prespuesto_container" >
-                <div class="panel-group" id="accordion">
+                <div class="panel-group navbar-fixed-top" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            {% include 'presupuestos/header_bar_presupuestos.html.twig' with {'presupuesto': false} %}
+                            {% include 'presupuestos/header_bar_presupuestos.html.twig' with {
+                                'presupuesto': false,
+                                'numero_presupuesto': false
+                                }
+                            %}
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="col-md-12" style="padding: 20px">
+                            <div class="col-md-12 accordion_container">
                                 <div class="col-md-4">
                                     {% include 'presupuestos/presupuesto_datos_cliente.html.twig'
                                         with {

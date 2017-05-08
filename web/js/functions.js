@@ -314,19 +314,19 @@ function check_importe_zero(value) {
 }
 
 function clonar_presupuesto() {
-    var numero = $('.datos_presupuesto_numero').text();
+    var numero = $.trim($('.datos_presupuesto_numero_call').text());
     var url = window.location.origin + '/presupuestos/clonar/' + numero;
     window.location.href = url;
 }
 
 function mod_presupuesto() {
-    var numero = $('.datos_presupuesto_numero').text();
+    var numero = $.trim($('.datos_presupuesto_numero_call').text());
     var url = window.location.origin + '/presupuestos/modificar/' + numero;
     window.location.href = url;
 }
 
 function presupuesto_to_pdf() {
-    var numero = $('.datos_presupuesto_numero').text();
+    var numero = $.trim($('.datos_presupuesto_numero_call').text());
     var url = window.location.origin + '/pdf/' + numero;
     window.location.href = url;
 }

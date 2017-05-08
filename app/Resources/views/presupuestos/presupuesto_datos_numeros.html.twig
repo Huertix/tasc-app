@@ -10,6 +10,9 @@
             ">
         </div>
         <div class="col-md-3">Número</div>
-        <div class="col-md-9 datos_presupuesto_numero">{% if numero_presupuesto %}{{ numero_presupuesto|trim }}{% endif %}</div>
+        {#datos_presupuesto_numero_call used by js call#}
+        <div class="col-md-9 datos_presupuesto_numero datos_presupuesto_numero_call">
+            {% if numero_presupuesto %}{{ numero_presupuesto|trim }}{% endif %}
+        </div>
     </fieldset>
 </div>
