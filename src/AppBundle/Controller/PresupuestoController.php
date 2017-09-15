@@ -17,6 +17,7 @@ use Symfony\Component\Finder\Finder;
 use iio\libmergepdf\Merger;
 use iio\libmergepdf\Pages;
 
+
 class PresupuestoController extends Controller
 {
 
@@ -29,17 +30,29 @@ class PresupuestoController extends Controller
   {
     $em = $this->getDoctrine()->getManager();
 
-    $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
-      ->presupuestosOrderedByDate();
+    $cache = $this->get('doctrine_cache.providers.app_cache');
 
-    foreach ($presupuestos as $presupuesto) {
-      $cliente = $em->getRepository('AppBundle:Cliente')
-        ->findOneBy([
-          'codigo' => $presupuesto->getCliente()
-        ]);
-      $presupuesto->setCliente($cliente);
+    $presupuestos = null;
+    if ($cache->contains('presupuestos')) {
+      $presupuestos = $cache->fetch('presupuestos');
 
+    } else {
+      $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
+        ->presupuestosOrderedByDate();
+
+      foreach ($presupuestos as $presupuesto) {
+        $cliente = $em->getRepository('AppBundle:Cliente')
+          ->findOneBy([
+            'codigo' => $presupuesto->getCliente()
+          ]);
+        $presupuesto->setCliente($cliente);
+
+      }
+
+      $cache->save('presupuestos', $presupuestos);
     }
+
+
 
     return $this->render('presupuestos/lista_presupuestos.html.twig', [
       'presupuestos' => $presupuestos
