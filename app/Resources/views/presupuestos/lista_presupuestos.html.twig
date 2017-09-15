@@ -27,26 +27,29 @@
             </thead>
             <tbody>
             {% for presupuesto in presupuestos %}
-                <tr class="presupuesto_list_row">
-                    <td class="col-md-2">
-                        <div >
-                            <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero|trim}) }}">
-                                {{ presupuesto.numero|trim }}
-                            </a>
-                        </div>
-                    </td>
-                    <td class="col-md-6">
-                        {% if presupuesto.cliente %}<div>{{ presupuesto.cliente.nombre }}</div> {% endif %}
-                    </td>
-                    <td class="col-md-2">
-                        <div>{{ presupuesto.fecha| date('d-m-Y') }}</div>
-                    </td>
-                    <td class="col-md-1">
-                        <div class="pull-right">{{ presupuesto.importe|number_format(2, '.', ',') }}</div>
-                    </td>
-                    <td class="col-md-1"></td>
-                </tr>
+                {% if presupuesto.cliente.__isInitialized__ is not defined %}
+                    <tr class="presupuesto_list_row">
+                        <td class="col-md-2">
+                            <div >
+                                <a href="{{ path('vista_presupuesto', {'numero_presupuesto': presupuesto.numero|trim}) }}">
+                                    {{ presupuesto.numero|trim }}
+                                </a>
+                            </div>
+                        </td>
+                        <td class="col-md-6">
+                            {{ presupuesto.cliente.nombre|trim }}
+                        </td>
+                        <td class="col-md-2">
+                            <div>{{ presupuesto.fecha| date('d-m-Y') }}</div>
+                        </td>
+                        <td class="col-md-1">
+                            <div class="pull-right">{{ presupuesto.importe|number_format(2, '.', ',') }}</div>
+                        </td>
+                        <td class="col-md-1"></td>
+                    </tr>
+                {% endif %}
             {% endfor %}
+
             </tbody>
         </table>
     </div>

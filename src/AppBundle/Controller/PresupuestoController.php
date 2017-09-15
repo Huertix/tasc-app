@@ -32,27 +32,30 @@ class PresupuestoController extends Controller
 
     $cache = $this->get('doctrine_cache.providers.app_cache');
 
-    $presupuestos = null;
-    if ($cache->contains('presupuestos')) {
-      $presupuestos = $cache->fetch('presupuestos');
+    $clientes = $em->getRepository('AppBundle:Cliente')->findAll();
 
-    } else {
-      $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
-        ->presupuestosOrderedByDate();
+    $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
+      ->presupuestosOrderedByDate();
 
-      foreach ($presupuestos as $presupuesto) {
-        $cliente = $em->getRepository('AppBundle:Cliente')
-          ->findOneBy([
-            'codigo' => $presupuesto->getCliente()
-          ]);
-        $presupuesto->setCliente($cliente);
-
-      }
-
-      $cache->save('presupuestos', $presupuestos);
-    }
+    //
+    //$clientes = null;
+    //if ($cache->contains('clientes')) {
+    //  $clientes = $cache->fetch('clientes');
+    //} else {
+    //  $clientes = $em->getRepository('AppBundle:Cliente')->findAll();
+    //  $cache->save('clientes', $clientes);
+    //}
 
 
+    //foreach ($presupuestos as $presupuesto) {
+    //  $cliente_id = $presupuesto->getCliente()->getCodigo();
+    //  foreach ($clientes as $cliente) {
+    //    if ($cliente->getCodigo() == $cliente_id){
+    //      $presupuesto->setCliente($cliente);
+    //      break;
+    //    }
+    //  }
+    //}
 
     return $this->render('presupuestos/lista_presupuestos.html.twig', [
       'presupuestos' => $presupuestos
@@ -324,7 +327,6 @@ class PresupuestoController extends Controller
         "message" => "Presupuesto saved",
         "presupuesto" => trim($numero_presupuesto)
       ];
-
     } catch (\Exception $e) {
       switch (get_class($e)) {
         case 'Doctrine\DBAL\DBALException':
