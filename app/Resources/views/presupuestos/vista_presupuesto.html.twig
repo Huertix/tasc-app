@@ -7,16 +7,15 @@
     <div>
         <div class="row">
             <div class="col-md-12 prespuesto_container" >
-                <div class="panel-group navbar-fixed-top" id="accordion">
+                <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            {% include 'presupuestos/header_bar_presupuestos.html.twig' with {
-                                'presupuesto': presupuesto,
-                                'numero_presupuesto': presupuesto.numero,}
-                            %}
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Detalles Presupuesto</a>
+                            </h4>
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="col-md-12 accordion_container">
+                            <div class="col-md-12" style="padding: 20px">
                                 <div class="col-md-4">
                                     {% include 'presupuestos/presupuesto_datos_cliente.html.twig'
                                         with {

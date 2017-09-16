@@ -1,50 +1,18 @@
 <div class="header_bar">
     <h4 class="panel-title">
         <div class="row">
-            <div class="col-md-6">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    <b>
-                        <div class="datos_cliente_nombre">
-                            {% if presupuesto %}
-                                {{ presupuesto.cliente.nombre|trim }}
-                            {% else %}
-                                &nbsp
-                            {% endif %}
-                        </div>
-                    </b>
-                </a>
-            </div>
             <div class="col-md-2">
-                <div class="col-md-3">Número:</div>
-                <div class="datos_presupuesto_numero col-md-8 col-md-offset-1">
-                    <b>
-                        {% if numero_presupuesto %}
-                            {{ numero_presupuesto|trim }}
-                        {% else %}
-                            &nbsp
-                        {% endif %}
-                    </b>
-                </div>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Detalles Presupuesto</a>
             </div>
-            <div class="col-md-2">
-                <div class="col-md-3">Fecha: </div>
-                <div class="datos_presupuesto_fecha col-md-8 col-md-offset-1">
-                    <b>
-                        {% if presupuesto %}
-                            {{  presupuesto.fecha| date('d/m/Y') }}
-                        {% else %}
-                            &nbsp
-                        {% endif %}
-                    </b>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="col-md-3">Total:</div>
-                <div class="total_importe col-md-8 col-md-offset-1"><b>&nbsp</b></div>
+            {% if presupuesto %}
+                <div class="datos_cliente_nombre col-md-6 col-md-offset-1"> {{ presupuesto.cliente.nombre|trim }}</div>
+            {% else %}
+                <div class="col-md-7 datos_cliente_nombre">&nbsp</div>
+            {% endif %}
+            <div class="col-md-2 col-md-offset-1">
+                <div class="col-md-2"><span>TOTAL:</span></div>
+                <div class="total_importe col-md-6 col-md-offset-1 pull-right">&nbsp</div>
             </div>
         </div>
     </h4>
 </div>
-
-
-

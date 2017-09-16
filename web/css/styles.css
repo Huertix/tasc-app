@@ -24,17 +24,6 @@
     height: 800px;
     max-height: 800px;
     z-index: 200;
-}
-
-#accordion {
-    top: 50px;
-    background: white;
-    border: 1px solid black;
-}
-
-.accordion_container {
-    padding: 20px;
-    background: whitesmoke;
 
 }
 
@@ -118,7 +107,6 @@
 .table_container {
     position: relative;
     z-index: -10;
-    top: 20px;
 }
 
 
