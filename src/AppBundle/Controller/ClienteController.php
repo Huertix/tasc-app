@@ -21,11 +21,29 @@ class ClienteController extends Controller {
    * @Route("/clientes", name="clientes")
    */
   public function listAction() {
+    $cache = $this->get('doctrine_cache.providers.app_cache');
 
     $em = $this->getDoctrine()->getManager();
 
-    $clientes = $em->getRepository('AppBundle\Entity\Cliente')
-      ->clientesOrderedByName();
+    $clientes = null;
+
+    try {
+        if ($cache->contains('clientes')) {
+          $clientes = $cache->fetch('clientes');
+          $clientes_count = $em->getRepository('AppBundle:Cliente')
+            ->countClientes();
+
+          if (count($clientes) != $clientes_count)
+            throw new \Exception("Clientes number does not match");
+        }
+        else
+          throw new \Exception("Clientes not in cache");
+
+    } catch (\Exception $e) {
+        $clientes = $em->getRepository('AppBundle\Entity\Cliente')
+          ->clientesOrderedByName();
+        $cache->save('clientes', $clientes);
+    }
 
     return $this->render('clientes/lista_clientes.html.twig', [
       'clientes' => $clientes

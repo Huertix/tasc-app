@@ -16,4 +16,13 @@ class ClienteRepository extends EntityRepository {
             ->execute();
 	}
 
+  public function countClientes() {
+    $qb = $this->createQueryBuilder('c');
+    $qb->select('count(c.codigo)');
+    //$qb->where('t.codigo = :codigo');
+    //$qb->setParameter('codigo', codigo);
+    $total_clients = $qb->getQuery()->getSingleScalarResult();
+    return $total_clients;
+  }
+
 }

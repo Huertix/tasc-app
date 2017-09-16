@@ -30,32 +30,11 @@ class PresupuestoController extends Controller
   {
     $em = $this->getDoctrine()->getManager();
 
-    $cache = $this->get('doctrine_cache.providers.app_cache');
 
     $clientes = $em->getRepository('AppBundle:Cliente')->findAll();
 
     $presupuestos = $em->getRepository('AppBundle\Entity\Presupuesto')
       ->presupuestosOrderedByDate();
-
-    //
-    //$clientes = null;
-    //if ($cache->contains('clientes')) {
-    //  $clientes = $cache->fetch('clientes');
-    //} else {
-    //  $clientes = $em->getRepository('AppBundle:Cliente')->findAll();
-    //  $cache->save('clientes', $clientes);
-    //}
-
-
-    //foreach ($presupuestos as $presupuesto) {
-    //  $cliente_id = $presupuesto->getCliente()->getCodigo();
-    //  foreach ($clientes as $cliente) {
-    //    if ($cliente->getCodigo() == $cliente_id){
-    //      $presupuesto->setCliente($cliente);
-    //      break;
-    //    }
-    //  }
-    //}
 
     return $this->render('presupuestos/lista_presupuestos.html.twig', [
       'presupuestos' => $presupuestos
@@ -178,7 +157,7 @@ class PresupuestoController extends Controller
     }
 
     $detalles_presupuesto = $presupuesto->getpresupuesto_detalles();
-    
+
     $articulos = $em->getRepository('AppBundle\Entity\Articulo')
       ->findAll();
 
