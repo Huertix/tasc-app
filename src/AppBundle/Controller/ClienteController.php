@@ -21,17 +21,14 @@ class ClienteController extends Controller {
    * @Route("/clientes", name="clientes")
    */
   public function listAction() {
-    $cache = $this->get('doctrine_cache.providers.app_cache');
 
     $em = $this->getDoctrine()->getManager();
-    
     $clientes = $em->getRepository('AppBundle\Entity\Cliente')
       ->clientesOrderedByName();
 
     return $this->render('clientes/lista_clientes.html.twig', [
       'clientes' => $clientes
     ]);
-
   }
 
   /**
@@ -39,14 +36,11 @@ class ClienteController extends Controller {
    */
   public function getAction($codigo_cliente) {
 
-
     $em = $this->getDoctrine()->getManager();
-
     $cli = $em->getRepository('AppBundle:Cliente')
       ->findOneBy([
         'codigo' => str_pad ( $codigo_cliente , 15 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
       ]);
-
 
     $cliente = [];
 
@@ -61,18 +55,11 @@ class ClienteController extends Controller {
       'credito' => $this->checkValue($cli->getCredito()),
     ];
 
-
     $data = [
       'cliente' => $cliente
     ];
 
     return new JsonResponse($data);
-
-  }
-
-  private function checkValue($value) {
-    $value = trim($value);
-    return $value != '' ? $value : '&nbsp';
   }
 
   /**
@@ -84,46 +71,22 @@ class ClienteController extends Controller {
     // only handles data on POST
     $form->handleRequest($request);
 
-
     if ($form->isSubmitted() && $form->isValid()) {
-
       $cliente = $form->getData();
-
       $em = $this->getDoctrine()->getManager();
       $em->persist($cliente);
       $em->flush();
-
-      $this->addFlash('success', 'Cliente created!');
-
+      $this->addFlash('success', 'Cliente "'. $cliente->getCodigo() .'" Guardado Correctamente!');
       return $this->redirectToRoute('clientes');
     }
-
-
 
     return $this->render('clientes/vista_cliente.html.twig', [
       'clienteForm' => $form->createView()
     ]);
-
   }
 
-
-  ///**
-  // * @Route("/clientes/{codigo_cliente}", name="vista_cliente")
-  // */
-  //public function showAction($codigo_cliente) {
-  //
-  //  $em = $this->getDoctrine()->getManager();
-  //  $cliente = $em->getRepository('AppBundle:Cliente')
-  //    ->findOneBy(['codigo' => $codigo_cliente]);
-  //
-  //  if (!$cliente) {
-  //    throw $this->createNotFoundException('Cliente no Encontrado');
-  //  }
-  //
-  //
-  //  return $this->render('clientes/vista_cliente.html.twig', [
-  //    'cliente' => $cliente
-  //  ]);
-  //}
-
+  private function checkValue($value) {
+    $value = trim($value);
+    return $value != '' ? $value : '&nbsp';
+  }
 }
