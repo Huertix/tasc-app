@@ -62,6 +62,45 @@ class ClienteController extends Controller {
     return new JsonResponse($data);
   }
 
+  ///**
+  // * @Route("/clientes/nuevo", name="nuevo_cliente")
+  // */
+  //public function newAction(Request $request) {
+  //
+  //
+  //  $cliente = new Cliente();
+  //
+  //  $cliente->setCodigo($this->get_next_cliente_number());
+  //  $cliente->setNombre('');
+  //  $cliente->setNombre2('');
+  //  $cliente->setCif('');
+  //  $cliente->setDireccion('');
+  //  $cliente->setCodpost('');
+  //  $cliente->setPoblacion('');
+  //  $cliente->setProvincia('');
+  //  $cliente->setPais('');
+  //  $cliente->setVendedor('03');
+  //  $cliente->setTipofac('05');
+  //  $cliente->setCredito('0');
+  //  $cliente->setDescu1('0');
+  //  $cliente->setTipoIva('21');
+  //  $cliente->setEmail('');
+  //  $cliente->setObservacio('');
+  //  $dtz = new \DateTimeZone("Europe/Madrid"); //Your timezone
+  //  $now = new \DateTime(date("Y-m-d H:i:s"), $dtz);
+  //  $cliente->setFAlta($now);
+  //  $cliente->setPresupuestos(array());
+  //
+  //  var_dump($cliente);
+  //  die();
+  //
+  //  $em = $this->getDoctrine()->getManager();
+  //  $em->persist($cliente);
+  //  $em->flush();
+  //
+  //
+  //}
+
   /**
    * @Route("/clientes/{codigo}", name="vista_cliente")
    */
@@ -92,6 +131,34 @@ class ClienteController extends Controller {
       'clienteForm' => $form->createView()
     ]);
   }
+  
+  //private function get_next_cliente_number() {
+  //  $em = $this->getDoctrine()->getManager();
+  //
+  //  $clientes = $em->getRepository('AppBundle\Entity\Cliente')
+  //    ->clientesOrderedByName();
+  //
+  //  $next_number = 0;
+  //
+  //  foreach ($clientes as $cliente) {
+  //    $raw_number = trim($cliente->getCodigo());
+  //    $number = '';
+  //
+  //    for ($i = 1; $i <= strlen($raw_number); $i++){
+  //      $char = $raw_number[$i-1];
+  //      if (is_numeric($char)) {
+  //        $number = $number . $char;
+  //      }
+  //    }
+  //
+  //    $k = (int)$number;
+  //    if ($next_number <= $k && $k < 43100000)  {
+  //      $next_number = $k;
+  //    }
+  //  }
+  //  $next_number = str_pad ( $next_number  + 1 , 15 , $pad_string = " ", $pad_type = STR_PAD_RIGHT );
+  //  return $next_number;
+  //}
 
   private function validate_cliente_form($cliente) {
     if (
