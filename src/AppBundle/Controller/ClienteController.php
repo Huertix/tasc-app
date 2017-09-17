@@ -73,6 +73,14 @@ class ClienteController extends Controller {
 
     if ($form->isSubmitted() && $form->isValid()) {
       $cliente = $form->getData();
+
+      if (!$this->validate_cliente_form($cliente)) {
+        $this->addFlash('error', 'Formulario Tiene Parametros Erroneos o Incompletos');
+        return $this->render('clientes/vista_cliente.html.twig', [
+          'clienteForm' => $form->createView()
+        ]);
+      }
+
       $em = $this->getDoctrine()->getManager();
       $em->persist($cliente);
       $em->flush();
@@ -83,6 +91,20 @@ class ClienteController extends Controller {
     return $this->render('clientes/vista_cliente.html.twig', [
       'clienteForm' => $form->createView()
     ]);
+  }
+
+  private function validate_cliente_form($cliente) {
+    if (
+      trim($cliente->getCodigo()) == '' ||
+      trim($cliente->getNombre()) == '' ||
+      trim($cliente->getCif())  == '' ||
+      trim($cliente->getDireccion())  == '' ||
+      trim($cliente->getPoblacion())  == '' ||
+      trim($cliente->getProvincia())  == ''
+    )
+      return false;
+
+    return true;
   }
 
   private function checkValue($value) {

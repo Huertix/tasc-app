@@ -19,22 +19,45 @@ class ClienteFormType extends AbstractType
 
       ->add('codigo', null,  array(
         'disabled' => true,
+        'label' => 'Código'
+
       ))
-      ->add('nombre')
-      ->add('cif')
+      ->add('nombre', TextType::class, array(
+        'empty_data' => '',
+        'trim' => true,
+        'required' => true
+      ))
+      ->add('cif', TextType::class, array(
+        'empty_data' => '',
+        'trim' => true,
+        'required' => true,
+        'label' => 'CIF'
+      ))
       ->add('f_alta', DateType::class, array(
         'label' => 'Fecha de Alta',
-        'html5' => false, 'widget' => 'single_text',
+        'html5' => false,
+        'widget' => 'single_text',
         'disabled' => true,
         'attr' => ['class' => 'js-datepicker'],
       ))
 
-      ->add('direccion')
+      ->add('direccion', TextType::class, array(
+        'empty_data' => '',
+        'trim' => true,
+        'label' => 'Dirección'
+      ))
       ->add('codpost', null , array(
         'empty_data' => ''
       ))
-      ->add('poblacion')
-      ->add('provincia')
+      ->add('poblacion', TextType::class, array(
+        'empty_data' => '',
+        'trim' => true,
+        'label' => 'Población'
+      ))
+      ->add('provincia', TextType::class, array(
+        'empty_data' => '',
+        'trim' => true
+      ))
       ->add('pais', ChoiceType::class, [
         'choices' => [
           'Spain' => '034',
@@ -51,19 +74,27 @@ class ClienteFormType extends AbstractType
       ])
       ->add('tipofac')
       ->add('credito', TextType::class, array(
-        'empty_data' => '0'
+        'empty_data' => '0',
+        'trim' => true
+
       ))
       ->add('descu1', TextType::class, array(
-        'empty_data' => '0'
+        'empty_data' => '0',
+        'trim' => true
       ))
       ->add('tipo_iva', null, array(
-        'empty_data' => '0'
+        'empty_data' => '0',
+        'trim' => true
       ))
       ->add('email', EmailType::class, array(
-        'empty_data' => ''
+        'empty_data' => '',
+        'trim' => true,
+        'required' => true
       ))
-      ->add('observacio', Type::class, array(
-        'empty_data' => ''
+      ->add('observacio', TextType::class, array(
+        'empty_data' => '',
+        'trim' => true,
+        'label' => 'Observaciones'
       ))
     ;
   }
