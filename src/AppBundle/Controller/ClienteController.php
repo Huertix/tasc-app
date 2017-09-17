@@ -131,7 +131,7 @@ class ClienteController extends Controller {
       'clienteForm' => $form->createView()
     ]);
   }
-  
+
   //private function get_next_cliente_number() {
   //  $em = $this->getDoctrine()->getManager();
   //

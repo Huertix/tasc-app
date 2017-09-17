@@ -72,7 +72,24 @@ class ClienteFormType extends AbstractType
           'Rafael Sevilla' => '03'
         ]
       ])
-      ->add('tipofac')
+      ->add('tipofac', ChoiceType::class, [
+        'choices' => [
+          'Varios' => '00',
+          'Mensual' => '01',
+          'Talon' => '02',
+          'Aplazado' => '03',
+          'Confirming' => '04',
+          'Transferencia' => '05',
+          'Bank Transfer' => '06',
+          'Recibo' => '07',
+          'Giro' => '08',
+          '45 D Confirming' => '45',
+          '60 D Confirming' => '60',
+          'Anticipado' => 'AN',
+          'Pagare' => 'PG'
+
+        ]
+      ])
       ->add('credito', TextType::class, array(
         'empty_data' => '0',
         'trim' => true
