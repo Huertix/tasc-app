@@ -106,6 +106,7 @@ function calc_importe_total () {
     $('.total_importe_base').html(total_importe_base.toFixed(2));
     $('.total_importe_iva').html(total_importe_iva.toFixed(2));
     $('.total_importe').html(total_importe.toFixed(2));
+    $('.total_importe_top_bar').html(total_importe.toFixed(2));
 }
 
 function register_table_row_head_change() {
@@ -221,8 +222,7 @@ function ajax_call_guardar_presupuesto(url) {
         return null;
 
     var importe = check_importe_zero($('.total_importe').text());
-
-
+    
     if (codigo && fecha && importe) {
         var data = {
             'cliente': codigo,
@@ -254,6 +254,7 @@ function ajax_call_guardar_presupuesto(url) {
 
         });
 
+        console.log(JSON.stringify(data));
 
         $.ajax({
             url: url,
@@ -265,6 +266,7 @@ function ajax_call_guardar_presupuesto(url) {
 
                 console.log(result['sucess']);
                 console.log(result['message']);
+                console.log(result['presupuesto']);
                 // $("#btn_imprimir_presupuesto").prop("hidden",false);
                 // $("#btn_guardar_presupuesto").prop("hidden",true);
                 // alert("El Presupuesto Número: " + result['presupuesto'] + " ha sido guardado.")

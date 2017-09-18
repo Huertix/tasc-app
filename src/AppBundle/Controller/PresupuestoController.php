@@ -223,11 +223,10 @@ class PresupuestoController extends Controller
     $em = $this->getDoctrine()->getManager();
 
     $parametersAsArray = [];
-
-    if ($content = $request->getContent()) {
+    $content = $request->getContent();
+    if ($content) {
       $parametersAsArray = json_decode($content, true);
     }
-
 
     try {
 
@@ -235,7 +234,7 @@ class PresupuestoController extends Controller
         ->findOneBy([
           'codigo' => str_pad ( $parametersAsArray["cliente"] , 15 , $pad_string = " ", $pad_type = STR_PAD_RIGHT )
         ]);
-
+      
       if (strpos($request->headers->get('referer'), 'modificar' )) {
         $number = explode( '/', $request->headers->get('referer'));
         $number = $number[sizeof($number) - 1];
@@ -317,7 +316,8 @@ class PresupuestoController extends Controller
           $response_array['message'] = "DBA Error: " . $e->getMessage();
           break;
         default:
-          throw $e;
+          $response_array['succes'] = False;
+          $response_array['message'] = "Error: " . $e->getMessage();
           break;
       }
     }
